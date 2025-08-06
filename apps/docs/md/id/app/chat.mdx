@@ -1,0 +1,131 @@
+---
+title: Chat Page
+---
+
+# Halaman Obrolan
+
+---
+
+Halaman `chat` berfungsi sebagai antarmuka utama pengguna dalam melakukan komunikasi melalui fitur **pesan instan**. Setiap pengguna dapat:
+
+- Membuat **group chat**, dengan minimal 2 anggota (tidak ada batas maksimum anggota saat ini).
+- Memulai percakapan pribadi (direct chat) dengan pengguna lain, tanpa harus melalui grup.
+
+Tampilan antarmuka dan fitur dirancang menyerupai aplikasi **WhatsApp Messenger** dimaksudkan agar pengguna familiar menggunakannya, termasuk dengan penempatan elemen, warna, ikon, dan alur interaksi.
+
+---
+
+## Pesan Waktu Nyata
+
+Fitur **realtime chat** dibangun menggunakan [`pusher-js`](https://pusher.com/), yang memungkinkan:
+
+- Pesan baru langsung muncul secara realtime **tanpa perlu reload halaman**.
+- Deteksi status online pengguna lainnya (**online presence**).
+- Notifikasi **read status**, yakni mengetahui siapa saja yang telah membaca pesan.
+
+Meskipun masih dalam tahap awal dan belum mencapai tingkat kesempurnaan layaknya `WhatsApp`, `Telegram`, atau `Discord`, implementasi ini sudah mencakup fungsionalitas dasar yang cukup representatif dan bisa dikembangkan lebih lanjut.
+
+---
+
+## Editor Obrolan
+
+Untuk editor pesan, alih-alih menggunakan elemen `<textarea>` untuk mengetik pesan, editor dirancang menggunakan elemen `<div contentEditable />` yang dikembangkan secara kustom.
+
+> Referensi dan inspirasi utama: [Lexical by Meta](https://lexical.dev/)
+
+Fitur dari editor ini meliputi:
+
+- Pemrosesan teks berbasis token.
+- Dukungan **semi-Markdown** seperti WhatsApp dan Discord.
+- Fitur **mention** pengguna (mis. `@username`).
+- Auto-link untuk URL yang diketik.
+- Auto-emoji (mis. `:smile:` menjadi 😄).
+- Teks tetap disimpan sebagai **string murni** di database (bukan serialized token atau AST).
+
+Meskipun belum stabil sepenuhnya, pendekatan ini menjadi alternatif ringan yang cukup andal untuk menggantikan `lexical` secara terbatas. Komponen `MessageBubble` digunakan untuk merender pesan yang telah tersimpan, dan [tokenisasi](/concept/tokenization) terjadi hanya saat rendering, bukan saat penyimpanan.
+
+Untuk menjaga keamanan konten, semua pesan disanitasi menggunakan [`domPurify`](https://www.npmjs.com/package/dompurify) sebelum dikirim ke database dan sebelum dirender.
+
+---
+
+## UI Optimis & Status Pesan
+
+Sistem ini menggunakan pendekatan **Optimistic UI** agar interaksi pengguna tetap cepat dan responsif, bahkan saat jaringan lambat. Pesan akan langsung muncul di UI sambil menunggu konfirmasi dari server.
+
+---
+
+### Status Pesan
+
+```ts
+type $Enums.MessageStatus = "SENDING" | "SENT" | "FAILED" | "SEEN";
+```
+
+### Penanganan Klien
+
+```ts
+function useOptimisticMessages(
+  chatId: string,
+  params: OptimisticMessagesParams
+): {
+  sendMessage: (value: SendMessage) => Promise<void>;
+  retrySend: (msg: OptimisticMessage) => Promise<void>;
+  deleteMessage: (messageId: string) => Promise<void>;
+};
+```
+
+Dengan pendekatan ini:
+
+- Pesan tampil seolah-olah telah terkirim -> (`SENDING`).
+- Jika berhasil dikonfirmasi oleh server -> status menjadi `SENT`.
+- Jika gagal (misalnya karena jaringan) -> status menjadi `FAILED` dan pengguna dapat menekan "Retry".
+- Jika telah dibaca oleh pengguna lain -> status diperbarui menjadi `SEEN`.
+
+---
+
+## `[chatId]`
+
+Halaman dengan parameter `[chatId]` digunakan untuk menampilkan **seluruh percakapan** dari sebuah sesi chat spesifik (baik personal maupun grup).
+
+---
+
+### Proses & Tipe Data
+
+1. Semua data chat diambil sebagai `Chat[]` dari database.
+2. Data difilter berdasarkan `chatId`.
+3. Setiap pesan kemudian diubah menjadi tipe `EnrichedMessage` dengan metadata tambahan:
+
+```ts
+interface EnrichedMessage extends OptimisticMessage {
+  isFirst: boolean;
+  isLast: boolean;
+  isFirstInDay: boolean;
+  isLastInDay: boolean;
+  isRepeat: boolean;
+  isRepeatInDay: boolean;
+  isFromCurrentUser: boolean;
+  dayKey: string;
+  groupPosition: GroupPosition;
+  isEdited: boolean;
+  totalCount: number;
+  indexKey: number;
+}
+```
+
+### Properti:
+
+- `isFirst` / `isLast`: penanda awal atau akhir dari sekelompok pesan.
+- `isFirstInDay` / `isLastInDay`: digunakan untuk menyisipkan divider berdasarkan tanggal.
+- `isRepeat`: apakah pesan identik sebelumnya sudah muncul.
+- `isFromCurrentUser`: membedakan posisi bubble untuk pesan dari pengguna sendiri.
+- `groupPosition`: mendeteksi posisi bubble untuk grouping (top/middle/bottom).
+- `isEdited`: flag jika pesan telah diedit.
+- `totalCount`: total pesan pada sesi tertentu.
+- `indexKey`: urutan logika yang digunakan saat render atau grouping pesan.
+
+---
+
+## Keamanan & Sanitasi
+
+- Sebelum pesan dirender semua input text disanitasi menggunakan [`domPurify`](https://www.npmjs.com/package/dompurify).
+- [Tokenisasi](/concept/tokenization) dilakukan saat render untuk mendukung fitur seperti mention, emoji, dan styling inline.
+- Untuk mencegah abuse, string yang terlalu panjang dipotong, dan simbol berbahaya (seperti HTML tags, event listeners, dsb.) disterilkan.

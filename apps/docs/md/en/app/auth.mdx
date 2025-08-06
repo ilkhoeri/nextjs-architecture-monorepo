@@ -1,0 +1,271 @@
+---
+title: Auth Page
+---
+
+# Auth Page
+
+---
+
+<br />
+
+<Img src="/assets/images/diagram-flow-auth-solid.png" alt="auth-flow" className="left-1/2 -translate-x-1/2 w-full xl:max-w-[80%]" />
+<small>Illustration – Authentication Flow (Server RSC)</small>
+
+---
+
+<blockquote data-quote="">
+  The application has recorded several active dummy accounts that can be used as an application preview.
+  <br />
+  <a href="/assets/dummy/test.user.json" className="-mt-4">
+    ⁕ View account list
+  </a>
+  <a href="/assets/dummy/test.user.json" download="test.user.json">
+    ⁕ Download account list
+  </a>
+</blockquote>
+
+The `auth` route is the main route used for managing user credentials. It contains a series of important page flows such as `sign in`, `sign up`, `invitation`, `verification`, and `error`, designed to handle various authentication scenarios.
+
+Credentials are managed using [NextAuth](https://authjs.dev/), which provides support for various provider types and full customization capabilities for authentication flows.
+
+**React Server Components (RSC)** have been fully supported since **React 18**, and fully adopted by Next.js through **Next.js 13.4** along with the launch of **App Router**. Therefore, all credential activities are implemented using functions with the `"use server"` directive. This allows functions to be executed entirely on the server side, maintaining internal visibility and security, and avoiding the traditional approach using API handlers. This approach can still be combined with client-side interactivity using `use client`.
+
+References: [React.js RSC](https://react.dev/reference/rsc/use-client), [Next.js use-server](https://nextjs.org/docs/app/api-reference/directives/use-server).
+
+<h4 className="text-h3 font-bold">Technical considerations:</h4>
+
+- **Effectiveness of results**: Whether using API endpoints or server handlers, the final results are identical. However, the server handler approach offers higher execution efficiency.
+- **Single-app session**: Since the session is only used within one application and not shared across applications, a public API endpoint for authentication is not required.
+- **Buffering time**: Based on various testing scenarios, using server handlers results in faster transaction times for actions such as `like`, `save`, `follow`, and `credential handling`.
+
+<br />
+
+## Sign In
+
+---
+
+The `sign-in` page is used to log in to the system. Here, I only provide manual authentication (username/email + password), not through third-party providers such as `Google`, `Apple`, `GitHub`, etc. The main reasons are:
+
+- Manual credentials give users the flexibility to choose their account name and password.
+- Provider configuration requires additional setup in the company account, including additional costs for tracking.
+
+However, if needed, provider credentials can be easily enabled as their support is already prepared in the application structure.
+
+```tsx
+function LoginWithProviders() {
+  const providers = [
+    { name: "google", icon: GoogleIcon },
+    { name: "github", icon: GithubIcon }
+  ];
+
+  return (
+    <Wrapper>
+      <Header>
+        <Title>Or continue with</Title>
+      </Header>
+      <Content>
+        {providers.map(provider => (
+          <Button key={provider.name} onClick={() => signIn(provider.name, { callbackUrl: "/" })}>
+            <provider.icon className="mr-2 size-5" />
+            Login with {transform(provider.name)}
+          </Button>
+        ))}
+      </Content>
+    </Wrapper>
+  );
+}
+```
+
+### Form Execution
+
+- **Identifier Field** <br />
+  The `Enter Username/Email` field supports automatic detection of input type (username or email) through a simple identification function.
+
+```ts
+function isEmail(identifier: string): boolean;
+```
+
+This function verifies if the input matches the email format. If not, it will be considered a username.
+
+- **User Search** <br />
+  Based on the identification results:
+
+```ts
+function getUserByEmail(email: string): Promise<Account | null>;
+function getUserByUserName(username: string): Promise<Account | null>;
+```
+
+Both functions are wrapped in a single aggregate function:
+
+```ts
+function getUserByIdentifier(identifier: string): Promise<Account | null>;
+```
+
+This function searches for an account by `email` or `username` uniquely. Once an account is found, login will still be performed using the `email` of that account. _Note: email and username must be unique among users._
+
+- **Password Field** <br />
+  This feature includes:
+  - Visibility toggle (`show/hide`) <br />
+    Users can hide or show the password as needed (default: `hide`).
+  - Real-time validation: <br />
+    A `<Dropdown>` component will appear when the user starts filling the password field. <br />
+    Validation includes: <br />
+    1. Character length
+    2. Uppercase letters
+    3. Lowercase letters
+    4. Numbers, and
+    5. Special characters.
+  - Hashing <br/>
+    Validated passwords will be sent to the server side in a hashed format. Password hashing uses [bcrypt.js](https://www.npmjs.com/package/bcryptjs).
+
+- **Login Button** <br />
+  The login button is inactive by default until all fields are filled. Once valid, the button will become active with a color transition animation.
+
+- **Reset Password** <br />
+  This feature allows users to reset their password via email. The `Reset Password` form appears as an inline form on the same page (`/auth/sign-in`) without navigation. The form only requires an email to send OTP using services like Resend. <br />
+  _Note: Currently this button is a placeholder._
+
+- **Register Here** <br />
+  This button directs users to `/auth/sign-up`. <br />
+  _Note: Authentication using providers does not require a sign-up page._
+
+### Execution Scenario
+
+| Request                                           | Response | Handling                                         |
+| ------------------------------------------------- | -------- | ------------------------------------------------ |
+| `Username`/`Email` invalid + `Password` incorrect | 🔴       | `toast` → `Invalid input`                        |
+| `Username` wrong + `Password` correct             | 🔴       | `toast` → `Password correct, Username not found` |
+| `Email` wrong + `Password` correct                | 🔴       | `toast` → `Email not registered`                 |
+| `Username`/`Email` correct + `Password` incorrect | 🔴       | `toast` → `Password is incorrect`                |
+| `Username`/`Email` correct + `Password` correct   | 🟢       | `toast` → `Login successful`                     |
+| `Login successful` + redirect                     | 🟢       | `callback` → homepage (or target page)           |
+
+<br />
+
+## Sign Up
+
+---
+
+The `/auth/sign-up` page is used for new account registration. The form has four fields and two action buttons.
+
+### Form Execution
+
+- **Email Field** <br />
+  Must be filled with a valid format, not previously registered.
+
+- **Username Field** <br />
+  Must be unique and at least 2 characters long. The system will automatically:
+  - Normalize the username to be URL-friendly.
+  - Fill the `name`, `firstName`, and `lastName` fields as default.
+
+- **Password Field** <br />
+  Has a visibility toggle and real-time validation.
+  - Visibility toggle (`show/hide`) <br />
+    Users can hide or show the password as needed (default: `hide`).
+  - Real-time validation: <br />
+    A `<Dropdown>` component will appear when the user starts filling the password field. <br />
+    Validation includes: <br />
+    1. Character length
+    2. Uppercase letters
+    3. Lowercase letters
+    4. Numbers, and
+    5. Special characters.
+  - _Valid example:_ `Johndoe123!`
+
+- **Confirm Password Field** <br />
+  Used to confirm the typed password matches.
+
+- **Register Button** <br />
+  The button is active only if all fields are valid. Animation will indicate the form's readiness for submission.
+
+- **Login Here**
+  Quick navigation to the login page for users who already have an account.
+
+### Execution Scenario
+
+| Request                         | Response | Handling                         |
+| ------------------------------- | -------- | -------------------------------- |
+| Fields invalid / incomplete     | 🔴       | Invalid input                    |
+| Email already registered        | 🔴       | Email already exists             |
+| Username already used           | 🔴       | Username already used            |
+| Email & username already exist  | 🔴       | Email and Username already exist |
+| Password does not meet criteria | 🔴       | Error field validation           |
+| All fields valid                | 🟢       | Redirected to `/sign-in`         |
+
+<br />
+
+## Invitation
+
+---
+
+The `/auth/invitation` page is used to verify invitation tokens. Suitable for exclusive accounts (`beta account`, `promo account`, `special role`) without active participation from new users.
+
+### Form Execution
+
+- **Token Field** <br />
+  The token must be valid, unused, and not expired.
+
+- **Verify Button** <br />
+  The button is only active if the token is filled.
+
+- **Login Here** <br />
+  An alternative for users who already have an account.
+
+### Execution Scenario
+
+| Request                    | Response | Handling                      |
+| -------------------------- | -------- | ----------------------------- |
+| Token invalid              | 🔴       | Token not registered          |
+| Token already used         | 🔴       | Token already used            |
+| Token expired              | 🔴       | Token has expired             |
+| Token exceeded usage limit | 🔴       | Token reached max usage limit |
+| Token valid                | 🟢       | Token verified                |
+| Verified                   | 🟢       | Redirected to `/sign-in`      |
+
+<br />
+
+## Verification
+
+---
+
+The `/auth/verification` page is used in the process of:
+
+- Two-Factor Authentication (2FA)
+- Password reset
+- Email token validation
+
+### Form Execution
+
+- **Token Field** <br />
+  Must be filled with a valid token sent via email. <br />
+  _Note: Only for registered emails._
+- **Verify Button** <br />
+  Inactive until the token is filled.
+
+### Execution Scenario
+
+| Request                    | Response | Handling                      |
+| -------------------------- | -------- | ----------------------------- |
+| Token invalid              | 🔴       | Token not registered          |
+| Token already used         | 🔴       | Token already used            |
+| Token expired              | 🔴       | Token has expired             |
+| Token exceeded usage limit | 🔴       | Token reached max usage limit |
+| Token valid                | 🟢       | Token verified                |
+| Verified                   | 🟢       | Redirected to callback        |
+
+## Error
+
+---
+
+The `/auth/error` page is a fallback page to handle errors such as invalid or expired tokens, or errors that cannot be handled via toast.
+
+### Form Execution
+
+- No form on this page.
+- No further action available from the user.
+
+### Execution Scenario
+
+| Response | Handling                                 |
+| -------- | ---------------------------------------- |
+| 🔴       | Displays error status, no further action |

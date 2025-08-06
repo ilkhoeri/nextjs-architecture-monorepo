@@ -1,0 +1,109 @@
+---
+title: Settings Page
+---
+
+# Settings Page
+
+---
+
+The page with the `/settings` prefix is exclusively for the **_current user_**—that is, the user who is currently logged in. Each parameter (`params`) in the URL is used to review, update, or delete data based on that account. Currently, there is only one active parameter, based on the `username`, which functions to update user data according to UX needs and YouApp team specifications.
+
+## &#91;username&#93;
+
+This parameter is taken from the `username` value of each user. Therefore, in the database, the `username` field in the `User` model has a **unique** constraint. This page allows users to view and update data structurally through several **card** displays, including:
+
+### First Card
+
+---
+
+The first card will display several pieces of information such as:
+
+- **Profile photo**
+- **Name**
+- **Gender**
+- **Horoscope (western zodiac)**
+- **Zodiac (Chinese shio)**
+
+For **Horoscope Badge** and **Zodiac Badge**, users can click on the element to display detailed information according to the date and year of birth entered.
+
+#### Reference Data:
+
+- **Zodiac (Shio)** is obtained through safe scraping methods from the [yourchineseastrology.com](https://www.yourchineseastrology.com) website, using [Cheerio](https://cheerio.js.org/docs/intro).
+- **Horoscope (Western Zodiac)** is obtained through the public API from [API Ninjas](https://api.api-ninjas.com/v1/horoscope) using HTTP fetch (requires `NINJAS_PUBLIC_KEY`).
+
+#### UX Enhancement:
+
+When the screen width exceeds 768px (assuming a _notebook_ query) and the user does not yet have a profile photo, the user can **drag & drop** directly into the card to upload a new image.
+
+### Second Card
+
+---
+
+The second card is used to update user personal information simultaneously:
+
+- **Profile Photo** <br />
+  Optional. Media files (`.jpg`, `.gif`, `.mp4`) will be stored on [Cloudinary](https://cloudinary.com/), and the database stores them as URLs. <br />
+  If the user registers using a third-party service (e.g., Google), the photo URL will be taken from the relevant provider.
+
+- **Name** <br />
+  Users can update their name with a minimum of two characters. If it consists of more than one word, the name will be mapped to the `firstName` and `lastName` fields in the database. <br />
+  Example: `Alexander Immanuel Johndoe` → `firstName = Alexander`, `lastName = Immanuel Johndoe`.
+
+- **Gender** <br />
+  Users can adjust their gender according to the available options.
+  Available gender options are `Male` and `Female`.
+
+- **Date of Birth** <br />
+  Used for:
+  - Internal validation.
+  - `Horoscope` and `Zodiac` calculation. <br />
+    _Note: If `birthDate` is `null` or `undefined`, neither will be displayed._
+
+- **Zodiac (Chinese Shio)** <br />
+  - Calculated based on birth date-month-year.
+  - Supports:
+    - Shio cycle calculation up to **2043-02-10**.
+    - `animals` and `elements` categories.
+    - Descriptive information.
+    - Corresponding icon display.
+
+- **Horoscope (Western Zodiac)** <br />
+  - Calculated based on birth date-month.
+  - Brief info, and informative display.
+  - Corresponding icon display.
+
+- **Height** <br />
+  A numerical value, expressed in **centimeters (cm)**. _Asian users friendly._
+
+- **Weight** <br />
+  A numerical value, expressed in **kilograms (kg)**.
+
+### Third Card
+
+---
+
+This card displays the user's **Interest** list.
+When the user clicks the `✏️` `(pencil/edit)` icon, the card will expand and display the interest input. Changes are made with a smooth animation (stretch/expand effect).
+Users can choose from suitable interest options or add, change, or delete their interests.
+
+### Fourth Card
+
+---
+
+Used to update the user's **Password**.
+The password form requires the user's current password for account validation. There are `Password Requirements` to guide users in creating new passwords according to the rules.
+
+### Fifth Card
+
+---
+
+Users can add, change, or delete their **social media links**, such as Instagram, LinkedIn, Twitter, GitHub, and others.
+
+### Sixth Card
+
+---
+
+The last card displays the user's **devices and login sessions**.
+
+- Device location is determined based on user permission.
+- This feature can be further developed to store session data in the database (`ping`), and allow integration with tools like [`pusher-js`](https://pusher.com/) so users can see the location or status of active sessions in real-time.

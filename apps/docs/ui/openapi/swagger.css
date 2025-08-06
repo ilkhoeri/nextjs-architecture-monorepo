@@ -1,0 +1,337 @@
+.swagger-ui .info .title:where(h1, h2, h3),
+.swagger-ui .opblock .opblock-summary-operation-id,
+.swagger-ui .opblock .opblock-summary-path,
+.swagger-ui .opblock .opblock-summary-path__deprecated,
+.swagger-ui .opblock .opblock-summary-description,
+.swagger-ui .opblock-description-wrapper p,
+.swagger-ui .opblock-external-docs-wrapper p,
+.swagger-ui .opblock-title_normal p,
+.swagger-ui .response-col_status,
+.swagger-ui table thead tr td,
+.swagger-ui table thead tr th,
+.swagger-ui .response-col_links,
+.swagger-ui .response-col_description {
+  color: hsl(var(--muted-foreground));
+}
+
+.swagger-ui .responses-inner h4,
+.swagger-ui .responses-inner h5 {
+  color: hsl(0, 0%, 100%);
+}
+
+.swagger-ui .model-hint {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.swagger-ui .info .title:where(h1, h2, h3) {
+  font-size: clamp(20px, 0.75rem + 4vw, 2.25rem);
+  font-weight: 700;
+}
+
+.swagger-ui .scheme-container {
+  border-radius: 0.75rem;
+  background-color: hsl(var(--muted));
+}
+
+.swagger-ui .scheme-container .schemes-server-container {
+  color: hsl(var(--color));
+}
+
+.swagger-ui .opblock-body .highlight-code pre.microlight {
+  background-color: hsl(var(--background)) !important;
+}
+
+.swagger-ui .opblock-body .highlight-code pre.microlight * {
+  background-color: hsl(var(--background));
+}
+
+.swagger-ui .opblock,
+.swagger-ui section.models,
+.swagger-ui .errors-wrapper,
+.swagger-ui .dialog-ux .modal-ux {
+  border-radius: 0.75rem;
+}
+
+.swagger-ui .btn,
+.swagger-ui select,
+.swagger-ui .btn.authorize,
+.swagger-ui .opblock .opblock-summary-method,
+.swagger-ui .opblock-body pre.microlight,
+.swagger-ui .model-box {
+  border-radius: var(--radius);
+}
+
+.swagger-ui .copy-to-clipboard,
+.swagger-ui .download-contents,
+.swagger-ui .auth-container input[type="text"] {
+  border-radius: calc(var(--radius) - 2px);
+}
+
+.swagger-ui .copy-to-clipboard,
+.swagger-ui .download-contents {
+  color: #000000;
+  background-color: #fff;
+}
+
+.swagger-ui .opblock .opblock-summary:hover .view-line-link.copy-to-clipboard {
+  width: 26px;
+}
+
+.swagger-ui .opblock .opblock-summary .view-line-link.copy-to-clipboard svg path {
+  fill: #000000;
+}
+
+.swagger-ui .info,
+.swagger-ui .errors-wrapper {
+  width: 100%;
+}
+
+.swagger-ui .opblock .opblock-summary .view-line-link,
+.swagger-ui .opblock .opblock-summary:hover .view-line-link {
+  margin: 0 1rem 0 0;
+}
+
+.swagger-ui .btn.authorize {
+  background-color: #16a34a;
+  color: #fff;
+  padding-block: 0.25rem;
+}
+
+.swagger-ui .opblock-body .highlight-code pre.microlight *,
+.swagger-ui .servers > label > select {
+  border-width: 0;
+}
+
+.swagger-ui .servers > label > select,
+.swagger-ui .btn.authorize,
+.swagger-ui .auth-btn-wrapper .btn-done {
+  height: 2rem;
+}
+
+.swagger-ui .servers > label,
+.swagger-ui .servers > label > select,
+.swagger-ui .auth-btn-wrapper .btn-done {
+  margin: 0;
+}
+
+.swagger-ui a.nostyle,
+.swagger-ui a.nostyle:visited,
+.swagger-ui .tab li button.tablinks {
+  color: hsl(var(--color));
+}
+
+.swagger-ui .btn.authorize.unlocked svg,
+.swagger-ui .opblock .opblock-summary .authorization__btn svg {
+  fill: #fff;
+}
+
+.swagger-ui .opblock-control-arrow svg {
+  fill: hsl(var(--muted-foreground));
+}
+
+.swagger-ui .expand-operation svg,
+.swagger-ui .opblock-control-arrow svg {
+  stroke-width: 2px;
+  stroke: hsl(var(--muted-foreground));
+  width: 16px;
+  height: 16px;
+}
+
+.swagger-ui .opblock-control-arrow svg {
+  margin-right: 0.5rem;
+}
+
+.swagger-ui .btn.authorize.locked svg {
+  fill: #ff0000;
+}
+
+.swagger-ui .auth-btn-wrapper {
+  align-items: center;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.swagger-ui .btn-group .btn:first-child {
+  border-radius: var(--radius) 0 0 var(--radius);
+  padding-block: 0.5rem;
+}
+
+.swagger-ui .btn-group .btn:last-child {
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding-block: 0.5rem;
+  border-color: transparent;
+  color: white;
+  background-color: #ff0000;
+}
+
+.swagger-ui *,
+.swagger-ui section.models,
+.swagger-ui .auth-container input[type="text"] {
+  border-color: hsl(var(--border));
+}
+.swagger-ui section.models h4 {
+  border-bottom-color: hsl(var(--border)) !important;
+}
+
+.dark .swagger-ui .model-toggle:after,
+.swagger-ui .copy-to-clipboard button {
+  filter: invert(100%);
+}
+
+.swagger-ui .model-box {
+  background: rgba(0, 0, 0, 0.1);
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.swagger-ui .opblock-tag:where(h3):has(a.nostyle) {
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.swagger-ui .opblock-summary > .opblock-summary-control,
+.swagger-ui .opblock-tag,
+.swagger-ui .opblock .opblock-summary {
+  position: relative;
+}
+.swagger-ui .opblock-tag .expand-operation {
+  margin-left: auto;
+}
+
+.swagger-ui .opblock-tag:where(h3):has(a.nostyle):has(small):has(button),
+.swagger-ui .auth-container input[type="text"] {
+  width: 100%;
+  max-width: 100%;
+}
+
+.swagger-ui .opblock-tag:where(h3):has(a.nostyle):has(small):has(button) {
+  margin-top: 2rem;
+  padding-inline: 0;
+}
+
+.swagger-ui .opblock-tag:where(h3):has(a.nostyle):has(small):has(button) a.nostyle,
+.swagger-ui .opblock .opblock-summary .view-line-link.copy-to-clipboard,
+.swagger-ui .opblock-summary > .opblock-summary-control .opblock-summary-path-description-wrapper,
+.swagger-ui .opblock .opblock-summary .authorization__btn {
+  position: absolute;
+}
+
+.swagger-ui .opblock-tag:where(h3):has(a.nostyle):has(small):has(button) a.nostyle {
+  left: 0;
+  top: -0.75rem;
+}
+
+.swagger-ui .opblock-tag:where(h3):has(a.nostyle):has(small):has(button) small {
+  padding: 0;
+}
+
+.swagger-ui .opblock-tag:where(h3):has(a.nostyle):has(small):has(button) small .renderedMarkdown p {
+  margin: 0 0 -2rem 0;
+}
+
+.swagger-ui .opblock-summary > .opblock-summary-control .opblock-summary-path-description-wrapper {
+  left: 80px;
+  padding: 0 0 0 10px;
+  max-width: calc(100% - 80px);
+}
+
+.swagger-ui .responses-inner {
+  overflow-x: auto;
+}
+
+.swagger-ui .opblock-body pre.microlight {
+  min-width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .swagger-ui .opblock-body pre.microlight {
+    min-width: 100%;
+  }
+}
+
+.swagger-ui .truncate,
+.swagger-ui .servers > label > select {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.swagger-ui .opblock-summary > .opblock-summary-control .opblock-summary-path-description-wrapper .opblock-summary-path .nostyle > span,
+.swagger-ui .opblock .opblock-summary-description,
+.swagger-ui .opblock-tag:where(h3):has(a.nostyle) small .renderedMarkdown p {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  line-clamp: 1;
+  -webkit-line-clamp: 1;
+}
+
+.swagger-ui .opblock .opblock-section-header {
+  gap: 0.825rem;
+}
+
+.swagger-ui .opblock .opblock-section-header h4 {
+  text-wrap-mode: nowrap;
+  white-space: nowrap;
+}
+
+.swagger-ui .opblock .opblock-summary-description,
+.swagger-ui .response-col_description .renderedMarkdown p,
+.swagger-ui .parameters-col_description .renderedMarkdown p {
+  font-size: clamp(0.75rem, 0.25rem + 1vw, 0.825rem);
+}
+
+.swagger-ui .opblock .opblock-summary-path-description-wrapper {
+  min-inline-size: -webkit-fill-available;
+}
+
+.swagger-ui .opblock .opblock-summary .view-line-link.copy-to-clipboard,
+.swagger-ui .opblock .opblock-summary .authorization__btn {
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 11;
+}
+
+.swagger-ui .opblock .opblock-summary .authorization__btn {
+  right: 2rem;
+}
+
+.swagger-ui .opblock .opblock-summary .view-line-link.copy-to-clipboard {
+  right: 2.5rem;
+}
+
+.swagger-ui textarea {
+  border: 2px solid transparent;
+}
+
+.swagger-ui .try-out__btn {
+  margin-left: 0rem;
+}
+
+.swagger-ui .model-box-control {
+  display: flex;
+  align-items: center;
+}
+
+.swagger-ui .model-toggle {
+  margin: 0;
+  top: 0;
+}
+
+.swagger-ui .pointer .model-box,
+.swagger-ui section.models .model-box .model-box {
+  padding: 0;
+}
+
+.swagger-ui .opblock {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.swagger-ui *:focus,
+.swagger-ui *:focus-visible {
+  outline: 0px solid transparent !important;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000) !important;
+}

@@ -1,0 +1,27 @@
+{
+  "extends": "@repo/typescript-config/nextjs.json",
+  "compilerOptions": {
+    "types": ["../../packages/types/global.d.ts"],
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "contentlayer/generated": ["./.contentlayer/generated"],
+      "contentlayer/*": ["./.contentlayer/*"],
+      "@/*": ["./*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".contentlayer/generated",
+    "md/error-handling.mdx",
+    "../../packages/ui/src/anchor.tsx",
+    "../../packages/ui/src/burger.tsx",
+    "../../packages/ui/src/polymorphic-slot.tsx",
+    "../../packages/components/src/theme/index.tsx",
+    "../../packages/ui/src/typography.tsx"
+  ],
+  "exclude": ["node_modules"]
+}

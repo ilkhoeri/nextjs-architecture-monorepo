@@ -1,0 +1,40 @@
+{
+  "name": "@repo/viz",
+  "version": "0.0.0",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    "./styles.css": "./dist/index.css",
+    "./*": "./src/*.tsx",
+    ".": "./src/index.ts"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tailwindcss -i ./src/styles.css -o dist/index.css",
+    "lint": "eslint src/",
+    "dev": "tailwindcss -i ./src/styles.css -o ./dist/index.css --watch",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@repo/icons": "workspace:*",
+    "@repo/hooks": "workspace:*",
+    "@repo/store": "workspace:*",
+    "@repo/ui": "workspace:*",
+    "@repo/utils": "workspace:*",
+    "@nivo/bar": "^0.84.0"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/tailwind-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/react": "catalog:dev",
+    "autoprefixer": "catalog:ui",
+    "postcss": "catalog:ui",
+    "react": "catalog:runtime",
+    "tailwindcss": "catalog:ui",
+    "tw-animate-css": "catalog:ui",
+    "tsup": "^8.0.1",
+    "typescript": "catalog:dev"
+  }
+}

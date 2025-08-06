@@ -1,0 +1,50 @@
+{
+  "name": "@repo/components",
+  "version": "0.0.0",
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*.tsx",
+    "./utils": "./src/*.ts",
+    "./fields": "./src/fields/index.ts",
+    "./motion": "./src/motion/index.ts",
+    "./theme": "./src/theme/index.tsx"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tailwindcss -i ./src/styles.css -o dist/index.css",
+    "lint": "eslint src/",
+    "dev": "tailwindcss -i ./src/styles.css -o ./dist/index.css --watch",
+    "type-check": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@hookform/resolvers": "catalog:runtime",
+    "next": "catalog:runtime",
+    "next-themes": "catalog:runtime",
+    "react": "catalog:runtime",
+    "react-country-region-selector": "catalog:runtime",
+    "react-day-picker": "catalog:runtime",
+    "react-dom": "catalog:runtime",
+    "react-hook-form": "catalog:runtime",
+    "react-select": "catalog:runtime"
+  },
+  "dependencies": {
+    "@repo/components": "workspace:*",
+    "@repo/hooks": "workspace:*",
+    "@repo/icons": "workspace:*",
+    "@repo/shells": "workspace:*",
+    "@repo/store": "workspace:*",
+    "@repo/ui": "workspace:*",
+    "@repo/utils": "workspace:*",
+    "@repo/viz": "workspace:*",
+    "xuxi": "catalog:runtime"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/tailwind-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/react": "catalog:dev",
+    "react": "catalog:runtime",
+    "tsup": "^8.0.1",
+    "typescript": "catalog:dev"
+  }
+}
