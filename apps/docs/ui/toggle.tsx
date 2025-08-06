@@ -3,16 +3,9 @@
 import * as React from "react";
 import { cn } from "@repo/utils";
 import { UnstyledButton } from "@repo/ui";
-import { useApp } from "@/context/app-context";
 import { useClipboard } from "@repo/hooks/use-clipboard";
 import { useWindowScroll } from "@repo/hooks/use-window-scroll";
 import { CheckIcon, CopyIcon, ChevronDownSquareIcon } from "@repo/icons";
-import { ThemeToggle as ThemeButton, type ThemeToggleProps } from "@repo/components/theme";
-
-export function ThemeToggle(props: Omit<ThemeToggleProps, "value">) {
-  const { theme } = useApp();
-  return <ThemeButton {...props} value={theme} />;
-}
 
 function tocopy(text: string) {
   const regex = /^```.*\n|\n```\s*$/gm;

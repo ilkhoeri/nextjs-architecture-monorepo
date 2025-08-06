@@ -4,9 +4,9 @@ import { ROUTES } from '@/routes';
 import { NavLinkItem } from './navlink';
 import { cvx, cvxVariants } from 'xuxi';
 import { LogoImage } from './logo-image';
-import { ThemeToggle } from '@/ui/toggle';
 import { BrandOeriIcon } from '@repo/icons';
 import { siteConfig } from '@/app/site/config';
+import { ThemeToggle } from "@/context/app-context";
 import { Polymorphic } from '@repo/ui/polymorphic-slot';
 
 const classes = cvx({

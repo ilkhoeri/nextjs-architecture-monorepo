@@ -3,13 +3,13 @@ import * as React from "react";
 import { Cookies } from "./types";
 import { i18n as i18nConfig } from "@/i18n";
 import { usePathname } from "next/navigation";
-import { setCookies } from "@repo/hooks/use-cookies";
 import { Dictionaries, Locale } from "@/i18n/types";
+import { setCookies } from "@repo/hooks/use-cookies";
 import { useDirection, type Direction } from "@repo/hooks";
 import { useCurrentLocale } from "next-i18n-router/client";
+import { ThemeToggle as ThemeButton, type ThemeToggleProps, type Theme } from '@repo/components/theme';
 
 export type CookiesName = `${Cookies}` | (string & {});
-type Theme = "dark" | "light" | "system";
 type __T_ = "dir" | "theme" | "isOpenAside"; // cookies value
 type IntrinsicAppProvider = Partial<Record<__T_, string | undefined>>;
 type useAppProps = IntrinsicAppProvider & {};
@@ -60,4 +60,9 @@ export function AppProvider({ children, dict, lang, ...props }: AppProviderProps
   const value = { dict, lang: (locale || lang) as Locale, theme: theme as Theme, setCookies, isHome, pathname, ...app };
 
   return <ctx.Provider value={value}>{children}</ctx.Provider>;
+}
+
+export function ThemeToggle(props: Omit<ThemeToggleProps, "value">) {
+  const { theme } = useApp();
+  return <ThemeButton {...props} value={theme} />;
 }

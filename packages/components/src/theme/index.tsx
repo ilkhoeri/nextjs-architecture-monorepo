@@ -14,10 +14,10 @@ export const theming = [
   { name: 'dark', icon: MoonStarIcon }
 ] as const;
 
-type Theme = (typeof theming)[number]['name'];
-const themeNames: Theme[] = theming.map(theme => theme.name);
+export type Theme = (typeof theming)[number]['name'];
+export const Theme: Theme[] = theming.map(theme => theme.name);
 export const defaultTheme: Theme = 'system';
-export const theme = { themeNames } as const;
+export const theme = { themeNames: Theme } as const;
 
 export function ThemeProvider({ children, enableSystem = true, attribute = 'class', defaultTheme = 'system', disableTransitionOnChange = true, ...props }: ThemeProviderProps) {
   return (
@@ -47,7 +47,7 @@ export function useNextTheme(setKey: Theme | (string & {}) = defaultTheme) {
 
   const memoizedTheme = React.useCallback(
     (newTheme: string, setNext: boolean = false) => {
-      const updatedTheme = setNext ? nextValue(newTheme as Theme, themeNames as string[]) : (newTheme as Theme);
+      const updatedTheme = setNext ? nextValue(newTheme as Theme, Theme as string[]) : (newTheme as Theme);
 
       setTheme(updatedTheme);
       setKeyTheme(updatedTheme as Theme);

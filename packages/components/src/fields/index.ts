@@ -3,4 +3,5 @@ export * from './cloudinary/cloudinary-handler-client';
 export * from './form';
 export * from './helper';
 export * from './native-markdown';
+export * from './requirements-password';
 export * from './utils';
