@@ -1,21 +1,35 @@
-import Image from 'next/image';
+import { redirect } from 'next/navigation';
+import { getCurrentUser } from '@/lib/get-user';
 import { PageLayout } from '@repo/shells';
 import { BarChart } from '@repo/viz/bar';
+import { User } from '@/types/user';
+import Image from 'next/image';
 
-export default function Home() {
+export default async function SetupPage() {
+  // const users = await db.user.findMany();
+  // if (!users || users.length === 0) return <RegisterModal />;
+
+  const user = await getCurrentUser();
+
+  if (!user?.email) redirect('/sign-in');
+
+  return <Components user={user} />;
+}
+
+function Components({ user }: { user: User | null }) {
   return (
     <PageLayout>
       <div className="font-sans grid grid-rows-none items-center justify-items-center min-h-screen p-8 pb-20 gap-16 w-full max-w-md">
         <main className="flex flex-col gap-[32px] items-center sm:items-start">
           <div className="flex flex-row gap-2 items-center justify-evenly w-full">
-            <Image src="/turborepo-logo.svg" alt="Turborepo logomark" width={38} height={38} />
+            <Image className="dark:invert" src="/turborepo-logo.svg" alt="Turborepo logomark" width={38} height={38} />
             <Image className="dark:invert" src="/next.svg" alt="Next.js logo" width={180} height={38} priority />
           </div>
-          <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
+          <ol className="font-mono list-inside list-none text-sm/6 text-center sm:text-left">
+            <li className="tracking-[-.01em] text-lg">Welcome back {user?.username}</li>
             <li className="mb-2 tracking-[-.01em]">
               Get started by editing <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">app/page.tsx</code>.
             </li>
-            <li className="tracking-[-.01em]">Save and see your changes instantly.</li>
           </ol>
 
           <div className="flex w-full gap-4 items-center flex-col sm:flex-row">
@@ -42,7 +56,7 @@ export default function Home() {
 
         <BarChart />
 
-        <footer className="row-start-3 py-2 px-4 border rounded-lg flex gap-[24px] flex-wrap items-center justify-center">
+        <footer className="row-start-3 py-2 px-4 border border-border rounded-lg flex gap-[24px] flex-wrap items-center justify-center">
           <a
             className="flex items-center gap-2 hover:underline hover:underline-offset-4"
             href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"

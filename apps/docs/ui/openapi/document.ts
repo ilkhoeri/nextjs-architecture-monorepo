@@ -3,7 +3,7 @@ import { OpenAPIObject, InfoObject } from "openapi3-ts/oas31";
 import { createDocument, extendZodWithOpenApi } from "zod-openapi";
 import { SettingGeneralSchema, SignUpSchema, CreateChatSchema, SignInSchema, CreateMessageSchema, GetMessageSchema } from "./schema";
 
-extendZodWithOpenApi(z as any);
+extendZodWithOpenApi(z);
 
 const info: InfoObject = {
   title: "API Docs",
@@ -22,7 +22,7 @@ const SessionSchema = z
       .optional(),
     expires: z.string().datetime()
   })
-  .meta({
+  .openapi({
     title: "Session",
     description: "NextAuth session object"
   });
@@ -31,7 +31,7 @@ const CsrfTokenSchema = z
   .object({
     csrfToken: z.string()
   })
-  .meta({
+  .openapi({
     title: "CSRF Token",
     description: "CSRF token for NextAuth"
   });
@@ -69,7 +69,7 @@ export const openApiDocument: OpenAPIObject = createDocument({
             description: "Successful response with CSRF token",
             content: {
               "application/json": {
-                schema: CsrfTokenSchema as any
+                schema: CsrfTokenSchema
               }
             }
           }
@@ -87,7 +87,7 @@ export const openApiDocument: OpenAPIObject = createDocument({
             description: "Successful response with session data",
             content: {
               "application/json": {
-                schema: SessionSchema as any
+                schema: SessionSchema
               }
             }
           },
@@ -106,9 +106,9 @@ export const openApiDocument: OpenAPIObject = createDocument({
             description: "A list of users",
             content: {
               "application/json": {
-                schema: z.array(SignUpSchema).meta({
+                schema: z.array(SignUpSchema).openapi({
                   description: "Array of user objects"
-                }) as any
+                })
               }
             }
           }
@@ -125,17 +125,17 @@ export const openApiDocument: OpenAPIObject = createDocument({
           required: true,
           content: {
             "application/json": {
-              schema: SignUpSchema.meta({
+              schema: SignUpSchema.openapi({
                 title: "SignUp Request",
                 description: "User data to create"
-              }) as any,
+              }),
               example: signUpExample
             },
             "application/x-www-form-urlencoded": {
-              schema: SignUpSchema.meta({
+              schema: SignUpSchema.openapi({
                 title: "SignUp Request Form",
                 description: "User data to create via form"
-              }) as any,
+              }),
               example: signUpExample
             }
           }
@@ -145,7 +145,7 @@ export const openApiDocument: OpenAPIObject = createDocument({
             description: "User created successfully",
             content: {
               "application/json": {
-                schema: SignUpSchema as any,
+                schema: SignUpSchema,
                 example: signUpExample
               }
             }
@@ -171,9 +171,9 @@ export const openApiDocument: OpenAPIObject = createDocument({
           description: "Optional: Callback URL after successful sign-in",
           content: {
             "application/x-www-form-urlencoded": {
-              schema: SignInSchema.meta({
+              schema: SignInSchema.openapi({
                 title: "SignIn Request"
-              }) as any
+              })
             }
           }
         },
@@ -182,9 +182,9 @@ export const openApiDocument: OpenAPIObject = createDocument({
             description: "Sign in successfully",
             content: {
               "application/x-www-form-urlencoded": {
-                schema: z.array(SignInSchema).meta({
+                schema: z.array(SignInSchema).openapi({
                   title: "SignIn Request"
-                }) as any
+                })
               }
             }
           },
@@ -221,7 +221,7 @@ export const openApiDocument: OpenAPIObject = createDocument({
                   callbackUrl: z.string().url().optional(),
                   csrfToken: z.string().optional() // CSRF token diperlukan untuk POST
                 })
-                .meta({
+                .openapi({
                   title: "SignIn Request"
                 })
             }
@@ -251,7 +251,7 @@ export const openApiDocument: OpenAPIObject = createDocument({
                   callbackUrl: z.string().url().optional(),
                   csrfToken: z.string().optional() // CSRF token diperlukan untuk POST
                 })
-                .meta({
+                .openapi({
                   title: "SignOut Request"
                 })
             }
@@ -286,10 +286,10 @@ export const openApiDocument: OpenAPIObject = createDocument({
           required: true,
           content: {
             "application/json": {
-              schema: SettingGeneralSchema as any
+              schema: SettingGeneralSchema
             },
             "application/x-www-form-urlencoded": {
-              schema: SettingGeneralSchema as any
+              schema: SettingGeneralSchema
             }
           }
         },
@@ -298,7 +298,7 @@ export const openApiDocument: OpenAPIObject = createDocument({
             description: "User updated successfully",
             content: {
               "application/json": {
-                schema: SignUpSchema as any
+                schema: SignUpSchema
               }
             }
           },
@@ -357,9 +357,9 @@ export const openApiDocument: OpenAPIObject = createDocument({
             description: "A list of chats",
             content: {
               "application/json": {
-                schema: z.array(CreateChatSchema).meta({
+                schema: z.array(CreateChatSchema).openapi({
                   description: "Array of chat objects"
-                }) as any
+                })
               }
             }
           }
@@ -373,15 +373,15 @@ export const openApiDocument: OpenAPIObject = createDocument({
           required: true,
           content: {
             "application/json": {
-              schema: CreateChatSchema.meta({
+              schema: CreateChatSchema.openapi({
                 description: "chat data to create"
-              }) as any
+              })
             },
             "application/x-www-form-urlencoded": {
-              schema: CreateChatSchema.meta({
+              schema: CreateChatSchema.openapi({
                 title: "Create chat Form",
                 description: "Chat data to create (Form Data)"
-              }) as any
+              })
             }
           }
         },
@@ -390,7 +390,7 @@ export const openApiDocument: OpenAPIObject = createDocument({
             description: "chat created successfully",
             content: {
               "application/json": {
-                schema: CreateChatSchema as any
+                schema: CreateChatSchema
               }
             }
           }
@@ -418,9 +418,9 @@ export const openApiDocument: OpenAPIObject = createDocument({
             description: "A list of messages",
             content: {
               "application/json": {
-                schema: z.array(GetMessageSchema).meta({
+                schema: z.array(GetMessageSchema).openapi({
                   description: "Array of message objects"
-                }) as any
+                })
               }
             }
           },
@@ -443,16 +443,16 @@ export const openApiDocument: OpenAPIObject = createDocument({
           required: true,
           content: {
             "application/json": {
-              schema: CreateMessageSchema.meta({
+              schema: CreateMessageSchema.openapi({
                 title: "Create Message JSON",
                 description: "Message data to create (JSON)"
-              }) as any
+              })
             },
             "application/x-www-form-urlencoded": {
-              schema: CreateMessageSchema.meta({
+              schema: CreateMessageSchema.openapi({
                 title: "Create Message Form",
                 description: "Message data to create (Form Data)"
-              }) as any
+              })
             }
           }
         },
@@ -461,7 +461,7 @@ export const openApiDocument: OpenAPIObject = createDocument({
             description: "Message created successfully",
             content: {
               "application/json": {
-                schema: GetMessageSchema as any
+                schema: GetMessageSchema
               }
             }
           },
@@ -482,8 +482,8 @@ export const openApiDocument: OpenAPIObject = createDocument({
   components: {
     /**
     schemas: {
-      User: SignUpSchema.meta({ ref: "User" }),
-      Chat: CreateChatSchema.meta({ ref: "Chat" }),
+      User: SignUpSchema.openapi({ ref: "User" }),
+      Chat: CreateChatSchema.openapi({ ref: "Chat" }),
       Session: SessionSchema,
       CsrfToken: CsrfTokenSchema,
       UpdateUser: SettingGeneralSchema

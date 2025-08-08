@@ -26,6 +26,7 @@
     "@repo/icons": "workspace:*",
     "@repo/shells": "workspace:*",
     "@repo/store": "workspace:*",
+    "@repo/styles": "workspace:*",
     "@repo/ui": "workspace:*",
     "@repo/utils": "workspace:*",
     "@repo/viz": "workspace:*",

@@ -2,7 +2,15 @@
 
 ## Getting Started
 
-First, run the development server:
+First, create .env
+
+Generate db:
+
+```bash
+cd apps/admin && npx prisma db push && cd ../..
+```
+
+Run the development server:
 
 Started from root:
 

@@ -1,11 +1,14 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
-
 @import './layer.css';
 @import './variables.css';
 
-@source '../../packages';
-@source '../../shared';
+/* @import '@repo/ui/styles.css';
+@import '@repo/shells/styles.css';
+@import '@repo/viz/styles.css'; */
+
+@source '../../ui/src';
+@source '../../components/src';
+/* @source '../../../shared/shells/src';
+@source '../../../shared/visualizations/src'; */
 
 @theme inline {
   --container-xs: 460px;
@@ -421,7 +424,7 @@
   }
 }
 
-@custom-variant vars (:root);
+@custom-variant root (:root);
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* @custom-variant mixin-dark (@mixin dark);
@@ -472,9 +475,6 @@
 }
 @utility whitespace-pre-line {
   white-space: pre-line;
-}
-@utility whitespace-pre-wrap {
-  white-space: pre-wrap;
 }
 @utility whitespace-break-spaces {
   white-space: break-spaces;

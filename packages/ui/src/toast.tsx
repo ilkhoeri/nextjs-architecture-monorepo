@@ -2,22 +2,24 @@
 
 import { useTheme } from 'next-themes';
 import { Toaster as Sonner } from 'sonner';
+import { useIsMobile } from '@repo/hooks';
 
 type ToasterProps = React.ComponentProps<typeof Sonner>;
 
 export const Toaster = (props: ToasterProps) => {
   const { theme = 'system' } = useTheme();
+  const isMobile = useIsMobile();
   return (
     <Sonner
       {...props}
       theme={theme as ToasterProps['theme']}
-      position={props.position || 'top-center'}
-      className="toaster group flex items-center justify-center"
+      position={props.position || (isMobile ? 'top-center' : 'bottom-right')}
+      className="toaster group md:max-w-[426px] [--width:100%_!important] flex items-center justify-center"
       toastOptions={{
         classNames: {
           toast:
-            'group toast *:select-none *:pointer-events-none *:font-inter !z-[calc(121+var(--z-index,0))] group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg bg-background-theme [--border-radius:1rem]',
-          description: 'group-[.toast]:text-muted-foreground group-[.toast]:whitespace-pre-wrap',
+            'group toast !gap-3 *:select-none *:pointer-events-none *:font-inter !z-[calc(121+var(--z-index,0))] group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg bg-background-theme [--border-radius:1rem]',
+          description: 'group-[.toast]:!text-muted-foreground group-[.toast]:whitespace-pre-wrap text-[.8125rem]',
           actionButton: 'group-[.toast]:bg-primary group-[.toast]:text-primary-foreground',
           cancelButton: 'group-[.toast]:bg-muted group-[.toast]:text-muted-foreground',
           title: 'whitespace-pre-wrap font-bold text-sm',
@@ -27,6 +29,7 @@ export const Toaster = (props: ToasterProps) => {
           loading: 'loading'
         }
       }}
+      offset={{ bottom: '50px' }}
     />
   );
 };

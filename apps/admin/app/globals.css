@@ -1,0 +1,145 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@import '@repo/styles';
+
+.cl-internal-qkjri9 {
+  display: none;
+}
+* .cl-internal-qkjri9 {
+  display: none !important;
+}
+
+/*  */
+.box-zko3ih {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: column;
+  -webkit-box-align: stretch;
+  align-items: stretch;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  isolation: isolate;
+  max-width: calc(-2.5rem + 100vw);
+  width: 25rem;
+  border-style: solid;
+  border-color: color-mix(in srgb, transparent 89%, white);
+  border-radius: var(--clerk-border-radius-xl, calc(var(--clerk-border-radius, 0.375rem) * 2));
+  color: white;
+  position: relative;
+  overflow: hidden;
+  border-width: 0px;
+  box-shadow:
+    0px 5px 15px 0px color-mix(in srgb, transparent, var(--clerk-color-shadow, #000000) 8%),
+    0px 15px 35px -5px color-mix(in srgb, transparent, var(--clerk-color-shadow, #000000) 20%),
+    0px 0px 0px 1px color-mix(in srgb, transparent, white 7%);
+}
+
+.box-hkbunq {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: column;
+  -webkit-box-align: stretch;
+  align-items: stretch;
+  gap: 2rem;
+  background-color: var(--ceramic-main);
+  transition-property: background-color, background, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-duration: 200ms;
+  text-align: center;
+  z-index: 10;
+  border-style: solid;
+  border-color: color-mix(in srgb, transparent 89%, var(--border));
+  border-radius: var(--clerk-border-radius-lg, calc(var(--clerk-border-radius, 0.375rem) * 4 / 3));
+  position: relative;
+  padding: 2rem 2.5rem 1rem;
+  -webkit-box-pack: center;
+  place-content: center;
+  margin-block-start: -1px;
+  margin-inline: -1px;
+  border-width: 0px;
+  box-shadow:
+    0px 0px 2px 0px color-mix(in srgb, transparent, var(--clerk-color-shadow, #000000) 8%),
+    0px 1px 2px 0px color-mix(in srgb, transparent, var(--clerk-color-shadow, #000000) 6%),
+    0px 0px 0px 1px color-mix(in srgb, transparent, white 3%);
+}
+
+.auth-1m2f0ge {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: column;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  margin-top: calc(calc(var(--clerk-spacing, 1rem) * 0.5) * -1);
+  padding-top: calc(var(--clerk-spacing, 1rem) * 0.5);
+  background: var(
+    --clerk-color-muted,
+    linear-gradient(color-mix(in srgb, transparent, white 3%), color-mix(in srgb, transparent, white 3%)),
+    linear-gradient(hsl(from var(--ceramic-muted) h s l / 1), hsl(from var(--ceramic-muted) h s l / 1))
+  );
+}
+
+.auth-1m2f0ge > :first-of-type {
+  padding: var(--clerk-spacing, 1rem) calc(var(--clerk-spacing, 1rem) * 2) var(--clerk-spacing, 1rem) calc(var(--clerk-spacing, 1rem) * 2);
+}
+
+.auth-1m2f0ge > :not(:first-of-type) {
+  padding: 1rem calc(1rem * 2);
+  border-top: 1px solid color-mix(in srgb, transparent 93%, white);
+}
+
+.auth-internal-1dauvpw {
+  box-sizing: border-box;
+  width: 100%;
+  position: relative;
+  isolation: isolate;
+}
+
+.auth-internal-1k7jtru {
+  box-sizing: border-box;
+  user-select: none;
+  pointer-events: none;
+  inset: 0px;
+  position: absolute;
+  background: repeating-linear-gradient(
+    -45deg,
+    color-mix(in srgb, transparent, var(--match-color, transparent) 7%),
+    color-mix(in srgb, transparent, var(--match-color, transparent) 7%) 6px,
+    color-mix(in srgb, transparent, var(--match-color, transparent) 11%) 6px,
+    color-mix(in srgb, transparent, var(--match-color, transparent) 11%) 12px
+  );
+  mask-image: linear-gradient(transparent 0%, black);
+}
+
+.auth-internal-pe6vm4 {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: column;
+  gap: calc(var(--clerk-spacing, 1rem) * 0.5);
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  z-index: 1;
+  position: relative;
+}
+
+.auth-internal-y44tp9:has(div:only-child) {
+  -webkit-box-pack: center;
+  justify-content: center;
+}
+
+.auth-internal-y44tp9 {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row;
+  -webkit-box-align: stretch;
+  align-items: stretch;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  width: 100%;
+}

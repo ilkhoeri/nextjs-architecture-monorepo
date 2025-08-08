@@ -3,9 +3,6 @@ import Image from 'next/image';
 import { ocx } from 'xuxi';
 import { cn } from '@repo/utils';
 
-// @ts-ignore
-import css from '../../styles/loader.module.css';
-
 type SubKeys = {
   spinner: 'root' | 'bar';
   orbit: 'root' | 'inner' | 'orbit';
@@ -67,8 +64,8 @@ export function LoaderProgress(props: LoaderSyntheticProps<'progressbar'>) {
   const { className, classNames, ...rest } = props;
   return (
     <div {...rest} className={cn('overflow-hidden size-full min-w-full min-h-full m-auto flex items-center justify-center relative', className, classNames?.root)}>
-      <div {...{ className: cn(css.progress, classNames?.wrap), role: 'progressbar' }}>
-        <div className={cn(css.progress_bar, classNames?.inner)} />
+      <div {...{ className: cn('loader-progress', classNames?.wrap), role: 'progressbar' }}>
+        <div className={cn('loader-progress_bar', classNames?.inner)} />
       </div>
     </div>
   );
@@ -79,16 +76,16 @@ interface LoaderLogoProps extends LoaderSyntheticProps<'logo'> {
 }
 
 export function LoaderLogo(props: LoaderLogoProps) {
-  const { className, classNames, image = '/icons/assets-logo.png', ...rest } = props;
+  const { className, classNames, image = '/icons/asset.png', ...rest } = props;
   return (
     <div {...rest} className={cn('overflow-hidden size-full min-w-full min-h-full m-auto flex items-center justify-center relative', className, classNames?.container)}>
-      <div className={cn(css.logoloadRoot, classNames?.root)}>
-        <div className={cn(css.logoloadWrap, classNames?.wrap)}>
-          <div className={cn(css.logoloadS, classNames?.inner)}>
+      <div className={cn('loader-logoloadRoot', classNames?.root)}>
+        <div className={cn('loader-logoloadWrap', classNames?.wrap)}>
+          <div className={cn('loader-logoloadS', classNames?.inner)}>
             <Image alt="" width={86} height={86} src={image} className={cn('size-full', classNames?.logo)} />
           </div>
-          <div data-loader-ring="x" className={cn(css.boxloadX, classNames?.ringX)} />
-          <div data-loader-ring="y" className={cn(css.boxloadY, classNames?.ringY)} />
+          <div data-loader-ring="x" className={cn('loader-boxloadX', classNames?.ringX)} />
+          <div data-loader-ring="y" className={cn('loader-boxloadY', classNames?.ringY)} />
         </div>
       </div>
     </div>

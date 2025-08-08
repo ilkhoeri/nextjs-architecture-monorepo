@@ -11,9 +11,9 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "tailwindcss -i ./src/styles.css -o dist/index.css",
+    "build": "npx @tailwindcss/cli -i ./src/styles.css -o dist/index.css",
     "lint": "eslint src/",
-    "dev": "tailwindcss -i ./src/styles.css -o ./dist/index.css --watch",
+    "dev": "npx @tailwindcss/cli -i ./src/styles.css -o ./dist/index.css --watch",
     "type-check": "tsc --noEmit"
   },
   "peerDependencies": {
@@ -23,12 +23,12 @@
   "dependencies": {
     "@repo/icons": "workspace:*",
     "@repo/store": "workspace:*",
+    "@repo/styles": "workspace:*",
     "xuxi": "catalog:runtime",
     "tailwind-merge": "catalog:ui"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
-    "@repo/tailwind-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/react": "catalog:dev",
     "autoprefixer": "catalog:ui",

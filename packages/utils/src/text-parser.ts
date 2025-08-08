@@ -1,79 +1,117 @@
 const DEFAULT_CONJUNCTIONS = ['and', 'or', 'of', 'the', 'this', 'with', 'dan', 'atau', 'yang', 'untuk', 'di', 'ke', 'dari', 'oleh', 'pada'];
 
-export type FormatTransform = keyof typeof transform;
+export type FormatTransform = keyof Omit<TextTransform, keyof Object | 'text' | 'constructor'>;
 
-/** Transforms a given string based on the specified transformation type. */
-export const transform = Object.assign(
-  {},
-  {
-    /**
-     * @param words - The input string to transform.
-     * @returns string
-     */
-    unformated: (words: string | undefined) => {
-      if (!words) return '';
-      return words;
-    },
-    /**
-     * @param words - The input string to transform.
-     * @returns string exclude {@link DEFAULT_CONJUNCTIONS DEFAULT_CONJUNCTIONS}
-     */
-    uppercaseFirst: (words: string | undefined) => {
-      if (!words) return '';
-      return words
-        .toLowerCase()
-        .split(' ')
-        .map((word, index) => (index === 0 || !DEFAULT_CONJUNCTIONS.includes(word) ? toUpper(word) : word))
-        .join(' ');
-    },
-    /**
-     * @param words - The input string to transform.
-     * @returns string
-     */
-    uppercase: (words: string | undefined) => {
-      if (!words) return '';
-      return words
-        .split('-')
-        .map(word => word.toUpperCase())
-        .join(' ');
-    },
-    /**
-     * @param words - The input string to transform.
-     * @returns string
-     */
-    capitalizeFirst: (words: string | undefined) => {
-      if (!words) return '';
-      return toUpper(
-        words
-          .split(' ')
-          .map(word => toUpper(word.replace(/-/g, ' ')))
-          .join(' ')
-      );
-    },
-    /**
-     * @param words - The input string to transform.
-     * @returns string
-     */
-    capitalize: (words: string | undefined) => {
-      if (!words) return '';
-      return words
-        .split('-')
-        .map(word => toUpper(word))
-        .join(' ');
-    },
-    /**
-     * @param words - The input string to transform.
-     * @returns string
-     */
-    lowercase: (words: string | undefined) => {
-      if (!words) return '';
-      return words
-        .split(' ')
-        .map(word => toLower(word))
-        .join(' ');
-    }
+/** Transforms a given string based on the specified transformation type.
+ * @example
+ * // Transformation at instantiation:
+ * const transform = new TextTransform('format words here', 'capitalize');
+ * const result = transform.toString(); // or implicitly
+ * console.log(transform + ''); // "Format Words Here"
+ * // Transform by calling the method:
+ * const transform = new TextTransform();
+ * const label = transform.capitalize('format words here');
+ * console.log(label); // "Format Words Here"
+ * // Combination of both:
+ * const transform = new TextTransform('format words here');
+ * console.log(transform.auto()); // using the initial text
+ * console.log(transform.capitalize('different text')); // using new text
+ * // Static method:
+ * const result = TextTransform.text('format words', 'capitalize');
+ */
+export class TextTransform {
+  private value: string;
+  private format: FormatTransform;
+
+  constructor(text?: string | null | undefined, format: FormatTransform = 'auto') {
+    this.value = text ?? '';
+    this.format = format;
   }
-);
+
+  private toUpper(text: string) {
+    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+  }
+
+  private toLower(text: string) {
+    return text.toLowerCase();
+  }
+
+  public auto(text?: string | null | undefined): string {
+    const input = text ?? this.value;
+    if (!input) return '';
+    return input
+      .toLowerCase()
+      .split(' ')
+      .map((t, index) => (index === 0 || !DEFAULT_CONJUNCTIONS.includes(t) ? this.toUpper(t) : t))
+      .join(' ');
+  }
+
+  public capitalize(text?: string | null | undefined): string {
+    const input = text ?? this.value;
+    if (!input) return '';
+    return input
+      .toLowerCase()
+      .split(' ')
+      .map(t => this.toUpper(t))
+      .join(' ');
+  }
+
+  public initial(text?: string | null | undefined): string {
+    const input = text ?? this.value;
+    if (!input) return '';
+    return this.toUpper(
+      input
+        .split(' ')
+        .map(t => this.toUpper(t.replace(/-/g, ' ')))
+        .join(' ')
+    );
+  }
+
+  public lowercase(text?: string | null | undefined): string {
+    const input = text ?? this.value;
+    if (!input) return '';
+    return input
+      .split(' ')
+      .map(t => this.toLower(t))
+      .join(' ');
+  }
+
+  public unset(text?: string | null | undefined): string {
+    const input = text ?? this.value;
+    if (!input) return '';
+    return input;
+  }
+
+  public uppercase(text?: string | null | undefined): string {
+    const input = text ?? this.value;
+    if (!input) return '';
+    return input
+      .split('-')
+      .map(t => t.toUpperCase())
+      .join(' ');
+  }
+
+  /** Instance method: transform the stored value using format passed to constructor */
+  public text(): string {
+    const transformMethod = this[this.format] as (text: string | null | undefined) => string;
+    return transformMethod.call(this, this.value);
+  }
+
+  /** Get the transformed result based on constructor format */
+  public toString(): string {
+    return this.text();
+  }
+
+  /** Get the transformed result based on constructor format */
+  public valueOf(): string {
+    return this.text();
+  }
+
+  /** 🔁 Static shortcut for one-liner transformation */
+  static text(text: string | null | undefined, format: FormatTransform = 'auto') {
+    return new TextTransform(text, format).text();
+  }
+}
 
 /**
  * Truncates a string to a maximum length, adding an ellipsis if necessary.
@@ -129,7 +167,7 @@ export function getInitials(name: string, limit: number = 3, conjunctions: strin
  */
 export function lowerCasePunctuation(str: string): string {
   const words = str.split(' ');
-  const lowerCase = words.map(word => toLower(word));
+  const lowerCase = words.map(word => word.toLowerCase());
   const withoutPunctuation = lowerCase.map(lower => removePunctuation(lower));
   const punctuationLess = withoutPunctuation.join('-');
   return combineConsecutiveHyphens(punctuationLess);
@@ -260,14 +298,6 @@ export function splitWordsToArray(words: string) {
   return wordsArray.map(word => ({ text: word }));
 }
 
-function toUpper(text: string) {
-  return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
-}
-
-function toLower(text: string): string {
-  return text.charAt(0).toLowerCase() + text.slice(1).toLowerCase();
-}
-
 function removePunctuation(str: string): string {
   return str.replace(/[.,'"+[\]{}]/g, '').replace(/[^-=!?\w\s]/g, '');
 }
@@ -286,16 +316,15 @@ function combineConsecutiveHyphens(str: string): string {
  * console.log(formatText("web_analitics"));  // Output: "Web Analitics"
  * console.log(formatText("WebAnalitics"));   // Output: "Web Analitics"
  */
-export function formatTitle(text: string | null | undefined, formatTransform: FormatTransform = 'uppercaseFirst'): string {
+export function formatTitle(text: string | null | undefined, format: FormatTransform = 'auto'): string {
   if (!text) return '';
-  const currentFormat = text
-    // Ubah kebab-case menjadi spasi (web-analitics -> web analitics)
+  const input = text
+    // kebab-case (web-analitics -> web analitics)
     .replace(/[-_]/g, ' ')
-    // Ubah camelCase menjadi spasi (webAnalitics -> web Analitics)
+    // camelCase (webAnalitics -> web Analitics)
     .replace(/([a-z])([A-Z])/g, '$1 $2');
-  // Kapitalisasi setiap kata
-  // .replace(/\b\w/g, char => char.toUpperCase())
-  return transform[formatTransform](currentFormat);
+
+  return new TextTransform(input, format).text();
 }
 
 const round = (num: number) => Math.round(num * 100) / 100;
@@ -436,27 +465,32 @@ export const htmlCharacterEntities = [
 ];
 
 export function stripHtml(text: string): string {
-  // 1. Remove HTML tags
+  // Remove HTML tags
   let cleanText = text.replace(/<[^>]*>/g, '');
-  // 2. Build a mapping dictionary for fast lookup
+  // Build a mapping dictionary for fast lookup
   const entityMap = new Map(htmlCharacterEntities.map(({ char, entity }) => [char, entity]));
-  // 3. Escape all characters using regex replace and lookup
+  // Escape all characters using regex replace and lookup
   cleanText = cleanText.replace(/[\s\S]/g, char => entityMap.get(char) ?? char);
   return cleanText;
 }
 
-export function displayName(title: string, format: FormatTransform = 'capitalize') {
-  const numberRgx = /^(\d+\.)\s*(.+)/;
-  const cleanTitle = title?.replace(':', '').replace('?', '').trim();
+export function pickUserEmail(email: string): string {
+  const prefix = email.split('@')[0];
+  const username = prefix.replace(/\./g, '');
+  return username;
+}
 
-  // untuk format [0.0.0] - YYYY-MM-DD
-  const versionMatch = title?.match(/^\[(\d+\.\d+\.\d+)\]\s*-\s*\d{4}-\d{2}-\d{2}$/);
-  if (versionMatch) return `v${versionMatch[1]}`; // ubah menjadi v0.0.0
+export function roster(names: string[] | null | undefined, conj: string = 'dan'): string {
+  if (!names || names.length === 0) return '';
 
-  if (numberRgx.test(cleanTitle)) return cleanTitle;
+  if (names.length === 1) return names[0];
 
-  const emojiRgx = /[\p{Emoji}\u200B-\u200D\uFE0F]\s/gu;
-  if (emojiRgx.test(cleanTitle)) return cleanTitle.replace(emojiRgx, '');
+  const allExceptLast = names.slice(0, -1);
+  const last = names[names.length - 1];
 
-  return transform[format](cleanTitle);
+  if (names.length === 2) {
+    return `${allExceptLast[0]} ${conj} ${last}`;
+  }
+
+  return `${allExceptLast.join(', ')}${names.length > 2 ? ',' : ''} ${conj} ${last}`;
 }

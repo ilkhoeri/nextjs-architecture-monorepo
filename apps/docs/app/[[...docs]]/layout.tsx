@@ -14,7 +14,6 @@ import { ThemeProvider } from "@repo/components/theme/index";
 
 import type { Metadata } from "next";
 
-import "@styles/globals.css";
 import "../../style/custom.css";
 
 export function metadata(): Metadata {

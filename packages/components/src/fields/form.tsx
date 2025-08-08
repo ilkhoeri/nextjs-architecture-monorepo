@@ -28,7 +28,7 @@ import { Select } from '@repo/ui/select';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { cvx, type cvxVariants } from 'xuxi';
 import { initialValues } from './helper';
-import { cn, transform, formatTitle } from '@repo/utils';
+import { cn, TextTransform, formatTitle } from '@repo/utils';
 
 export { FormProvider };
 
@@ -339,7 +339,7 @@ export function transformSelectData(data: InputDataOption | null | undefined): I
       return { label: '', value: item };
     }
 
-    return { value: item.value, label: transform.capitalizeFirst(item.label) };
+    return { value: item.value, label: TextTransform.text(item.label) };
   });
 }
 
