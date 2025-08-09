@@ -4,23 +4,23 @@ import { AccessDenied403, InternalError500, NotFound404 } from '@repo/icons/icon
 import { IconType } from '@repo/ui';
 import { cn } from '@repo/utils';
 
-type StatusErrorTrees = 'root' | 'title' | 'description' | 'svg';
-type StatusErrorOption = 'NotFound' | 'internal-error' | 'denied';
+type StatusAccessTrees = 'root' | 'title' | 'description' | 'svg';
+type StatusAccessOption = 'not-found' | 'internal-error' | 'access-denied';
 
-interface StatusErrorObject {
+interface StatusAccessObject {
   title: string;
   description: string | string[];
   icon: IconType;
 }
 
-interface StatusErrorProps extends Omit<React.ComponentProps<'div'>, 'title'>, Nullable<StatusErrorObject> {
+interface StatusAccessProps extends Omit<React.ComponentProps<'div'>, 'title'>, Nullable<StatusAccessObject> {
   svgProps?: React.ComponentPropsWithRef<typeof AccessDenied403>;
-  classNames?: Partial<Record<StatusErrorTrees, string>>;
-  status: StatusErrorOption;
+  classNames?: Partial<Record<StatusAccessTrees, string>>;
+  status: StatusAccessOption;
 }
 
-const statusErrorMap: Record<StatusErrorOption, StatusErrorObject> = {
-  denied: {
+const statusAccessMap: Record<StatusAccessOption, StatusAccessObject> = {
+  'access-denied': {
     title: 'Permission denied',
     description: 'You do not have permission to access this page.',
     icon: AccessDenied403
@@ -30,19 +30,19 @@ const statusErrorMap: Record<StatusErrorOption, StatusErrorObject> = {
     description: 'There was an error, please try again later.',
     icon: InternalError500
   },
-  NotFound: {
+  'not-found': {
     title: 'Sorry, page not found!',
     description: ['Sorry, we couldn’t find the page you’re looking for.', 'Perhaps you’ve mistyped the URL? Be sure to check your spelling.'],
     icon: NotFound404
   }
 } as const;
 
-export const StatusError = React.forwardRef<HTMLDivElement, StatusErrorProps>((_props, ref) => {
+export const StatusAccess = React.forwardRef<HTMLDivElement, StatusAccessProps>((_props, ref) => {
   const { classNames, className, svgProps, status, children, title: titleProp, description: descriptionProp, icon: IconProp, ...props } = _props;
 
-  const title = titleProp || statusErrorMap[status].title;
-  const description = descriptionProp || statusErrorMap[status].description;
-  const Icon = IconProp || statusErrorMap[status].icon;
+  const title = titleProp || statusAccessMap[status].title;
+  const description = descriptionProp || statusAccessMap[status].description;
+  const Icon = IconProp || statusAccessMap[status].icon;
 
   return (
     <div
@@ -70,4 +70,4 @@ export const StatusError = React.forwardRef<HTMLDivElement, StatusErrorProps>((_
     </div>
   );
 });
-StatusError.displayName = 'StatusError';
+StatusAccess.displayName = 'StatusAccess';

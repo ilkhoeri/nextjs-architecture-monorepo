@@ -4,7 +4,8 @@
   "exports": {
     ".": "./src/index.ts",
     "./*": "./src/*.tsx",
-    "./utils": "./src/*.ts",
+    "./lib": "./src/*.ts",
+    "./error": "./src/error/index.ts",
     "./fields": "./src/fields/index.ts",
     "./motion": "./src/motion/index.ts",
     "./theme": "./src/theme/index.tsx"

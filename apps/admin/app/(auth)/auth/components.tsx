@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { User } from '@/types/user';
 import { siteUrl } from '@/app/config/site';
 import { usePathname } from 'next/navigation';
-import { StatusError } from '@/components/403';
 import { useSearchParams } from 'next/navigation';
+import { StatusAccess } from '@repo/components/error';
 import { buttonVariants, ClientOnly } from '@repo/ui';
 import { cn, formatTitle, TextTransform } from '@repo/utils';
 
@@ -85,7 +85,7 @@ export function AuthErrorMessage({ accounts }: { accounts: User['accounts'] | nu
 
   return (
     <div className="size-full flex flex-col justify-center items-center">
-      <StatusError
+      <StatusAccess
         status="internal-error"
         title={error && 'Authentication Error'}
         description={error && accounts && errorDescription}
