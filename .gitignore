@@ -32,7 +32,7 @@ yarn-error.log*
 
 apps/admin/.env
 apps/docs/.env
-apps/web/.env
+apps/client/.env
 
 # turbo
 .turbo

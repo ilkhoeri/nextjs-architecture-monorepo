@@ -46,7 +46,7 @@ main/
 │ │ ├── tsconfig.json
 │ │ └── ...
 │ │
-│ └── web/
+│ └── client/
 │ · ├── app/
 │ · ├── next.config.js
 │ · ├── tsconfig.json
@@ -151,7 +151,7 @@ bun install
 ### 3. Run your app
 
 ```bash
-bun dev -C apps/web
+bun dev -C apps/client
 ```
 
 > Or navigate into any `apps/*` directory and run manually.

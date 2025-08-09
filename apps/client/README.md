@@ -1,4 +1,4 @@
-# Monorepo - Web
+# Monorepo - Client
 
 ## Getting Started
 
@@ -7,13 +7,13 @@ First, run the development server:
 Started from root:
 
 ```bash
-bun dev:web
+bun dev:client
 ```
 
 or started from current app:
 
 ```bash
-cd apps/web && bun dev
+cd apps/client && bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
