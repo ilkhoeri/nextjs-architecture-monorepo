@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { TableOfContents } from "./config";
-import { displayName } from "@repo/utils";
-import { cn } from "@repo/utils";
+import React from 'react';
+import Link from 'next/link';
+import { cn } from '@repo/utils';
+import { TableOfContents } from './config';
+import { usePathname } from 'next/navigation';
+import { getNameToc } from '@/utils/text-parser';
 
 interface TocProps {
   toc: TableOfContents | null;
@@ -32,7 +32,7 @@ export function DashboardTableOfContents({ toc, sub = 6 }: TocProps) {
             .flatMap(item => [item.url, item?.items?.map(item => item.url)])
             .flat()
             .filter(Boolean)
-            .map(id => id?.split("#")[1])
+            .map(id => id?.split('#')[1])
         : [],
     [toc]
   );
@@ -42,8 +42,8 @@ export function DashboardTableOfContents({ toc, sub = 6 }: TocProps) {
 
   const mounted = useMounted();
 
-  const paths = pathname.split("/").filter(Boolean);
-  const editPageLink = paths.length ? `https://github.com/ilkhoeri/messaging-app/edit/main/docs/md/${paths.join("/")}.mdx` : "";
+  const paths = pathname.split('/').filter(Boolean);
+  const editPageLink = paths.length ? `https://github.com/ilkhoeri/messaging-app/edit/main/docs/md/${paths.join('/')}.mdx` : '';
 
   if (!toc?.items?.length) return null;
 
@@ -127,20 +127,20 @@ interface TreeProps {
 function Tree({ tree, level = 1, sub = 3, activeItem }: TreeProps) {
   return tree?.items?.length && level < sub ? (
     <div
-      className={cn("text-span list-none max-w-[calc(100%+1rem)]", {
-        "pl-4 rtl:pl-0 rtl:pr-4": level !== 1,
-        "webkit-scrollbar lg:max-h-[calc(100dvh-13rem)] overflow-y-auto pb-4 -ml-4 rtl:ml-0 rtl:-mr-4 [&>div>a]:hidden": level === 1
+      className={cn('text-span list-none max-w-[calc(100%+1rem)]', {
+        'pl-4 rtl:pl-0 rtl:pr-4': level !== 1,
+        'webkit-scrollbar lg:max-h-[calc(100dvh-13rem)] overflow-y-auto pb-4 -ml-4 rtl:ml-0 rtl:-mr-4 [&>div>a]:hidden': level === 1
       })}
     >
       {tree.items.map((item, index) => {
         return (
-          <div key={index} className={cn("text-muted-foreground pt-2")}>
+          <div key={index} className={cn('text-muted-foreground pt-2')}>
             <a
               href={item.url}
-              title={displayName(item.title)}
-              className={cn("hover:text-color no-underline transition-colors block truncate", item.url === `#${activeItem}` ? "text-color" : "text-muted-foreground")}
+              title={getNameToc(item.title)}
+              className={cn('hover:text-color no-underline transition-colors block truncate', item.url === `#${activeItem}` ? 'text-color' : 'text-muted-foreground')}
             >
-              {displayName(item.title)}
+              {getNameToc(item.title)}
             </a>
             {item.items?.length ? <Tree sub={sub} tree={item} level={level + 1} activeItem={activeItem} /> : null}
           </div>

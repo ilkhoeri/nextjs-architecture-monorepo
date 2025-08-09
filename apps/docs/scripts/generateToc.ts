@@ -1,15 +1,15 @@
-import fs from "fs";
-import path from "node:path";
-import { Node } from "unist";
-import { remark } from "remark";
-import { tocList } from "@/routes";
-import { visit } from "unist-util-visit";
-import { displayName } from "@repo/utils";
+import fs from 'fs';
+import path from 'node:path';
+import { Node } from 'unist';
+import { remark } from 'remark';
+import { tocList } from '@/routes';
+import { visit } from 'unist-util-visit';
+import { getNameToc } from '@/utils/text-parser';
 
-const textTypes = new Set(["text", "emphasis", "strong", "inlineCode"]);
+const textTypes = new Set(['text', 'emphasis', 'strong', 'inlineCode']);
 
 function flattenNode(node: Node): string {
-  let text = "";
+  let text = '';
   visit(node, (child: any) => {
     if (textTypes.has(child.type)) {
       text += child.value;
@@ -21,35 +21,35 @@ function flattenNode(node: Node): string {
 function generateSlug(title: string): string {
   return title
     .toLowerCase()
-    .replace(/\*\*|\*/g, "")
-    .replace(/`/g, "")
-    .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, "-");
+    .replace(/\*\*|\*/g, '')
+    .replace(/`/g, '')
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-');
 }
 
 function cleanedName(title: string) {
-  return displayName(title.replace("undefined", ""), "unformated");
+  return getNameToc(title.replace('undefined', ''), 'unset');
 }
 
 function removeFrontMatter(content: string): string {
-  if (content.startsWith("---")) {
-    const endIndex = content.indexOf("\n---", 3);
+  if (content.startsWith('---')) {
+    const endIndex = content.indexOf('\n---', 3);
     return endIndex !== -1 ? content.slice(endIndex + 4).trim() : content;
   }
   return content;
 }
 
 function extractHeadingsFromFile(filePath: string) {
-  let content = fs.readFileSync(filePath, "utf-8");
+  let content = fs.readFileSync(filePath, 'utf-8');
   content = removeFrontMatter(content);
 
   const headings: { level: number; title: string }[] = [];
 
   const ast = remark().parse(content);
 
-  visit(ast, "heading", (node: any) => {
+  visit(ast, 'heading', (node: any) => {
     const title = flattenNode(node);
-    if (title && title !== "undefined") {
+    if (title && title !== 'undefined') {
       headings.push({ level: node.depth, title });
     }
   });
@@ -74,26 +74,26 @@ function generateTableOfContents(basePath: string, title: string, files: string[
     if (headings.length === 0) return;
 
     const fileLink = `/${file}`;
-    let fileToc = "";
+    let fileToc = '';
 
     headings.forEach(heading => {
-      const slug = generateSlug(heading.title.replace("undefined", ""));
+      const slug = generateSlug(heading.title.replace('undefined', ''));
       const link = `[${cleanedName(heading.title.trimEnd())}](${fileLink}#${slug})`;
 
       if (heading.level === 1) {
         fileToc += `- [**${cleanedName(heading.title.trimEnd())}**](${fileLink}#${slug})\n`;
       } else {
-        const indentation = "  ".repeat(heading.level - 2);
+        const indentation = '  '.repeat(heading.level - 2);
         fileToc += `  ${indentation}- ${link}\n`;
       }
     });
 
     if (fileToc) {
-      toc += fileToc + "";
+      toc += fileToc + '';
     }
   });
 
-  console.log("Running Generated List:", files);
+  console.log('Running Generated List:', files);
 
   return toc;
 }
@@ -107,27 +107,27 @@ function generateTocFile(basePath: string, { title, date }: GenerateTocFileProps
   try {
     const toc = generateTableOfContents(basePath, title);
 
-    const tocFilePath = path.join(basePath, "toc.mdx");
+    const tocFilePath = path.join(basePath, 'toc.mdx');
 
     const yamlMetadata = `---\ntitle: Table of Contents\ndate: ${date}\n---`;
     const content = `${yamlMetadata}\n\n${toc.trim()}\n`;
 
-    fs.writeFileSync(tocFilePath, content, "utf-8");
+    fs.writeFileSync(tocFilePath, content, 'utf-8');
 
     console.info(`\n✅ ${title} has been generated at ${tocFilePath}\n`);
   } catch (error) {
-    console.error("Error:", `\n${error}\n`);
+    console.error('Error:', `\n${error}\n`);
   }
 }
 
-const date = new Intl.DateTimeFormat("en-CA").format(new Date());
+const date = new Intl.DateTimeFormat('en-CA').format(new Date());
 
-generateTocFile("md/id", {
-  title: "Daftar isi",
+generateTocFile('md/id', {
+  title: 'Daftar isi',
   date
 });
 
-generateTocFile("md/en", {
-  title: "Table of Contents",
+generateTocFile('md/en', {
+  title: 'Table of Contents',
   date
 });
