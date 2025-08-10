@@ -1,4 +1,4 @@
-import localFont from "next/font/local";
+import localFont from 'next/font/local';
 import {
   Amiri,
   Anek_Telugu,
@@ -15,126 +15,126 @@ import {
   Caveat,
   Ubuntu,
   Barlow
-} from "next/font/google";
+} from 'next/font/google';
 
 export const geistSans = localFont({
-  src: "./GeistVF.woff",
-  variable: "--ff-geist-sans",
-  weight: "100 900"
+  src: './GeistVF.woff',
+  variable: '--ff-geist-sans',
+  weight: '100 900'
 });
 export const geistMono = localFont({
-  src: "./GeistMonoVF.woff",
-  variable: "--ff-geist-mono",
-  weight: "100 900"
+  src: './GeistMonoVF.woff',
+  variable: '--ff-geist-mono',
+  weight: '100 900'
 });
 
 export const anekTelugu = Anek_Telugu({
-  weight: ["400", "500", "600", "700", "800"],
-  style: ["normal"],
-  subsets: ["latin"],
-  variable: "--ff-anek-telugu",
-  display: "swap"
+  weight: ['400', '500', '600', '700', '800'],
+  style: ['normal'],
+  subsets: ['latin'],
+  variable: '--ff-anek-telugu',
+  display: 'swap'
 });
 export const amiri = Amiri({
-  weight: ["400", "700"],
-  style: ["normal"],
-  subsets: ["latin"],
-  variable: "--ff-amiri",
-  display: "swap"
+  weight: ['400', '700'],
+  style: ['normal'],
+  subsets: ['latin'],
+  variable: '--ff-amiri',
+  display: 'swap'
 });
 export const inter = Inter({
-  weight: ["400", "500", "600", "700", "800", "900"],
-  style: ["normal"],
-  subsets: ["latin"],
-  variable: "--ff-inter",
-  display: "swap"
+  weight: ['400', '500', '600', '700', '800', '900'],
+  style: ['normal'],
+  subsets: ['latin'],
+  variable: '--ff-inter',
+  display: 'swap'
 });
 export const ubuntu = Ubuntu({
-  weight: ["300", "400", "500", "700"],
-  style: ["normal"],
-  subsets: ["latin"],
-  variable: "--ff-ubuntu",
-  display: "swap"
+  weight: ['300', '400', '500', '700'],
+  style: ['normal'],
+  subsets: ['latin'],
+  variable: '--ff-ubuntu',
+  display: 'swap'
 });
 export const caveat = Caveat({
-  weight: ["400", "500", "600", "700"],
-  style: ["normal"],
-  subsets: ["latin"],
-  variable: "--ff-caveat",
-  display: "swap"
+  weight: ['400', '500', '600', '700'],
+  style: ['normal'],
+  subsets: ['latin'],
+  variable: '--ff-caveat',
+  display: 'swap'
 });
 export const kanit = Kanit({
-  weight: ["400", "500", "600", "700", "800", "900"],
-  style: ["normal"],
-  subsets: ["latin"],
-  variable: "--ff-kanit",
-  display: "swap"
+  weight: ['400', '500', '600', '700', '800', '900'],
+  style: ['normal'],
+  subsets: ['latin'],
+  variable: '--ff-kanit',
+  display: 'swap'
 });
 export const dancingScript = Dancing_Script({
-  weight: ["400", "500", "600", "700"],
-  style: ["normal"],
-  subsets: ["latin"],
-  variable: "--ff-dancing-script",
-  display: "swap"
+  weight: ['400', '500', '600', '700'],
+  style: ['normal'],
+  subsets: ['latin'],
+  variable: '--ff-dancing-script',
+  display: 'swap'
 });
 export const koulen = Koulen({
-  weight: ["400"],
-  style: ["normal"],
-  subsets: ["latin"],
-  variable: "--ff-koulen",
-  display: "swap"
+  weight: ['400'],
+  style: ['normal'],
+  subsets: ['latin'],
+  variable: '--ff-koulen',
+  display: 'swap'
 });
 export const montserrat = Montserrat({
-  weight: ["400", "500", "600", "700", "800", "900"],
-  style: ["normal"],
-  subsets: ["latin"],
-  variable: "--ff-montserrat",
-  display: "swap"
+  weight: ['400', '500', '600', '700', '800', '900'],
+  style: ['normal'],
+  subsets: ['latin'],
+  variable: '--ff-montserrat',
+  display: 'swap'
 });
 export const poppins = Poppins({
-  weight: ["400", "500", "600", "700", "800", "900"],
-  style: ["normal"],
-  subsets: ["latin"],
-  variable: "--ff-poppins",
-  display: "swap"
+  weight: ['400', '500', '600', '700', '800', '900'],
+  style: ['normal'],
+  subsets: ['latin'],
+  variable: '--ff-poppins',
+  display: 'swap'
 });
 export const robotoMono = Roboto_Mono({
-  weight: ["400", "500", "600", "700"],
-  style: ["normal"],
-  subsets: ["latin"],
-  variable: "--ff-roboto-mono",
-  display: "swap"
+  weight: ['400', '500', '600', '700'],
+  style: ['normal'],
+  subsets: ['latin'],
+  variable: '--ff-roboto-mono',
+  display: 'swap'
 });
 export const specialElit = Special_Elite({
-  weight: ["400"],
-  style: ["normal"],
-  subsets: ["latin"],
-  variable: "--ff-special-elit",
-  display: "swap"
+  weight: ['400'],
+  style: ['normal'],
+  subsets: ['latin'],
+  variable: '--ff-special-elit',
+  display: 'swap'
 });
 export const quicksand = Quicksand({
-  weight: ["400", "500", "600", "700"],
-  style: ["normal"],
-  subsets: ["latin"],
-  variable: "--ff-quicksand",
-  display: "swap"
+  weight: ['400', '500', '600', '700'],
+  style: ['normal'],
+  subsets: ['latin'],
+  variable: '--ff-quicksand',
+  display: 'swap'
 });
 export const barlow = Barlow({
-  weight: ["400", "500", "600", "700", "800", "900"],
-  style: ["normal"],
-  subsets: ["latin"],
-  variable: "--ff-barlow",
-  display: "swap"
+  weight: ['400', '500', '600', '700', '800', '900'],
+  style: ['normal'],
+  subsets: ['latin'],
+  variable: '--ff-barlow',
+  display: 'swap'
 });
 export const rokkitt = Orelega_One({
-  weight: ["400"],
-  style: ["normal"],
-  subsets: ["latin"],
-  variable: "--ff-orelega-one",
-  display: "swap"
+  weight: ['400'],
+  style: ['normal'],
+  subsets: ['latin'],
+  variable: '--ff-orelega-one',
+  display: 'swap'
 });
 
-export const fontsVariable = [geistSans.variable, geistMono.variable, inter.variable, montserrat.variable, rokkitt.variable].join(" ");
+export const fontsVariable = [geistSans.variable, geistMono.variable, inter.variable, montserrat.variable, rokkitt.variable].join(' ');
 
 type CSSProperties = React.CSSProperties & { [key: string]: any };
 type stylesBodyType = { className: string; style?: CSSProperties };
@@ -161,7 +161,7 @@ export function bodyConfig(className?: string | undefined, style?: CSSProperties
 
   if (className) {
     additionalClass = {
-      className: [fontsVariable, className].join(" "),
+      className: [fontsVariable, className].join(' '),
       style: { ...style }
     };
   }

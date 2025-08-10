@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "node:path";
+import fs from 'fs';
+import path from 'node:path';
 
 interface CopyProps {
   title: string;
@@ -8,12 +8,12 @@ interface CopyProps {
   fileOutput: string;
 }
 
-interface CopySyncProps extends Omit<CopyProps, "fileOutput"> {
+interface CopySyncProps extends Omit<CopyProps, 'fileOutput'> {
   fileOutput: string | string[];
 }
 
 function nameFile(fileSource: string) {
-  const file = fileSource.split("/");
+  const file = fileSource.split('/');
   return file[file.length - 1];
 }
 
@@ -52,19 +52,19 @@ function copy(meta: CopyProps) {
     fs.mkdirSync(outputDir, { recursive: true });
 
     if (!fs.existsSync(sourcePath)) {
-      console.error("Source file not found:", sourcePath);
+      console.error('Source file not found:', sourcePath);
       return;
     }
 
-    const sourceContent = fs.readFileSync(sourcePath, "utf-8");
+    const sourceContent = fs.readFileSync(sourcePath, 'utf-8');
     const yamlMetadata = `---\ntitle: ${title}\ndate: ${date}\n---`;
     const newContent = `${yamlMetadata}\n\n${sourceContent.trim()}`;
 
-    fs.writeFileSync(targetPath, newContent, "utf-8");
+    fs.writeFileSync(targetPath, newContent, 'utf-8');
 
     console.info(`\n✅ Synchronized ${title} from [${nameFile(fileSource)}] to [${nameFile(fileOutput)}] Successfully.\n`);
   } catch (error) {
-    console.error("Error:", `\n${error}\n`);
+    console.error('Error:', `\n${error}\n`);
   }
 }
 
@@ -79,22 +79,22 @@ function copySync(meta: CopySyncProps) {
       copy({ fileOutput, ...rest });
     }
   } catch (error) {
-    console.error("Error:", `\n${error}\n`);
+    console.error('Error:', `\n${error}\n`);
   }
 }
 
-const date = new Intl.DateTimeFormat("en-CA").format(new Date());
+const date = new Intl.DateTimeFormat('en-CA').format(new Date());
 
 copySync({
-  title: "CHANGELOG",
+  title: 'CHANGELOG',
   date,
-  fileSource: "../../../CHANGELOG.md",
-  fileOutput: ["../md/en/guidelines/changelog.mdx", "../md/id/guidelines/changelog.mdx"]
+  fileSource: '../../../CHANGELOG.md',
+  fileOutput: ['../md/en/guidelines/changelog.mdx', '../md/id/guidelines/changelog.mdx']
 });
 
 copySync({
-  title: "CONTRIBUTING",
+  title: 'CONTRIBUTING',
   date,
-  fileSource: "../../../CONTRIBUTING.md",
-  fileOutput: ["../md/en/guidelines/contributing.mdx", "../md/id/guidelines/contributing.mdx"]
+  fileSource: '../../../CONTRIBUTING.md',
+  fileOutput: ['../md/en/guidelines/contributing.mdx', '../md/id/guidelines/contributing.mdx']
 });

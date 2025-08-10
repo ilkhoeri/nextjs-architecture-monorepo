@@ -1,9 +1,9 @@
-"use client";
-import React from "react";
-import Image from "next/image";
-import { cn } from "@repo/utils";
-import { useTheme } from "next-themes";
-import { useImagePopup } from "@repo/hooks/use-image-popup";
+'use client';
+import React from 'react';
+import Image from 'next/image';
+import { cn } from '@repo/utils';
+import { useTheme } from 'next-themes';
+import { useImagePopup } from '@repo/hooks/use-image-popup';
 
 type ExtendsImgProps = {
   popup?: boolean;
@@ -19,10 +19,10 @@ type ExtendsImgProps = {
 
 type ImgProps = Omit<React.ComponentProps<typeof Image>, keyof ExtendsImgProps> & ExtendsImgProps;
 
-const SRC = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs%3D";
+const SRC = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs%3D';
 
 export function Img(_props: ImgProps) {
-  const { alt = "", src: srcProp, className, popup = true, ...props } = _props;
+  const { alt = '', src: srcProp, className, popup = true, ...props } = _props;
   const [mounted, setMounted] = React.useState(false);
   const theme = useTheme();
 
@@ -31,15 +31,15 @@ export function Img(_props: ImgProps) {
   React.useEffect(() => setMounted(true), []);
 
   const normalizeSrc = React.useMemo(() => {
-    if (typeof srcProp === "string") return srcProp;
+    if (typeof srcProp === 'string') return srcProp;
     const parse = (x: string) => {
       if (srcProp.prefix && srcProp.suffix) return `${srcProp.prefix}${x}${srcProp.suffix}`;
       if (srcProp.prefix) return `${srcProp.prefix}${x}`;
       if (srcProp.suffix) return `${x}${srcProp.suffix}`;
       return x;
     };
-    return theme.theme === "light" ? parse(srcProp.light ?? "light") : parse(srcProp.dark ?? "dark");
+    return theme.theme === 'light' ? parse(srcProp.light ?? 'light') : parse(srcProp.dark ?? 'dark');
   }, [theme.theme, srcProp]);
 
-  return <Image alt={alt} data-popup={popup ? "true" : undefined} width={1000} height={500} src={!mounted ? SRC : normalizeSrc} className={cn("relative", className)} {...props} />;
+  return <Image alt={alt} data-popup={popup ? 'true' : undefined} width={1000} height={500} src={!mounted ? SRC : normalizeSrc} className={cn('relative', className)} {...props} />;
 }

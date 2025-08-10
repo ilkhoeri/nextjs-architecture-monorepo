@@ -3,7 +3,7 @@ const config = {
   plugins: {
     // "tailwindcss/nesting": "postcss-nesting",
     // autoprefixer: {},
-    "@tailwindcss/postcss": {}
+    '@tailwindcss/postcss': {}
   }
 };
 

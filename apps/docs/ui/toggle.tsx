@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { cn } from "@repo/utils";
-import { UnstyledButton } from "@repo/ui";
-import { useClipboard } from "@repo/hooks/use-clipboard";
-import { useWindowScroll } from "@repo/hooks/use-window-scroll";
-import { CheckIcon, CopyIcon, ChevronDownSquareIcon } from "@repo/icons";
+import * as React from 'react';
+import { cn } from '@repo/utils';
+import { UnstyledButton } from '@repo/ui';
+import { useClipboard } from '@repo/hooks/use-clipboard';
+import { useWindowScroll } from '@repo/hooks/use-window-scroll';
+import { CheckIcon, CopyIcon, ChevronDownSquareIcon } from '@repo/icons';
 
 function tocopy(text: string) {
   const regex = /^```.*\n|\n```\s*$/gm;
-  text = text.replace(regex, "");
+  text = text.replace(regex, '');
   return text;
 }
 
@@ -31,7 +31,7 @@ export const CopyButton = React.forwardRef<
       }}
       disabled={!value}
       className={cn(
-        "inline-flex items-center justify-center rounded-md ring-offset-background transition-colors text-muted-foreground [@media(hover:hover)]:hover:bg-muted/75 [@media(hover:hover)]:hover:text-color focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-background focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 sizer [--sz:28px] p-0.5 bg-background",
+        'inline-flex items-center justify-center rounded-md ring-offset-background transition-colors text-muted-foreground [@media(hover:hover)]:hover:bg-muted/75 [@media(hover:hover)]:hover:text-color focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-background focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 sizer [--sz:28px] p-0.5 bg-background',
         className
       )}
       suppressHydrationWarning
@@ -40,14 +40,14 @@ export const CopyButton = React.forwardRef<
     </UnstyledButton>
   );
 });
-CopyButton.displayName = "CopyButton";
+CopyButton.displayName = 'CopyButton';
 
 export const ScrollToggle = React.forwardRef<React.ComponentRef<typeof UnstyledButton>, React.ComponentPropsWithoutRef<typeof UnstyledButton>>(({ className, ...props }, ref) => {
   const { bottom, scrollWindow, mounted } = useWindowScroll();
 
   if (!mounted) return null;
 
-  const label = bottom ? "Scroll to Top" : "Scroll to Bottom";
+  const label = bottom ? 'Scroll to Top' : 'Scroll to Bottom';
   return (
     <UnstyledButton
       ref={ref}
@@ -57,18 +57,18 @@ export const ScrollToggle = React.forwardRef<React.ComponentRef<typeof UnstyledB
       title={label}
       onClick={scrollWindow}
       className={cn(
-        "fixed bottom-4 right-4 z-[99] mr-[--scrollbar-space,var(--has-scrollbar)] flex size-8 cursor-pointer select-none items-center justify-center rounded-xl border border-muted-foreground/40 bg-background/40 p-0.5 capitalize text-muted-foreground/90 outline-0 backdrop-blur transition-none duration-0 disabled:pointer-events-none disabled:opacity-50 supports-[backdrop-filter]:bg-background/40 [&_svg]:size-full",
+        'fixed bottom-4 right-4 z-[99] mr-[var(--scrollbar-space,var(--has-scrollbar))] flex size-8 cursor-pointer select-none items-center justify-center rounded-xl border border-muted-foreground/40 bg-background/40 p-0.5 capitalize text-muted-foreground/90 outline-0 backdrop-blur transition-none duration-0 disabled:pointer-events-none disabled:opacity-50 supports-[backdrop-filter]:bg-background/40 [&_svg]:size-full',
         "after:absolute after:left-0 after:h-8 after:w-12 after:content-['']",
         className
       )}
     >
       <ChevronDownSquareIcon
         style={{
-          rotate: bottom ? "180deg" : "0deg",
-          transition: "rotate 0.3s"
+          rotate: bottom ? '180deg' : '0deg',
+          transition: 'rotate 0.3s'
         }}
       />
     </UnstyledButton>
   );
 });
-ScrollToggle.displayName = "ScrollToggle";
+ScrollToggle.displayName = 'ScrollToggle';

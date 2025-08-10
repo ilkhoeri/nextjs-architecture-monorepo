@@ -1,4 +1,4 @@
-import * as z from "zod";
+import * as z from 'zod';
 
 export const isMongoObjectId = (id?: string) => !!id && /^[0-9a-fA-F]{24}$/.test(id);
 
@@ -6,15 +6,15 @@ export const phoneRegEx = /^(?:0|\+62)(?:\d{3}-\d{4}-\d{4}|\d{3}-\d{3}-\d{4}|\d{
 
 export const passwordRegEx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$&+,:;=?@#|'<>.^*()%!-])[a-zA-Z0-9$&+,:;=?@#|'<>.^*()%!-]{8,}$/;
 
-export const passwordMessage = "Passwords Invalid";
-export const phoneMessage = "Contoh input yang valid: 0812-3456-7890 atau +62812-3456-7890";
+export const passwordMessage = 'Passwords Invalid';
+export const phoneMessage = 'Contoh input yang valid: 0812-3456-7890 atau +62812-3456-7890';
 
-export const containsLetters = (str: string | undefined) => /[a-zA-Z]{2,}/.test(str || "");
+export const containsLetters = (str: string | undefined) => /[a-zA-Z]{2,}/.test(str || '');
 
 export const passwordSchema = (message: string) => z.string().refine(password => passwordRegEx.test(password), { message });
 export const phoneSchema = (message: string) => z.string().refine(input => phoneRegEx.test(input), { message });
 
-export const UserGender = ["Male", "Female"] as const;
+export const UserGender = ['Male', 'Female'] as const;
 export type UserGender = (typeof UserGender)[number];
 
 export const AboutSchema = z.object({
@@ -24,7 +24,7 @@ export const AboutSchema = z.object({
   resume: z.optional(z.string()),
   nationalId: z.optional(z.string()),
   taxId: z.optional(z.string()),
-  gender: z.optional(z.enum(UserGender, { message: "Invalid value" })),
+  gender: z.optional(z.enum(UserGender, { message: 'Invalid value' })),
   horoscope: z.optional(z.string()),
   zodiac: z.string().optional(),
   height: z.optional(z.coerce.number()),
@@ -46,7 +46,7 @@ export const SettingGeneralSchema = z.object({
   name: z.optional(z.string()),
   firstName: z.optional(z.string()),
   lastName: z.optional(z.string()),
-  image: z.optional(z.string().url("Invalid image URL")).nullable(),
+  image: z.optional(z.string().url('Invalid image URL')).nullable(),
   phone: z.optional(phoneSchema(phoneMessage)),
   about: AboutSchema.optional(),
   links: z.optional(z.array(LinkSchema))
@@ -55,32 +55,32 @@ export const SettingGeneralSchema = z.object({
 export const SignUpSchema = z
   .object({
     name: z.string().min(2, {
-      message: "Name is required"
+      message: 'Name is required'
     }),
     email: z.string().email({
-      message: "Email is required"
+      message: 'Email is required'
     }),
     password: passwordSchema(passwordMessage),
-    confirmPassword: passwordSchema("Password does not match")
+    confirmPassword: passwordSchema('Password does not match')
   })
   .refine(data => data.password === data.confirmPassword, {
     message: passwordMessage,
-    path: ["confirmPassword"]
+    path: ['confirmPassword']
   })
   .refine(data => containsLetters(data.name), {
-    message: "Name must contain at least two letters",
-    path: ["name"]
+    message: 'Name must contain at least two letters',
+    path: ['name']
   });
 
 export const SignInSchema = z.object({
   identifier: z.string({
-    message: "Username/Email is required"
+    message: 'Username/Email is required'
   }),
   password: passwordSchema(passwordMessage)
   // code: z.optional(z.string())
 });
 
-export const ChatType = ["PRIVATE", "GROUP", "CHANNEL", "BOT"] as const;
+export const ChatType = ['PRIVATE', 'GROUP', 'CHANNEL', 'BOT'] as const;
 export type ChatType = (typeof ChatType)[number];
 
 export const CreateChatSchema = z
@@ -95,8 +95,8 @@ export const CreateChatSchema = z
             value: z.string().optional()
           })
           .refine(data => isMongoObjectId(data.value), {
-            message: "Not valid id",
-            path: ["value"]
+            message: 'Not valid id',
+            path: ['value']
           })
       )
       .optional()
@@ -109,22 +109,22 @@ export const CreateChatSchema = z
       return hasValidUserId || hasValidMembers;
     },
     {
-      message: "Either userId or at least one valid member is required",
+      message: 'Either userId or at least one valid member is required',
       path: []
     }
   );
 
-export const MessageType = ["TEXT", "IMAGE", "VIDEO", "AUDIO", "FILE", "STICKER", "SYSTEM"] as const;
+export const MessageType = ['TEXT', 'IMAGE', 'VIDEO', 'AUDIO', 'FILE', 'STICKER', 'SYSTEM'] as const;
 export type MessageType = (typeof MessageType)[number];
 
-export const MessageStatus = ["SENDING", "SENT", "FAILED", "SEEN"] as const;
+export const MessageStatus = ['SENDING', 'SENT', 'FAILED', 'SEEN'] as const;
 export type MessageStatus = (typeof MessageStatus)[number];
 
 export const CreateMessageSchema = z.object({
   chatId: z.string(),
   body: z.string().nullable().optional(),
   mediaUrl: z.string().nullable().optional(),
-  type: z.enum(MessageType).default("TEXT")
+  type: z.enum(MessageType).default('TEXT')
 });
 
 type ender = {
@@ -152,5 +152,5 @@ export const GetMessageSchema = z.object({
   status: z.enum(MessageStatus),
   body: z.string().nullable().optional(),
   mediaUrl: z.string().nullable().optional(),
-  type: z.enum(MessageType).default("TEXT")
+  type: z.enum(MessageType).default('TEXT')
 });

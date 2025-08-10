@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React from "react";
-import { useIsMobile } from "@repo/hooks/use-media-query";
-import { useModal, type UseModalOptions } from "@repo/hooks/use-modal";
-import { useMobileHistoryState } from "@repo/hooks/use-mobile-history-state";
+import React from 'react';
+import { useIsMobile } from '@repo/hooks/use-media-query';
+import { useModal, type UseModalOptions } from '@repo/hooks/use-modal';
+import { useMobileHistoryState } from '@repo/hooks/use-mobile-history-state';
 
 interface MediaQuery {
   mediaQuery?: number;
@@ -30,14 +30,14 @@ export const NavProvider: React.FC<NavProviderProps> = ({ children, mediaQuery =
     const body = document.body;
 
     if (open && isMobile) {
-      body.style.setProperty("overflow", "hidden");
+      body.style.setProperty('overflow', 'hidden');
     } else {
-      body.style.removeProperty("overflow");
+      body.style.removeProperty('overflow');
     }
 
     return () => {
       if (open && isMobile) {
-        body.style.removeProperty("overflow");
+        body.style.removeProperty('overflow');
       }
     };
   }, [open, isMobile]);
@@ -63,7 +63,7 @@ export const NavProvider: React.FC<NavProviderProps> = ({ children, mediaQuery =
 export const useNavContext = () => {
   const context = React.useContext(NavContext);
   if (!context) {
-    throw new Error("useNavContext must be used within an NavProvider");
+    throw new Error('useNavContext must be used within an NavProvider');
   }
   return context;
 };

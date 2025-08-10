@@ -1,25 +1,25 @@
 'use client';
 import * as React from 'react';
-import { AccessDenied403, InternalError500, NotFound404 } from '@repo/icons/icons-illustration';
-import { IconType } from '@repo/ui';
 import { cn } from '@repo/utils';
+import { IconType } from '@repo/ui';
+import { AccessDenied403, InternalError500, NotFound404 } from '@repo/icons/icons-illustration';
 
-type StatusAccessTrees = 'root' | 'title' | 'description' | 'svg';
-type StatusAccessOption = 'not-found' | 'internal-error' | 'access-denied';
+type AccessStatusTrees = 'root' | 'title' | 'description' | 'svg';
+type AccessStatusOption = 'not-found' | 'internal-error' | 'access-denied';
 
-interface StatusAccessObject {
+interface AccessStatusObject {
   title: string;
   description: string | string[];
   icon: IconType;
 }
 
-interface StatusAccessProps extends Omit<React.ComponentProps<'div'>, 'title'>, Nullable<StatusAccessObject> {
+interface AccessStatusProps extends Omit<React.ComponentProps<'div'>, 'title'>, Nullable<AccessStatusObject> {
   svgProps?: React.ComponentPropsWithRef<typeof AccessDenied403>;
-  classNames?: Partial<Record<StatusAccessTrees, string>>;
-  status: StatusAccessOption;
+  classNames?: Partial<Record<AccessStatusTrees, string>>;
+  status: AccessStatusOption;
 }
 
-const statusAccessMap: Record<StatusAccessOption, StatusAccessObject> = {
+const accessStatusMap: Record<AccessStatusOption, AccessStatusObject> = {
   'access-denied': {
     title: 'Permission denied',
     description: 'You do not have permission to access this page.',
@@ -37,12 +37,12 @@ const statusAccessMap: Record<StatusAccessOption, StatusAccessObject> = {
   }
 } as const;
 
-export const StatusAccess = React.forwardRef<HTMLDivElement, StatusAccessProps>((_props, ref) => {
+export const AccessStatus = React.forwardRef<HTMLDivElement, AccessStatusProps>((_props, ref) => {
   const { classNames, className, svgProps, status, children, title: titleProp, description: descriptionProp, icon: IconProp, ...props } = _props;
 
-  const title = titleProp || statusAccessMap[status].title;
-  const description = descriptionProp || statusAccessMap[status].description;
-  const Icon = IconProp || statusAccessMap[status].icon;
+  const title = titleProp || accessStatusMap[status].title;
+  const description = descriptionProp || accessStatusMap[status].description;
+  const Icon = IconProp || accessStatusMap[status].icon;
 
   return (
     <div
@@ -70,4 +70,4 @@ export const StatusAccess = React.forwardRef<HTMLDivElement, StatusAccessProps>(
     </div>
   );
 });
-StatusAccess.displayName = 'StatusAccess';
+AccessStatus.displayName = 'AccessStatus';

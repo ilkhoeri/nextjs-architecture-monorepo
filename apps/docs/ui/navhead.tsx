@@ -2,7 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { cn } from '@repo/utils';
-import { Sheets } from './sheets';
+import { Sheets } from '@repo/ui/sheets';
 import { Button } from '@repo/ui';
 import { ROUTES } from '@/routes';
 import { NavLinkItem } from './navlink';

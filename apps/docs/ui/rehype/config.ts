@@ -1,8 +1,8 @@
-"use client";
-import { useLocalStorage } from "@repo/hooks/use-local-storage";
+'use client';
+import { useLocalStorage } from '@repo/hooks/use-local-storage';
 
 type Config = {
-  packageManager: "npm" | "yarn" | "pnpm" | "bun";
+  packageManager: 'npm' | 'yarn' | 'pnpm' | 'bun';
 };
 
 function useStorage<T>(key: string, initialValue: T): [T, (value: T) => void] {
@@ -15,8 +15,8 @@ function useStorage<T>(key: string, initialValue: T): [T, (value: T) => void] {
 }
 
 export function useConfig() {
-  const [config, setConfig] = useStorage<Config>("config", {
-    packageManager: "pnpm"
+  const [config, setConfig] = useStorage<Config>('config', {
+    packageManager: 'pnpm'
   });
 
   return [config, setConfig] as const;

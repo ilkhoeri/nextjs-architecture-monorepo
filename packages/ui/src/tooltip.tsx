@@ -1,13 +1,13 @@
-"use client";
-import * as React from "react";
-import * as Primitive from "@radix-ui/react-tooltip";
-import { createPortal } from "react-dom";
-import { mergeRefs } from "@repo/hooks/use-merged-ref";
-import { useTouch } from "@repo/hooks/use-touch";
-import { cn } from "@repo/utils";
+'use client';
+import * as React from 'react';
+import * as Primitive from '@radix-ui/react-tooltip';
+import { createPortal } from 'react-dom';
+import { mergeRefs } from '@repo/hooks/use-merged-ref';
+import { useTouch } from '@repo/hooks/use-touch';
+import { cn } from '@repo/utils';
 
-type TooltipOrigin = "trigger" | "content";
-type KeyType = "side" | "align" | "sideOffset";
+type TooltipOrigin = 'trigger' | 'content';
+type KeyType = 'side' | 'align' | 'sideOffset';
 type CSSProperties = React.CSSProperties & { [key: string]: any };
 type StylesNames<T extends string> = {
   classNames?: Partial<Record<T, string>>;
@@ -16,11 +16,11 @@ type StylesNames<T extends string> = {
 };
 type TooltipProviderTypes = Primitive.TooltipProviderProps & Primitive.TooltipProps;
 
-interface CtxProps extends Omit<TooltipProviderTypes, "children"> {
+interface CtxProps extends Omit<TooltipProviderTypes, 'children'> {
   touch?: boolean;
   triggerRef: React.RefObject<HTMLButtonElement>;
 }
-interface ProviderProps extends Omit<CtxProps, "triggerRef"> {
+interface ProviderProps extends Omit<CtxProps, 'triggerRef'> {
   children: React.ReactNode;
 }
 
@@ -47,7 +47,7 @@ function TooltipProvider(_props: ProviderProps) {
 
 const TooltipTrigger = React.forwardRef<React.ComponentRef<typeof Primitive.Trigger>, Primitive.TooltipTriggerProps>((_props, ref) => {
   const { touch, triggerRef } = useTooltipCtx();
-  return <Primitive.Trigger {...{ ref: mergeRefs(triggerRef, ref), "data-touch": `${touch}`, ..._props }} />;
+  return <Primitive.Trigger {...{ ref: mergeRefs(triggerRef, ref), 'data-touch': `${touch}`, ..._props }} />;
 });
 TooltipTrigger.displayName = Primitive.TooltipTrigger.displayName;
 
@@ -55,7 +55,7 @@ const TooltipContent = React.forwardRef<React.ComponentRef<typeof Primitive.Cont
   { className, sideOffset = 4, children, withArrow, align, side, ...props },
   ref
 ) {
-  if (typeof document === "undefined") return null;
+  if (typeof document === 'undefined') return null;
   return createPortal(
     <Primitive.Content
       {...{
@@ -64,7 +64,7 @@ const TooltipContent = React.forwardRef<React.ComponentRef<typeof Primitive.Cont
         side,
         sideOffset: withArrow ? Number(sideOffset) + 9 : sideOffset,
         className: cn(
-          "group/content relative z-50 flex items-center justify-center rounded-md border bg-background px-1 py-0.5 text-sm text-muted-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 [&_[data-tooltip]]:text-background",
+          'group/content relative z-50 flex items-center justify-center rounded-md border bg-background px-1 py-0.5 text-sm text-muted-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 [&_[data-tooltip]]:text-background',
           className
         ),
         ...props
@@ -87,10 +87,10 @@ const TooltipContent = React.forwardRef<React.ComponentRef<typeof Primitive.Cont
 TooltipContent.displayName = Primitive.Content.displayName;
 
 export interface TooltipProps
-  extends Omit<Primitive.TooltipTriggerProps, "content" | "style">,
+  extends Omit<Primitive.TooltipTriggerProps, 'content' | 'style'>,
     Pick<Primitive.TooltipContentProps, KeyType>,
     StylesNames<TooltipOrigin>,
-    Omit<TooltipProviderTypes, "children"> {
+    Omit<TooltipProviderTypes, 'children'> {
   touch?: boolean;
   content?: React.ReactNode;
   withArrow?: boolean;
@@ -114,8 +114,8 @@ const Tooltip = React.forwardRef<React.ComponentRef<typeof Primitive.Trigger>, T
     styles,
     withArrow,
     touch = true,
-    align = "center",
-    side = "bottom",
+    align = 'center',
+    side = 'bottom',
     ...props
   } = _props;
 
@@ -140,10 +140,10 @@ const Tooltip = React.forwardRef<React.ComponentRef<typeof Primitive.Trigger>, T
     </TooltipProvider>
   );
 });
-Tooltip.displayName = "Tooltip";
+Tooltip.displayName = 'Tooltip';
 
 const arrow = cn(
-  "absolute !h-[9px] !w-[23px] group-data-[align=center]/content:group-data-[side=bottom]/content:inset-x-auto group-data-[align=center]/content:group-data-[side=left]/content:inset-y-auto group-data-[align=center]/content:group-data-[side=right]/content:inset-y-auto group-data-[align=center]/content:group-data-[side=top]/content:inset-x-auto group-data-[align=end]/content:group-data-[side=bottom]/content:right-2 group-data-[align=end]/content:group-data-[side=left]/content:bottom-4 group-data-[align=end]/content:group-data-[side=right]/content:bottom-4 group-data-[align=end]/content:group-data-[side=top]/content:right-2 group-data-[align=start]/content:group-data-[side=bottom]/content:left-2 group-data-[align=start]/content:group-data-[side=left]/content:top-4 group-data-[align=start]/content:group-data-[side=right]/content:top-4 group-data-[align=start]/content:group-data-[side=top]/content:left-2 group-data-[side=bottom]/content:bottom-[calc(100%-0px)] group-data-[side=left]/content:left-[calc(100%-7px)] group-data-[side=right]/content:right-[calc(100%-7px)] group-data-[side=top]/content:top-[calc(100%-0px)] group-data-[side=bottom]/content:rotate-180 group-data-[side=left]/content:-rotate-90 group-data-[side=right]/content:rotate-90 group-data-[side=top]/content:rotate-0 [&_[data-arrow=border]]:text-border"
+  'absolute !h-[9px] !w-[23px] group-data-[align=center]/content:group-data-[side=bottom]/content:inset-x-auto group-data-[align=center]/content:group-data-[side=left]/content:inset-y-auto group-data-[align=center]/content:group-data-[side=right]/content:inset-y-auto group-data-[align=center]/content:group-data-[side=top]/content:inset-x-auto group-data-[align=end]/content:group-data-[side=bottom]/content:right-2 group-data-[align=end]/content:group-data-[side=left]/content:bottom-4 group-data-[align=end]/content:group-data-[side=right]/content:bottom-4 group-data-[align=end]/content:group-data-[side=top]/content:right-2 group-data-[align=start]/content:group-data-[side=bottom]/content:left-2 group-data-[align=start]/content:group-data-[side=left]/content:top-4 group-data-[align=start]/content:group-data-[side=right]/content:top-4 group-data-[align=start]/content:group-data-[side=top]/content:left-2 group-data-[side=bottom]/content:bottom-[calc(100%-0px)] group-data-[side=left]/content:left-[calc(100%-7px)] group-data-[side=right]/content:right-[calc(100%-7px)] group-data-[side=top]/content:top-[calc(100%-0px)] group-data-[side=bottom]/content:rotate-180 group-data-[side=left]/content:-rotate-90 group-data-[side=right]/content:rotate-90 group-data-[side=top]/content:rotate-0 [&_[data-arrow=border]]:text-border'
 );
 
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider };

@@ -430,13 +430,7 @@
     },
     {
       "name": "Object Key",
-      "scope": [
-        "string.alias.graphql",
-        "string.unquoted.graphql",
-        "string.unquoted.alias.graphql",
-        "meta.field.declaration.ts variable.object.property",
-        "variable.object.property"
-      ],
+      "scope": ["string.alias.graphql", "string.unquoted.graphql", "string.unquoted.alias.graphql", "meta.field.declaration.ts variable.object.property", "variable.object.property"],
       "settings": {
         "foreground": "hsl(var(--gray-1000))"
       }

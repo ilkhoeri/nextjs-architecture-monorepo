@@ -19,8 +19,8 @@
   },
   "dependencies": {
     "@radix-ui/react-dialog": "catalog:runtime",
-    "@radix-ui/react-scroll-area": "^1.2.2",
-    "@radix-ui/react-tooltip": "^1.1.7",
+    "@radix-ui/react-scroll-area": "catalog:runtime",
+    "@radix-ui/react-tooltip": "catalog:runtime",
     "@repo/components": "workspace:*",
     "@repo/hooks": "workspace:*",
     "@repo/icons": "workspace:*",

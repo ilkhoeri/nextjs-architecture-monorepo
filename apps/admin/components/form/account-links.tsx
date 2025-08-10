@@ -161,7 +161,7 @@ export function LinkForm({ data, account, setOpenId }: LinkFormProps) {
         onSubmit={form.handleSubmit(onSubmit)}
         className={cn('w-full max-w-full px-1 flex flex-col gap-1 mt-2 overflow-hidden')}
       >
-        <motion.div variants={itemVariants()} className="flex flex-row items-center gap-4 flex-shrink-0 [--sz:24px] h-[--sz] max-w-full">
+        <motion.div variants={itemVariants()} className="flex flex-row items-center gap-4 flex-shrink-0 [--sz:24px] h-[var(--sz)] max-w-full">
           <Icon size="var(--sz)" className="text-gray-400" />
           {isValidURL(formData.url) ? (
             <>
@@ -242,7 +242,7 @@ export function LinkForm({ data, account, setOpenId }: LinkFormProps) {
   );
 
   const renderField = data && (
-    <div className="flex flex-row items-center gap-4 flex-shrink-0 h-[--sz] [--sz:32px] w-full max-w-full group">
+    <div className="flex flex-row items-center gap-4 flex-shrink-0 h-[var(--sz)] [--sz:32px] w-full max-w-full group">
       <Icon size="var(--sz)" />
       <div className="flex flex-col max-w-[calc(100%-(var(--sz)+2rem+2rem))]">
         <Link href={data?.url} target="_blank" rel="noopener noreferrer nofollow" className="font-normal text-sm truncate">

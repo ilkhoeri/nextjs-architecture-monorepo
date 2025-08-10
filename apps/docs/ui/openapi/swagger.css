@@ -64,7 +64,7 @@
 
 .swagger-ui .copy-to-clipboard,
 .swagger-ui .download-contents,
-.swagger-ui .auth-container input[type="text"] {
+.swagger-ui .auth-container input[type='text'] {
   border-radius: calc(var(--radius) - 2px);
 }
 
@@ -167,7 +167,7 @@
 
 .swagger-ui *,
 .swagger-ui section.models,
-.swagger-ui .auth-container input[type="text"] {
+.swagger-ui .auth-container input[type='text'] {
   border-color: hsl(var(--border));
 }
 .swagger-ui section.models h4 {
@@ -200,7 +200,7 @@
 }
 
 .swagger-ui .opblock-tag:where(h3):has(a.nostyle):has(small):has(button),
-.swagger-ui .auth-container input[type="text"] {
+.swagger-ui .auth-container input[type='text'] {
   width: 100%;
   max-width: 100%;
 }

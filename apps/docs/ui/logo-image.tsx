@@ -1,8 +1,8 @@
-"use client";
-import React from "react";
-import Image from "next/image";
+'use client';
+import React from 'react';
+import Image from 'next/image';
 
-type LogoImageProp = Omit<React.ComponentProps<typeof Image>, "alt" | "src" | "height" | "width"> & {
+type LogoImageProp = Omit<React.ComponentProps<typeof Image>, 'alt' | 'src' | 'height' | 'width'> & {
   size?: number | `${number}`;
 };
 
@@ -17,7 +17,7 @@ export function LogoImage({ size = 46, onContextMenu, style, ...props }: LogoIma
       style={
         {
           ...style,
-          WebkitUserDrag: "none"
+          WebkitUserDrag: 'none'
         } as React.CSSProperties
       }
       onContextMenu={e => {

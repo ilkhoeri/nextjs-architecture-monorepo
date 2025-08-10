@@ -21,7 +21,11 @@
     "../../packages/ui/src/burger.tsx",
     "../../packages/ui/src/polymorphic-slot.tsx",
     "../../packages/components/src/theme/index.tsx",
-    "../../packages/ui/src/typography.tsx"
+    "../../packages/ui/src/typography.tsx",
+    "../../packages/ui/src/sheets.tsx",
+    "../../packages/ui/src/scroll-area.tsx",
+    "../../packages/ui/src/tabs.tsx",
+    "../../packages/ui/src/tooltip.tsx"
   ],
   "exclude": ["node_modules"]
 }

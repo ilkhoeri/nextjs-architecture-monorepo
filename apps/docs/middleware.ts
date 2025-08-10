@@ -1,6 +1,6 @@
-import { i18nRouter } from "next-i18n-router";
-import { NextRequest } from "next/server";
-import { i18n } from "./i18n";
+import { i18nRouter } from 'next-i18n-router';
+import { NextRequest } from 'next/server';
+import { i18n } from './i18n';
 
 export function middleware(request: NextRequest) {
   // const nextUrl = request.nextUrl;
@@ -11,13 +11,13 @@ export function middleware(request: NextRequest) {
 
   // Skip i18n middleware for Next.js internal routes
   if (
-    pathname.startsWith("/_next/") ||
-    pathname.startsWith("/api/") ||
-    pathname.startsWith("/assets/") ||
-    pathname.startsWith("/images/") ||
-    pathname.startsWith("/icons/") ||
-    pathname.startsWith("/favicon") ||
-    pathname.includes(".") // Skip files with extensions
+    pathname.startsWith('/_next/') ||
+    pathname.startsWith('/api/') ||
+    pathname.startsWith('/assets/') ||
+    pathname.startsWith('/images/') ||
+    pathname.startsWith('/icons/') ||
+    pathname.startsWith('/favicon') ||
+    pathname.includes('.') // Skip files with extensions
   ) {
     return;
   }
@@ -33,10 +33,10 @@ export const config = {
   // Only run middleware on specific paths
   matcher: [
     // Skip all internal paths (_next, api, assets, etc.)
-    "/((?!_next/static|_next/image|favicon.ico|assets|api).*)",
+    '/((?!_next/static|_next/image|favicon.ico|assets|api).*)',
     // Include root path
-    "/",
+    '/',
     // Include locale paths
-    "/(id|en)/:path*"
+    '/(id|en)/:path*'
   ]
 };

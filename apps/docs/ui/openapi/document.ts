@@ -1,14 +1,14 @@
-import { z } from "zod";
-import { OpenAPIObject, InfoObject } from "openapi3-ts/oas31";
-import { createDocument, extendZodWithOpenApi } from "zod-openapi";
-import { SettingGeneralSchema, SignUpSchema, CreateChatSchema, SignInSchema, CreateMessageSchema, GetMessageSchema } from "./schema";
+import { z } from 'zod';
+import { OpenAPIObject, InfoObject } from 'openapi3-ts/oas31';
+import { createDocument, extendZodWithOpenApi } from 'zod-openapi';
+import { SettingGeneralSchema, SignUpSchema, CreateChatSchema, SignInSchema, CreateMessageSchema, GetMessageSchema } from './schema';
 
 extendZodWithOpenApi(z);
 
 const info: InfoObject = {
-  title: "API Docs",
-  version: "1.0.0",
-  description: "API documentation for my Next.js application"
+  title: 'API Docs',
+  version: '1.0.0',
+  description: 'API documentation for my Next.js application'
 };
 
 const SessionSchema = z
@@ -23,8 +23,8 @@ const SessionSchema = z
     expires: z.string().datetime()
   })
   .openapi({
-    title: "Session",
-    description: "NextAuth session object"
+    title: 'Session',
+    description: 'NextAuth session object'
   });
 
 const CsrfTokenSchema = z
@@ -32,24 +32,24 @@ const CsrfTokenSchema = z
     csrfToken: z.string()
   })
   .openapi({
-    title: "CSRF Token",
-    description: "CSRF token for NextAuth"
+    title: 'CSRF Token',
+    description: 'CSRF token for NextAuth'
   });
 
 const signUpExample = {
-  name: "johndoe",
-  email: "johndoe@mail.com",
-  password: "Johndoe123!",
-  confirmPassword: "Johndoe123!"
+  name: 'johndoe',
+  email: 'johndoe@mail.com',
+  password: 'Johndoe123!',
+  confirmPassword: 'Johndoe123!'
 };
 
 export const openApiDocument: OpenAPIObject = createDocument({
   info,
-  openapi: "3.0.0",
+  openapi: '3.0.0',
   servers: [
     {
       url: process.env.NEXT_PUBLIC_API_URL!,
-      description: "Main API Server"
+      description: 'Main API Server'
     }
     // Jika ada server lain, misal untuk lingkungan development
     // {
@@ -59,16 +59,16 @@ export const openApiDocument: OpenAPIObject = createDocument({
   ],
   paths: {
     // --- NextAuth ---
-    "/api/auth/csrf": {
+    '/api/auth/csrf': {
       get: {
-        tags: ["Users Management"],
-        summary: "Get CSRF token",
-        description: "Retrieves the CSRF token required for POST requests.",
+        tags: ['Users Management'],
+        summary: 'Get CSRF token',
+        description: 'Retrieves the CSRF token required for POST requests.',
         responses: {
-          "200": {
-            description: "Successful response with CSRF token",
+          '200': {
+            description: 'Successful response with CSRF token',
             content: {
-              "application/json": {
+              'application/json': {
                 schema: CsrfTokenSchema
               }
             }
@@ -77,37 +77,37 @@ export const openApiDocument: OpenAPIObject = createDocument({
         security: [{ bearerAuth: [] }]
       }
     },
-    "/api/getProfile": {
+    '/api/getProfile': {
       get: {
-        tags: ["Users Management"],
-        summary: "Get current user session",
-        description: "Retrieves the current user session details.",
+        tags: ['Users Management'],
+        summary: 'Get current user session',
+        description: 'Retrieves the current user session details.',
         responses: {
-          "200": {
-            description: "Successful response with session data",
+          '200': {
+            description: 'Successful response with session data',
             content: {
-              "application/json": {
+              'application/json': {
                 schema: SessionSchema
               }
             }
           },
-          "401": {
-            description: "Unauthorized"
+          '401': {
+            description: 'Unauthorized'
           }
         }
       }
     },
-    "/api/auth/users": {
+    '/api/auth/users': {
       get: {
-        tags: ["Users Management"],
-        summary: "Get all users",
+        tags: ['Users Management'],
+        summary: 'Get all users',
         responses: {
-          "200": {
-            description: "A list of users",
+          '200': {
+            description: 'A list of users',
             content: {
-              "application/json": {
+              'application/json': {
                 schema: z.array(SignUpSchema).openapi({
-                  description: "Array of user objects"
+                  description: 'Array of user objects'
                 })
               }
             }
@@ -117,79 +117,79 @@ export const openApiDocument: OpenAPIObject = createDocument({
       }
     },
     // "/api/auth/signup": {
-    "/api/register": {
+    '/api/register': {
       post: {
-        tags: ["Users Management"],
-        summary: "Create a new user",
+        tags: ['Users Management'],
+        summary: 'Create a new user',
         requestBody: {
           required: true,
           content: {
-            "application/json": {
+            'application/json': {
               schema: SignUpSchema.openapi({
-                title: "SignUp Request",
-                description: "User data to create"
+                title: 'SignUp Request',
+                description: 'User data to create'
               }),
               example: signUpExample
             },
-            "application/x-www-form-urlencoded": {
+            'application/x-www-form-urlencoded': {
               schema: SignUpSchema.openapi({
-                title: "SignUp Request Form",
-                description: "User data to create via form"
+                title: 'SignUp Request Form',
+                description: 'User data to create via form'
               }),
               example: signUpExample
             }
           }
         },
         responses: {
-          "200": {
-            description: "User created successfully",
+          '200': {
+            description: 'User created successfully',
             content: {
-              "application/json": {
+              'application/json': {
                 schema: SignUpSchema,
                 example: signUpExample
               }
             }
           },
-          "400": {
-            description: "Email and Name already exists"
+          '400': {
+            description: 'Email and Name already exists'
           },
-          "401": {
-            description: "Email already exists"
+          '401': {
+            description: 'Email already exists'
           },
-          "402": {
-            description: "Name already used"
+          '402': {
+            description: 'Name already used'
           }
         }
       }
     },
-    "/api/login": {
+    '/api/login': {
       post: {
-        tags: ["Users Management"],
-        summary: "Sign in",
-        description: "Initiates the sign-in process.",
+        tags: ['Users Management'],
+        summary: 'Sign in',
+        description: 'Initiates the sign-in process.',
         requestBody: {
-          description: "Optional: Callback URL after successful sign-in",
+          description: 'Optional: Callback URL after successful sign-in',
           content: {
-            "application/x-www-form-urlencoded": {
+            'application/x-www-form-urlencoded': {
               schema: SignInSchema.openapi({
-                title: "SignIn Request"
+                title: 'SignIn Request'
               })
             }
           }
         },
         responses: {
-          "200": {
-            description: "Sign in successfully",
+          '200': {
+            description: 'Sign in successfully',
             content: {
-              "application/x-www-form-urlencoded": {
+              'application/x-www-form-urlencoded': {
                 schema: z.array(SignInSchema).openapi({
-                  title: "SignIn Request"
+                  title: 'SignIn Request'
                 })
               }
             }
           },
-          "400": {
-            description: "Bad Request"
+          '400': {
+            description: 'Bad Request'
           }
         }
       }
@@ -265,100 +265,100 @@ export const openApiDocument: OpenAPIObject = createDocument({
       }
     },
      */
-    "/api/updateProfile": {
+    '/api/updateProfile': {
       put: {
-        tags: ["Users Management"],
-        summary: "Update user by ID",
+        tags: ['Users Management'],
+        summary: 'Update user by ID',
         description: "Updates an existing user's information by their ID.",
         parameters: [
           {
-            name: "userId",
-            in: "path",
+            name: 'userId',
+            in: 'path',
             required: true,
-            description: "The ID of the user to update",
+            description: 'The ID of the user to update',
             schema: {
-              type: "string",
-              format: "objectid"
+              type: 'string',
+              format: 'objectid'
             }
           }
         ],
         requestBody: {
           required: true,
           content: {
-            "application/json": {
+            'application/json': {
               schema: SettingGeneralSchema
             },
-            "application/x-www-form-urlencoded": {
+            'application/x-www-form-urlencoded': {
               schema: SettingGeneralSchema
             }
           }
         },
         responses: {
-          "200": {
-            description: "User updated successfully",
+          '200': {
+            description: 'User updated successfully',
             content: {
-              "application/json": {
+              'application/json': {
                 schema: SignUpSchema
               }
             }
           },
-          "400": {
-            description: "Invalid input or user not found"
+          '400': {
+            description: 'Invalid input or user not found'
           },
-          "401": {
-            description: "Unauthorized"
+          '401': {
+            description: 'Unauthorized'
           }
         }
         // security: [{ bearerAuth: [] }]
       }
     },
     // --- Penambahan Endpoint DELETE untuk Delete User ---
-    "/api/auth/danger/delete/user/{userId}": {
+    '/api/auth/danger/delete/user/{userId}': {
       delete: {
-        tags: ["Users Management"],
-        summary: "Delete user by ID (DANGER ZONE)",
-        description: "Deletes a user permanently by their ID. This action is irreversible.",
+        tags: ['Users Management'],
+        summary: 'Delete user by ID (DANGER ZONE)',
+        description: 'Deletes a user permanently by their ID. This action is irreversible.',
         parameters: [
           {
-            name: "userId",
-            in: "path",
+            name: 'userId',
+            in: 'path',
             required: true,
-            description: "The ID of the user to delete",
+            description: 'The ID of the user to delete',
             schema: {
-              type: "string",
-              format: "objectid"
+              type: 'string',
+              format: 'objectid'
             }
           }
         ],
         responses: {
-          "204": {
-            description: "User deleted successfully (No Content)"
+          '204': {
+            description: 'User deleted successfully (No Content)'
           },
-          "400": {
-            description: "Invalid user ID"
+          '400': {
+            description: 'Invalid user ID'
           },
-          "401": {
-            description: "Unauthorized"
+          '401': {
+            description: 'Unauthorized'
           },
-          "404": {
-            description: "User not found"
+          '404': {
+            description: 'User not found'
           }
         }
         // security: [{ bearerAuth: [] }]
       }
     },
     // --- Akhir Penambahan untuk NextAuth ---
-    "/api/chats": {
+    '/api/chats': {
       get: {
-        tags: ["Chats Management"],
-        summary: "Get all chats",
+        tags: ['Chats Management'],
+        summary: 'Get all chats',
         responses: {
-          "200": {
-            description: "A list of chats",
+          '200': {
+            description: 'A list of chats',
             content: {
-              "application/json": {
+              'application/json': {
                 schema: z.array(CreateChatSchema).openapi({
-                  description: "Array of chat objects"
+                  description: 'Array of chat objects'
                 })
               }
             }
@@ -367,29 +367,29 @@ export const openApiDocument: OpenAPIObject = createDocument({
         // security: [{ bearerAuth: [] }]
       },
       post: {
-        tags: ["Chats Management"],
-        summary: "Create a new chat",
+        tags: ['Chats Management'],
+        summary: 'Create a new chat',
         requestBody: {
           required: true,
           content: {
-            "application/json": {
+            'application/json': {
               schema: CreateChatSchema.openapi({
-                description: "chat data to create"
+                description: 'chat data to create'
               })
             },
-            "application/x-www-form-urlencoded": {
+            'application/x-www-form-urlencoded': {
               schema: CreateChatSchema.openapi({
-                title: "Create chat Form",
-                description: "Chat data to create (Form Data)"
+                title: 'Create chat Form',
+                description: 'Chat data to create (Form Data)'
               })
             }
           }
         },
         responses: {
-          "201": {
-            description: "chat created successfully",
+          '201': {
+            description: 'chat created successfully',
             content: {
-              "application/json": {
+              'application/json': {
                 schema: CreateChatSchema
               }
             }
@@ -397,82 +397,82 @@ export const openApiDocument: OpenAPIObject = createDocument({
         }
       }
     },
-    "/api/viewMessages": {
+    '/api/viewMessages': {
       get: {
-        tags: ["Messages Management"],
-        summary: "Get all messages or filter by chat ID",
-        description: "Retrieves a list of all messages. Optionally, filter messages by a specific chat ID.",
+        tags: ['Messages Management'],
+        summary: 'Get all messages or filter by chat ID',
+        description: 'Retrieves a list of all messages. Optionally, filter messages by a specific chat ID.',
         parameters: [
           {
-            name: "chatId",
-            in: "query",
+            name: 'chatId',
+            in: 'query',
             required: false,
-            description: "Optional: Filter messages by chat ID",
+            description: 'Optional: Filter messages by chat ID',
             schema: {
-              type: "string"
+              type: 'string'
             }
           }
         ],
         responses: {
-          "200": {
-            description: "A list of messages",
+          '200': {
+            description: 'A list of messages',
             content: {
-              "application/json": {
+              'application/json': {
                 schema: z.array(GetMessageSchema).openapi({
-                  description: "Array of message objects"
+                  description: 'Array of message objects'
                 })
               }
             }
           },
-          "401": {
-            description: "Unauthorized"
+          '401': {
+            description: 'Unauthorized'
           },
-          "500": {
-            description: "Internal Server Error"
+          '500': {
+            description: 'Internal Server Error'
           }
         }
         // security: [{ bearerAuth: [] }]
       }
     },
-    "/api/sendMessage": {
+    '/api/sendMessage': {
       post: {
-        tags: ["Messages Management"],
-        summary: "Create a new message",
-        description: "Sends a new message to a specified chat.",
+        tags: ['Messages Management'],
+        summary: 'Create a new message',
+        description: 'Sends a new message to a specified chat.',
         requestBody: {
           required: true,
           content: {
-            "application/json": {
+            'application/json': {
               schema: CreateMessageSchema.openapi({
-                title: "Create Message JSON",
-                description: "Message data to create (JSON)"
+                title: 'Create Message JSON',
+                description: 'Message data to create (JSON)'
               })
             },
-            "application/x-www-form-urlencoded": {
+            'application/x-www-form-urlencoded': {
               schema: CreateMessageSchema.openapi({
-                title: "Create Message Form",
-                description: "Message data to create (Form Data)"
+                title: 'Create Message Form',
+                description: 'Message data to create (Form Data)'
               })
             }
           }
         },
         responses: {
-          "201": {
-            description: "Message created successfully",
+          '201': {
+            description: 'Message created successfully',
             content: {
-              "application/json": {
+              'application/json': {
                 schema: GetMessageSchema
               }
             }
           },
-          "400": {
-            description: "Invalid input"
+          '400': {
+            description: 'Invalid input'
           },
-          "401": {
-            description: "Unauthorized"
+          '401': {
+            description: 'Unauthorized'
           },
-          "500": {
-            description: "Internal Server Error"
+          '500': {
+            description: 'Internal Server Error'
           }
         },
         security: [{ bearerAuth: [] }]
@@ -491,25 +491,25 @@ export const openApiDocument: OpenAPIObject = createDocument({
     */
     securitySchemes: {
       bearerAuth: {
-        type: "http",
-        scheme: "bearer",
-        bearerFormat: "JWT",
-        description: "Enter your JWT Bearer token in the format **Bearer &lt;token>**"
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        description: 'Enter your JWT Bearer token in the format **Bearer &lt;token>**'
       }
     }
   },
   tags: [
     {
-      name: "Users Management",
-      description: "Operations related to user management and authentication"
+      name: 'Users Management',
+      description: 'Operations related to user management and authentication'
     },
     {
-      name: "Chats Management",
-      description: "Operations related to chat functionalities"
+      name: 'Chats Management',
+      description: 'Operations related to chat functionalities'
     },
     {
-      name: "Messages Management",
-      description: "Operations related to message functionalities"
+      name: 'Messages Management',
+      description: 'Operations related to message functionalities'
     }
   ],
   security: [{ bearerAuth: [] }] // Semua endpoint memerlukan autentikasi secara default

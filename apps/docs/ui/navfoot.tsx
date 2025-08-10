@@ -6,7 +6,7 @@ import { cvx, cvxVariants } from 'xuxi';
 import { LogoImage } from './logo-image';
 import { BrandOeriIcon } from '@repo/icons';
 import { siteConfig } from '@/app/site/config';
-import { ThemeToggle } from "@/context/app-context";
+import { ThemeToggle } from '@/context/app-context';
 import { Polymorphic } from '@repo/ui/polymorphic-slot';
 
 const classes = cvx({
@@ -62,7 +62,7 @@ export async function NavFoot() {
         <ThemeToggle
           unstyled={{ wrapper: true, buttons: true }}
           classNames={{
-            wrapper: cn('flex items-center p-[3px] border rounded-full w-max'),
+            wrapper: cn('flex items-center p-[3px] border border-border rounded-full w-max'),
             buttons: cn(
               'inline-flex items-center justify-center ring-offset-background-theme transition-colors text-muted-foreground [@media(hover:hover)]:hover:data-[state=active]:bg-constructive/75 [@media(hover:hover)]:hover:bg-muted/75 [@media(hover:hover)]:hover:text-color focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-background-theme focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 sizer [--sz:32px] p-0.5 rounded-full data-[state=active]:bg-constructive data-[state=active]:text-white'
             )

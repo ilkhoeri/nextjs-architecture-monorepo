@@ -1,10 +1,10 @@
-import { dictionaries } from "./intl";
-import { Locale } from "./types";
-import { Config } from "next-i18n-router/dist/types";
+import { dictionaries } from './intl';
+import { Locale } from './types';
+import { Config } from 'next-i18n-router/dist/types';
 
 export const mockLocales = [
-  { code: "en", name: "English" },
-  { code: "id", name: "Bahasa Indonesia" }
+  { code: 'en', name: 'English' },
+  { code: 'id', name: 'Bahasa Indonesia' }
   // { code: "es", name: "Español" },
   // { code: "fr", name: "Français" },
   // { code: "de", name: "Deutsch" },
@@ -26,6 +26,6 @@ export const locales: Locale[] = mockLocales.map(item => item.code);
 
 // export const locales: Locale[] = Object.keys(dictionaries) as (keyof typeof dictionaries)[];
 
-export const defaultLocale: Locale = "en";
+export const defaultLocale: Locale = 'en';
 
 export const i18n: Config = { locales, defaultLocale } as const;

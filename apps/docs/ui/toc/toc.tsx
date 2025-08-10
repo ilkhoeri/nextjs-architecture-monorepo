@@ -48,7 +48,7 @@ export function DashboardTableOfContents({ toc, sub = 6 }: TocProps) {
   if (!toc?.items?.length) return null;
 
   return (
-    <aside className="bg-background-theme m-0 mt-[calc(var(--navbar)*-1)] h-[--aside-h] max-h-[--aside-h] w-full overflow-hidden pt-[calc(var(--navbar)+18px)] [--aside-h:100dvh] [--aside-w:calc(var(--aside)-1rem)] max-lg:sr-only max-lg:z-[-111] max-lg:hidden lg:sticky lg:top-0 lg:w-[--aside-w] lg:min-w-[--aside-w] lg:max-w-[--aside-w] lg:pl-8 lg:pr-4 lg:transition-none lg:[--aside-h:calc(100dvh-2rem)] lg:rtl:pl-4 lg:rtl:pr-8">
+    <aside className="bg-background-theme m-0 mt-[calc(var(--navbar)*-1)] h-[var(--aside-h)] max-h-[var(--aside-h)] w-full overflow-hidden pt-[calc(var(--navbar)+18px)] [--aside-h:100dvh] [--aside-w:calc(var(--aside)-1rem)] max-lg:sr-only max-lg:z-[-111] max-lg:hidden lg:sticky lg:top-0 lg:w-[var(--aside-w)] lg:min-w-[var(--aside-w)] lg:max-w-[var(--aside-w)] lg:pl-8 lg:pr-4 lg:transition-none lg:[--aside-h:calc(100dvh-2rem)] lg:rtl:pl-4 lg:rtl:pr-8">
       {toc?.items?.length && (
         <nav className="sticky flex flex-col flex-nowrap items-start justify-start overflow-y-auto overflow-x-hidden pl-3 pt-4 max-lg:pb-24 max-lg:pt-0 lg:pb-0 rtl:pl-0 rtl:pr-3">
           <hgroup>

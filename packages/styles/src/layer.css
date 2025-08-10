@@ -167,7 +167,7 @@
       }
     }
     &[data-loader='clockwise'] {
-      @apply relative flex flex-wrap content-center items-center justify-center size-[var(--clockwise-size)] bg-transparent rounded-full outline [outline-width:--outline] outline-offset-[var(--outline)] outline-[var(--clockwise-color,#757575)] [--outline:calc(var(--clockwise-size)/24)];
+      @apply relative flex flex-wrap content-center items-center justify-center size-[var(--clockwise-size)] bg-transparent rounded-full outline [outline-width:var(--outline)] outline-offset-[var(--outline)] outline-[var(--clockwise-color,#757575)] [--outline:calc(var(--clockwise-size)/24)];
       & [data-clockwise='clockwise'] {
         @apply absolute size-full rounded-full flex flex-wrap content-center items-center justify-center [--space:calc((var(--clockwise-size)*4.17)/100)] [--initial-size:calc((var(--clockwise-size)/2)+var(--space))] [--w:calc((var(--clockwise-size)*8.334)/100)] [--top:calc(var(--initial-size)-var(--h))] [animation:rotate_var(--duration,var(--clockwise-duration))_linear_var(--clockwise-delay,0s)_infinite_var(--clockwise-property,normal)_forwards_running];
         &:first-child {
@@ -188,7 +188,7 @@
       }
     }
     &[data-loader='buffer'] {
-      @apply relative [--from:--buffer-size] [--to:calc(var(--buffer-size)/4)] flex flex-nowrap flex-row items-center justify-between size-[var(--buffer-size)];
+      @apply relative [--from:var(--buffer-size)] [--to:calc(var(--buffer-size)/4)] flex flex-nowrap flex-row items-center justify-between size-[var(--buffer-size)];
       & [data-buffer='buffer'] {
         @apply block w-[calc(var(--buffer-size)/8.75)] h-[calc(var(--buffer-size)/1)] bg-[var(--buffer-color,#757575)] rounded-full [animation:heightSpare_var(--buffer-duration)_ease_var(--buffer-delay)_infinite_normal_both_running];
       }

@@ -1,20 +1,20 @@
 // "use server";
 
-"server-only";
+'server-only';
 
 // import { cookies } from "next/headers";
-import { createIntl } from "@formatjs/intl";
-import { MessageFormatElement } from "react-intl";
-import { defaultLocale } from "./config";
+import { createIntl } from '@formatjs/intl';
+import { MessageFormatElement } from 'react-intl';
+import { defaultLocale } from './config';
 
-import type { Dictionaries, Locale } from "./types";
+import type { Dictionaries, Locale } from './types';
 
 // import en from "./dictionaries/en.json" with { type: "json" };
 // import id from "./dictionaries/id.json" with { type: "json" };
 
 export const dictionaries = {
-  en: () => import("./dictionaries/en.json").then(module => module.default),
-  id: () => import("./dictionaries/id.json").then(module => module.default)
+  en: () => import('./dictionaries/en.json').then(module => module.default),
+  id: () => import('./dictionaries/id.json').then(module => module.default)
   // ar: () => import("./dictionaries/ar.json").then(module => module.default),
   // ja: () => import("./dictionaries/ja.json").then(module => module.default),
   // ms: () => import("./dictionaries/ms.json").then(module => module.default),

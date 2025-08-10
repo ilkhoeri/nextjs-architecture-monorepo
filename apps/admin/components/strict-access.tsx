@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import { StatusAccess } from '@repo/components/error';
+import { AccessStatus } from '@repo/components/error';
 import { User } from '@/types/user';
 import { strictRole } from '../lib/const/role-status';
 
@@ -19,7 +19,7 @@ export function StrictAccess(props: StrictAccessProps) {
 
   const strictUser = strictRole(user) ? false : user.refId !== data?.userId;
 
-  if (data && strictUser) return <StatusAccess status="access-denied" />;
+  if (data && strictUser) return <AccessStatus status="access-denied" />;
 
   return <>{children}</>;
 }

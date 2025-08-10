@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { useRouter } from "next/navigation";
-import { usePathname } from "next/navigation";
-import { useCurrentLocale } from "next-i18n-router/client";
-import { i18n } from "../config";
-import { Locale } from "../types";
+import * as React from 'react';
+import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import { useCurrentLocale } from 'next-i18n-router/client';
+import { i18n } from '../config';
+import { Locale } from '../types';
 
 type Options = {
   days?: number;
@@ -30,10 +30,10 @@ export function useLocaleSwitcher() {
     (newLocale: string) => {
       setLocale(newLocale as Locale);
       // Set cookie for next-i18n-router
-      setCookies("NEXT_LOCALE", newLocale);
+      setCookies('NEXT_LOCALE', newLocale);
       // Jika locale saat ini adalah default dan tidak ingin menambahkan prefix default
       if (currentLocale === i18n.defaultLocale && !i18n.prefixDefault) {
-        router.replace("/" + newLocale + currentPathname, { scroll: false });
+        router.replace('/' + newLocale + currentPathname, { scroll: false });
       } else {
         router.replace(currentPathname.replace(`/${currentLocale}`, `/${newLocale}`), { scroll: false });
       }

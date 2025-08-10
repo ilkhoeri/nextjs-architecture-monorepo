@@ -1,18 +1,18 @@
-"use client";
-import React from "react";
-import { cn } from "@repo/utils";
-import { CheckIcon } from "@repo/icons";
-import { cvx } from "xuxi";
+'use client';
+import React from 'react';
+import { cn } from '@repo/utils';
+import { CheckIcon } from '@repo/icons';
+import { cvx } from 'xuxi';
 
 export const radioVariants = cvx({
   variants: {
     role: {
-      title: "px-2 font-semibold py-0 text-base",
-      separator: "-mx-1 my-1 h-px bg-muted",
-      group: "grid grid-flow-row gap-0.5",
-      item: "relative w-full flex flex-row items-center justify-start cursor-pointer bg-inherit transition-colors duration-300 hover:bg-color/5 select-none rounded-md text-sm outline-none transition-colors aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 gap-3 py-2 px-3 aria-checked:bg-color/5 data-[state=checked]:bg-color/5",
+      title: 'px-2 font-semibold py-0 text-base',
+      separator: '-mx-1 my-1 h-px bg-muted',
+      group: 'grid grid-flow-row gap-0.5',
+      item: 'relative w-full flex flex-row items-center justify-start cursor-pointer bg-inherit transition-colors duration-300 hover:bg-color/5 select-none rounded-md text-sm outline-none transition-colors aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 gap-3 py-2 px-3 aria-checked:bg-color/5 data-[state=checked]:bg-color/5',
       indicator:
-        "bg-background-theme flex [--sz:20px] size-[var(--sz)] min-w-[var(--sz)] min-h-[var(--sz)] max-w-[var(--sz)] max-h-[var(--sz)] items-center justify-center rounded-full border border-color"
+        'bg-background-theme flex [--sz:20px] size-[var(--sz)] min-w-[var(--sz)] min-h-[var(--sz)] max-w-[var(--sz)] max-h-[var(--sz)] items-center justify-center rounded-full border border-color'
     }
   }
 });
@@ -76,7 +76,7 @@ export function RadioGroup(_props: RadioGroupProps) {
   const { value, onValueChange, children, className, name } = _props;
 
   return (
-    <div className={cn(radioVariants({ role: "group" }), className)} role="radiogroup">
+    <div className={cn(radioVariants({ role: 'group' }), className)} role="radiogroup">
       {React.Children.map(children, child => {
         if (React.isValidElement(child)) {
           return React.cloneElement(child as React.ReactElement<RadioItemBaseProps>, {
@@ -105,17 +105,17 @@ export function RadioItem(_props: RadioItemProps) {
   return (
     <label
       {...{
-        role: "menuitemradio",
+        role: 'menuitemradio',
         htmlFor: forName,
-        "aria-disabled": disabled,
-        "aria-checked": checked,
-        "data-disabled": disabled ? "true" : undefined,
-        "data-state": checked ? "checked" : "unchecked"
+        'aria-disabled': disabled,
+        'aria-checked': checked,
+        'data-disabled': disabled ? 'true' : undefined,
+        'data-state': checked ? 'checked' : 'unchecked'
       }}
-      className={cn(radioVariants({ role: "item" }), className)}
+      className={cn(radioVariants({ role: 'item' }), className)}
     >
       <input type="radio" id={forId} name={forName} value={value as string} checked={checked} onChange={onSelect} disabled={disabled} className="sr-only" />
-      <div className={cn(radioVariants({ role: "indicator" }))}>{currentIcon}</div>
+      <div className={cn(radioVariants({ role: 'indicator' }))}>{currentIcon}</div>
       {children}
     </label>
   );
@@ -156,7 +156,7 @@ interface StandaloneRadioItemProps {
  */
 export function StandaloneRadioGroup({ value, onValueChange, children, className }: StandaloneRadioGroupProps) {
   return (
-    <div className={cn("space-y-1", className)} role="radiogroup">
+    <div className={cn('space-y-1', className)} role="radiogroup">
       {React.Children.map(children, child => {
         if (React.isValidElement(child)) {
           return React.cloneElement(child as React.ReactElement<RadioItemProps>, {
@@ -207,16 +207,16 @@ export function StandaloneRadioItem({
       // )}
       {...{
         disabled,
-        role: "radio",
+        role: 'radio',
         name: value,
-        "aria-disabled": disabled,
-        "aria-checked": checked,
-        "data-disabled": disabled ? "true" : undefined,
-        "data-state": checked ? "checked" : "unchecked"
+        'aria-disabled': disabled,
+        'aria-checked': checked,
+        'data-disabled': disabled ? 'true' : undefined,
+        'data-state': checked ? 'checked' : 'unchecked'
       }}
-      className={cn(radioVariants({ role: "item" }), className)}
+      className={cn(radioVariants({ role: 'item' }), className)}
     >
-      <div className={cn(radioVariants({ role: "indicator" }))}>{currentIcon}</div>
+      <div className={cn(radioVariants({ role: 'indicator' }))}>{currentIcon}</div>
       {children}
     </button>
   );

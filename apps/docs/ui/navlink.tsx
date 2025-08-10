@@ -1,12 +1,12 @@
-"use client";
-import * as React from "react";
-import Image from "next/image";
-import { cn } from "@repo/utils";
-import { usePathname } from "next/navigation";
-import { Anchor, type AnchorProps } from "@repo/ui/anchor";
-import type { IconType, DetailedSvgProps } from "@repo/ui";
+'use client';
+import * as React from 'react';
+import Image from 'next/image';
+import { cn } from '@repo/utils';
+import { usePathname } from 'next/navigation';
+import { Anchor, type AnchorProps } from '@repo/ui/anchor';
+import type { IconType, DetailedSvgProps } from '@repo/ui';
 
-type NavLinkTrees = "link" | "active" | "icon" | "img" | "title" | "mark";
+type NavLinkTrees = 'link' | 'active' | 'icon' | 'img' | 'title' | 'mark';
 export type NavLinkClass = {
   classNames?: Partial<Record<NavLinkTrees, string>>;
 };
@@ -20,23 +20,23 @@ export interface NavLinkItemProps {
   isNew?: boolean | undefined;
   style?: React.CSSProperties & { [key: string]: any };
 }
-export interface NavLinkProps extends Omit<AnchorProps, "href">, NavLinkClass {
+export interface NavLinkProps extends Omit<AnchorProps, 'href'>, NavLinkClass {
   items: NavLinkItemProps[];
   includePath?: boolean;
   children?: React.ReactNode;
 }
 
-export const getPathSegments = (path: string) => path.toLowerCase().split("/").filter(Boolean);
+export const getPathSegments = (path: string) => path.toLowerCase().split('/').filter(Boolean);
 
 export function NavLink({ items, ...props }: NavLinkProps) {
   return items.map((item, index) => <NavLinkItem key={index} href={item.href} title={item.title} icon={item.icon} {...props} />);
 }
 
-interface NavLinkItemTypes extends Omit<AnchorProps, "href">, NavLinkItemProps, NavLinkClass {
+interface NavLinkItemTypes extends Omit<AnchorProps, 'href'>, NavLinkItemProps, NavLinkClass {
   includePath?: boolean;
 }
 export function NavLinkItem(_props: NavLinkItemTypes) {
-  const { href = "", title, icon: Icon, image, isNew, scroll = false, className, classNames, includePath, iconProps, style, ...props } = _props;
+  const { href = '', title, icon: Icon, image, isNew, scroll = false, className, classNames, includePath, iconProps, style, ...props } = _props;
   const pathname = usePathname();
 
   const pathSegments = getPathSegments(pathname);
@@ -48,8 +48,8 @@ export function NavLinkItem(_props: NavLinkItemTypes) {
         {...{
           href,
           scroll,
-          "data-path": pathActive ? "active" : undefined,
-          "data-mark": isNew ? "true" : undefined,
+          'data-path': pathActive ? 'active' : undefined,
+          'data-mark': isNew ? 'true' : undefined,
           className: cn(className, classNames?.link, pathActive && classNames?.active),
           style,
           ...props
@@ -59,7 +59,7 @@ export function NavLinkItem(_props: NavLinkItemTypes) {
           <Image
             alt=""
             draggable="false"
-            src={image || "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs%3D"}
+            src={image || 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs%3D'}
             height={20}
             width={20}
             loading="lazy"
@@ -91,14 +91,14 @@ export const Mark = React.forwardRef<HTMLElement, MarkProps>(function Mark({ chi
     <mark
       ref={ref}
       className={cn(
-        "h-4 w-max select-none rounded px-1 text-center font-mono text-[10px] font-semibold uppercase leading-[16px] text-white",
-        mark === true ? "bg-[#2ea043] tracking-wide" : "bg-[#e54b4b] tracking-[0]",
+        'h-4 w-max select-none rounded px-1 text-center font-mono text-[10px] font-semibold uppercase leading-[16px] text-white',
+        mark === true ? 'bg-[#2ea043] tracking-wide' : 'bg-[#e54b4b] tracking-[0]',
         className
       )}
       {...props}
     >
-      {mark === true ? (childTrue ?? "True") : (childFalse ?? "False")}
+      {mark === true ? (childTrue ?? 'True') : (childFalse ?? 'False')}
     </mark>
   );
 });
-Mark.displayName = "Mark";
+Mark.displayName = 'Mark';

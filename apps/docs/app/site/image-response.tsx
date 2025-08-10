@@ -1,10 +1,10 @@
-import { ImageResponse } from "next/og";
+import { ImageResponse } from 'next/og';
 
-export const runtime = "edge";
-export const contentType = "image/png";
+export const runtime = 'edge';
+export const contentType = 'image/png';
 
 // Image metadata
-export const alt = "About Acme";
+export const alt = 'About Acme';
 export const size = {
   width: 1200,
   height: 630
@@ -18,10 +18,10 @@ export default async function Image({ url, params }: { url: string; params: Prom
   const post = await fetch(`${url}/${slug}`).then(res => res.json());
 
   // logo image
-  const logoSrc = await fetch(new URL("/favicon/asset-umk-transparent.png", import.meta.url)).then(res => res.arrayBuffer());
+  const logoSrc = await fetch(new URL('/favicon/asset-umk-transparent.png', import.meta.url)).then(res => res.arrayBuffer());
 
   // Font
-  const interSemiBold = fetch(new URL("./Inter-SemiBold.ttf", import.meta.url)).then(res => res.arrayBuffer());
+  const interSemiBold = fetch(new URL('./Inter-SemiBold.ttf', import.meta.url)).then(res => res.arrayBuffer());
 
   return new ImageResponse(
     (
@@ -30,13 +30,13 @@ export default async function Image({ url, params }: { url: string; params: Prom
         {...{
           style: {
             fontSize: 128,
-            background: "white",
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center"
+            background: 'white',
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center'
           }
         }}
       >
@@ -52,9 +52,9 @@ export default async function Image({ url, params }: { url: string; params: Prom
       ...size,
       fonts: [
         {
-          name: "Inter",
+          name: 'Inter',
           data: await interSemiBold,
-          style: "normal",
+          style: 'normal',
           weight: 400
         }
       ]

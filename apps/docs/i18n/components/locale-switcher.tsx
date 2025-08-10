@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { cn } from '@repo/utils';
 import { i18nLocale } from '../types';
-import { Sheets } from '@/ui/sheets';
+import { Sheets } from '@repo/ui/sheets';
 import { RadioGroup, RadioItem, radioVariants } from './radio';
 // import { StandaloneRadioGroup as RadioGroup, StandaloneRadioItem as RadioItem, radioVariants } from "./radio";
 import { useLocaleSwitcher } from '../hooks/use-local-switcher';

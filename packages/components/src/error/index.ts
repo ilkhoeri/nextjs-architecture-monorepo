@@ -2,4 +2,4 @@ export * from './block';
 export * from './lib';
 export * from './messages';
 export * from './reset';
-export * from './status-access';
+export * from './access-status';

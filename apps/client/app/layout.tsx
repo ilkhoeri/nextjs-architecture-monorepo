@@ -1,4 +1,6 @@
 import { Inter } from 'next/font/google';
+import { ThemeProvider, ThemeStateHidden } from '@repo/components/theme';
+
 import type { Metadata } from 'next';
 
 import './globals.css';
@@ -17,8 +19,13 @@ export function metadata(): Metadata {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} bg-background`}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.className} bg-background`}>
+        <ThemeProvider>
+          {children}
+          <ThemeStateHidden />
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
