@@ -1,15 +1,15 @@
 'use client';
-import * as React from 'react';
-import { createPortal } from 'react-dom';
-import { mergeRefs } from '@repo/hooks/use-merged-ref';
-import { cvx, rem, ocx } from 'xuxi';
-import { useHotkeys } from '@repo/hooks/use-hotkeys';
-import { useClickOutside } from '@repo/hooks/use-click-outside';
-import { useElementRect } from '@repo/hooks/use-element-info';
-import { getVarsPositions, useUpdatedPositions } from '@repo/hooks/use-open-state';
-import { useMeasureScrollbar } from '@repo/hooks';
-import { XIcon } from '@repo/icons';
+import React from 'react';
 import { cn } from '@repo/utils';
+import { XIcon } from '@repo/icons';
+import { cvx, rem, ocx } from 'xuxi';
+import { createPortal } from 'react-dom';
+import { useMeasureScrollbar } from '@repo/hooks';
+import { useHotkeys } from '@repo/hooks/use-hotkeys';
+import { mergeRefs } from '@repo/hooks/use-merged-ref';
+import { useElementRect } from '@repo/hooks/use-element-info';
+import { useClickOutside } from '@repo/hooks/use-click-outside';
+import { getVarsPositions, useUpdatedPositions } from '@repo/hooks/use-open-lib';
 
 export enum SheetsVariant {
   Accordion = 'accordion',
@@ -874,7 +874,7 @@ function styleByVariant(side: `${SheetsSide}`) {
         dropdown: ''
       },
       trigger: {
-        accordion: 'relative z-9 w-full flex flex-row items-center justify-between flex-1 py-4 rounded-none font-medium hover:underline [&>svg]:data-[state*=open]:rotate-180',
+        accordion: 'relative z-9 w-full flex flex-row items-center justify-between flex-1 py-4 rounded-none hover:underline underline-offset-4 data-[state*=open]:[&>svg]:rotate-180',
         collapsible: cn(styleDefault.trigger),
         dialog: cn(styleDefault.trigger),
         drawer: cn(styleDefault.trigger),

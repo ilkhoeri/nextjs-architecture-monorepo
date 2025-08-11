@@ -65,7 +65,7 @@ export default async function RootLayout({ children, params }: Readonly<RootLayo
           <link rel="icon" sizes="any" type="image/x-icon" href="/favicon.ico" />
           <link rel="shortcut icon" href="/favicon.ico" />
         </head>
-        <body {...bodyConfig('bg-background-theme')}>
+        <body {...bodyConfig()}>
           <ThemeProvider>
             <NavProvider>
               <NavHead />

@@ -50,7 +50,7 @@ export function SignInForm({ className, providerSign, ...props }: SignInFormProp
       />
 
       {providerSign}
-      {providerSign && <Separator label="or" className="-my-2" />}
+      {providerSign && <Separator label="or" className="-my-2 border-b-[var(--palette-divider)]" />}
 
       <Form {...props} onSubmit={form.handleSubmit(onSubmit)} className={cn('group flex flex-col gap-6 w-full', className)}>
         <div className="grid gap-4">

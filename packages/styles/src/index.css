@@ -1,6 +1,8 @@
 @import './layer.css';
 @import './variables.css';
 
+/* @config "../../configs/tailwind-config/tailwind.config.ts"; */
+
 /* @import '@repo/ui/styles.css';
 @import '@repo/shells/styles.css';
 @import '@repo/viz/styles.css'; */
@@ -69,18 +71,20 @@
   --tracking-0: 0;
 
   /* border-radius */
-  --radius: 0.5rem;
-  --radius-0: 0;
-  --radius-sm: calc(var(--radius) - 0.25rem);
-  --radius-md: calc(var(--radius) - 0.125rem);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 0.125rem);
-  --radius-2xl: calc(var(--radius) + 0.25rem);
-  --radius-3xl: calc(var(--radius) + 0.5rem);
-  --radius-4xl: 2rem;
-  --radius-5xl: 2.5rem;
-  --radius-6xl: 3rem;
-  --radius-7xl: 3.5rem;
+  --radius-none: 0rem;
+  --radius-0: 0rem;
+  --radius-xs: calc(0.125rem - var(--padd, 0px));
+  --radius-sm: calc(0.25rem - var(--padd, 0px));
+  --radius-md: calc(0.375rem - var(--padd, 0px));
+  --radius-lg: calc(0.5rem - var(--padd, 0px));
+  --radius-xl: calc(0.625rem - var(--padd, 0px));
+  --radius-2xl: calc(1rem - var(--padd, 0px));
+  --radius-3xl: calc(1.5rem - var(--padd, 0px));
+  --radius-4xl: calc(2rem - var(--padd, 0px));
+  --radius-5xl: calc(2.5rem - var(--padd, 0px));
+  --radius-6xl: calc(3rem - var(--padd, 0px));
+  --radius-7xl: calc(3.5rem - var(--padd, 0px));
+  --radius-full: calc(infinity * 1px);
 
   /* color */
   --color-color: var(--color);
@@ -93,7 +97,7 @@
   --color-background-code-body: var(--background-code-body);
   --color-code: var(--code);
   --color-border: var(--border);
-  --color-muted: var(--cl-muted);
+  --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-muted-emphasis: var(--muted-emphasis);
   --color-mention: var(--mention);
@@ -113,16 +117,15 @@
   --color-primitive-emphasis: var(--primitive-emphasis);
 
   --color-foreground: var(--foreground);
-  --color-primary: #0070f3;
-  --color-secondary: #1c1c1e;
-  --color-accent: #ff4081;
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
 
-  --color-color: var(--color);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-border: var(--border);
   --color-ceramic-primary: var(--ceramic-primary);
   --color-ceramic-secondary: var(--ceramic-secondary);
   --color-ceramic-dimmed: var(--ceramic-dimmed);
@@ -161,16 +164,12 @@
   --font-geist-sans: var(--font-geist-sans);
   --font-geist-mono: var(--font-geist-mono);
   --font-orelega-one: var(--ff-orelega-one);
-  /* --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono); */
 
   /* font-size */
 
   /* font */
   --text-tiny: 0.8125rem;
   --text-tiny--line-height: 1.38462;
-  --text-tiny--letter-spacing: normal;
-  --text-tiny--font-weight: 400;
 }
 
 /* keyframes */
@@ -427,6 +426,29 @@
 @custom-variant root (:root);
 @custom-variant dark (&:where(.dark, .dark *));
 
+@custom-variant any-hover {
+  @media (any-hover: hover) {
+    &:hover {
+      @slot;
+    }
+  }
+}
+/* @custom-variant theme-midnight (&:where([data-theme="midnight"] *)); */
+@custom-variant theme-midnight {
+  &:where([data-theme='midnight'] *) {
+    @slot;
+  }
+}
+
+@utility round-* {
+  border-radius: --value(--radius-*);
+  border-radius: calc(--value([integer], [percentage], [length]) - var(--padd, 0px));
+}
+@utility padd-* {
+  --padd: --spacing(--value(integer));
+  --padd: --value([integer], [percentage], [length], [ratio], [*]);
+}
+
 /* @custom-variant mixin-dark (@mixin dark);
 @custom-variant mixin-light (@mixin light);
 @custom-variant mixin-ltr (@mixin ltr);
@@ -490,7 +512,9 @@
   animation: hop-arround 2s infinite;
 }
 
-@utility sizer {
+@utility sizer-* {
+  --sz: --spacing(--value(integer));
+  --sz: --value([integer], [percentage], [length], [ratio], [*]);
   width: var(--sz--w, var(--sz-w, var(--sz)));
   min-width: var(--sz-miw, var(--sz-min, var(--sz-w, var(--sz))));
   max-width: var(--sz-maw, var(--sz-max, var(--sz-w, var(--sz))));
@@ -614,8 +638,10 @@
 }
 
 @utility scrollbar-hidden {
+  scrollbar-color: #0000 #0000 !important;
+  scrollbar-width: none !important;
   &::-webkit-scrollbar {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -626,11 +652,12 @@
 }
 
 @utility webkit-scrollbar {
+  --webkit-scroll-sz: var(--scroll-sz, 0px);
   @supports (scrollbar-color: auto) {
     &::-webkit-scrollbar {
       display: none;
-      width: var(--scroll-sz, 0px);
-      height: var(--scroll-sz, 0px);
+      width: var(--webkit-scroll-sz, 0px);
+      height: var(--webkit-scroll-sz, 0px);
       border-radius: var(--scroll-rounded, 9999px);
     }
     &::-webkit-scrollbar-track {
@@ -647,8 +674,8 @@
 }
 
 ::-webkit-scrollbar {
-  width: var(--scroll-sz, 0.3125rem);
-  height: var(--scroll-sz, 0.3125rem);
+  width: var(--webkit-scroll-sz, 0.3125rem);
+  height: var(--webkit-scroll-sz, 0.3125rem);
   border-radius: var(--scroll-rounded, infinity);
 }
 ::-webkit-scrollbar-track {
@@ -752,7 +779,6 @@ body {
   margin: 0;
   overflow: hidden auto;
   overflow-x: hidden;
-  font-family: var(--font-geist-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--color);

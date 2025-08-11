@@ -1,10 +1,10 @@
 'use client';
 import React from 'react';
-import { motion } from 'framer-motion';
-import { XIcon } from '@repo/icons';
 import { cn } from '@repo/utils';
-import { Portal } from '@repo/hooks/use-open-state';
+import { XIcon } from '@repo/icons';
+import { motion } from 'framer-motion';
 import { useModal } from '@repo/hooks/use-modal';
+import { Portal } from '@repo/hooks/use-open-lib';
 
 type MotionImageTrees = 'container' | 'image' | 'containerModal' | 'imageModal' | 'closeModal' | 'portalModal';
 interface MotionImageProps extends Omit<React.ComponentProps<typeof motion.div>, 'children'> {

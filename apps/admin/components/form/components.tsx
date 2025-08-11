@@ -1,11 +1,11 @@
-import * as React from 'react';
-import Image from 'next/image';
+import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { cn } from '@repo/utils/cn';
 import { Loader } from '@repo/ui/loader';
 import { Button } from '@repo/ui/button';
 import { classesInput } from '@repo/ui/input';
-import { Portal } from '@repo/hooks/use-open-state';
+import { Portal } from '@repo/hooks/use-open-lib';
 
 interface Options {
   className?: string;

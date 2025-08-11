@@ -1,8 +1,8 @@
 import { ErrorReset } from './reset';
+import { NotchTailIcon } from './icons';
 import { TextTransform } from '@repo/utils';
 import { ChevronFillIcon } from '@repo/icons';
 import { errorParser, HttpErrorProps } from './lib';
-import { IndicatorIcon, NotchTailIcon } from './icons';
 import { parseErrorStack, type ParsedStack } from './utils/stack-parser';
 
 function NavPagination() {
@@ -37,8 +37,8 @@ export function ErrorBlockHead({ error }: { error: HttpErrorProps['error'] }) {
       </div>
       <div className="error-overlay-notch" data-side="right">
         <p className="container-build-error-version-status dialog-exclude-closing-from-outside-click">
-          <IndicatorIcon className="version-staleness-indicator stale" />
-          <span data-nextjs-version-checker="true" title="There is a newer version (15.4.6) available, upgrade recommended! ">
+          <span data-staleness-indicator="" className="stale" />
+          <span data-version-checker="true" title={stack?.type}>
             {process.env.NEXT_PUBLIC_SITE_URL}
           </span>
         </p>
@@ -57,11 +57,9 @@ export function ErrorBlockBody({ error, reset }: HttpErrorProps) {
     <div data-dialog-content="">
       <div data-dialog-header="">
         <div className="flex flex-row items-center justify-between mb-3.5">
-          <p className="flex flex-row items-center gap-2">
-            <span className="errors-label bg-[#2a1314] text-[#ff6369]">Console {stack?.type}</span>
-            <span data-environment-name-label="" className="bg-muted text-muted-foreground">
-              {TextTransform.text(stack?.origin)}
-            </span>
+          <p data-environment="" className="flex flex-row items-center gap-2">
+            {stack?.type && <span data-environment-type="">{stack?.type}</span>}
+            <span data-environment-name-label="">{TextTransform.text(stack?.origin)}</span>
           </p>
           <ErrorReset reset={reset} />
         </div>
@@ -72,7 +70,9 @@ export function ErrorBlockBody({ error, reset }: HttpErrorProps) {
       <div data-dialog-body="">
         <div data-codeframe="">
           <div data-codeframe-header="">
-            <div className="flex flex-row items-center gap-2">{error.digest && <p>Digest: {error.digest}</p>}</div>
+            <div className="flex flex-row items-center gap-2">
+              <p>{error.digest ? `Digest: ${error.digest}` : 'Console'}</p>
+            </div>
             <a className="cursor-default text-sm font-semibold text-muted-foreground hover:text-color">↪</a>
           </div>
           <pre data-codeframe-content="">
@@ -84,12 +84,31 @@ export function ErrorBlockBody({ error, reset }: HttpErrorProps) {
   );
 }
 
+// Padding untuk line number: berdasarkan selisih digit
+const getLinePadding = (digitCount: number, currentLength: number, padChar = ' ') => {
+  return padChar.repeat(Math.max(digitCount - currentLength, 0));
+};
+
+// Padding untuk resource: selalu berdasarkan digitCount penuh
+const getResourcePadding = (digitCount: number, padChar = ' ') => {
+  return padChar.repeat(Math.max(digitCount - 1, 0));
+};
+
 function ErrorStack({ stack: parsed }: { stack: ParsedStack | null }) {
   if (!parsed) return null;
 
+  const totalLines = parsed.stack.length;
+  const digitCount = totalLines.toString().length;
+
   return (
-    <div data-line-numbers="" className="max-h-80 overflow-y-auto pr-4 pb-3 grid">
+    <div data-line-numbers={digitCount} className="max-h-80 overflow-y-auto pr-4 pb-3 grid">
       {parsed.stack.map((s, idx) => {
+        const lineNumb = idx + 1;
+        const paddedLength = lineNumb.toString().length;
+
+        const padd = getLinePadding(digitCount, paddedLength);
+        const paddRsc = getResourcePadding(digitCount);
+
         const srcOrigin = s.origin !== 'unknown' && `(${s.origin})`;
         const srcFile = s.file && decodeURIComponent(s.file);
         const srcLine = s.line && `line: ${s.line}`;
@@ -98,12 +117,16 @@ function ErrorStack({ stack: parsed }: { stack: ParsedStack | null }) {
 
         return (
           <span key={idx} data-line="" className="grid">
-            <span>
-              <span data-number="">{idx + 1} | </span> {s.function} {srcOrigin}
+            <span data-line-origin="">
+              <span data-number="">
+                {lineNumb}&nbsp;{`${padd}|`}&nbsp;
+              </span>
+              {s.function}&nbsp;{srcOrigin}
             </span>
             {resource?.map((x, i) => (
               <span key={i} style={{ color: 'var(--muted-foreground)' }}>
-                <span data-number="">{'  | '}</span> {x}
+                <span data-number="">{`  ${paddRsc}|`}&nbsp;</span>
+                {x}
               </span>
             ))}
           </span>

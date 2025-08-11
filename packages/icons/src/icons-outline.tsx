@@ -20,15 +20,6 @@ export function SettingsIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-export function SearchIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <Svg {...props}>
-      <circle cx="11" cy="11" r="8" />
-      <path d="m21 21-4.3-4.3" />
-    </Svg>
-  );
-}
-
 export function Spinner() {
   return (
     <div className="absolute right-0 top-0 bottom-0 flex items-center justify-center">

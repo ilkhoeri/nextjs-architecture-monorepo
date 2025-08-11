@@ -1,9 +1,9 @@
 'use client';
 import React from 'react';
-import { motion } from 'framer-motion';
 import { cn } from '@repo/utils';
-import { Portal } from '@repo/hooks/use-open-state';
+import { motion } from 'framer-motion';
 import { useModal } from '@repo/hooks/use-modal';
+import { Portal } from '@repo/hooks/use-open-lib';
 
 export interface MotionButtonProps extends React.ComponentProps<typeof motion.button> {
   name: string;

@@ -15,6 +15,11 @@
   --color-constructive-emphasis: var(--constructive-emphasis);
 }
 
+body {
+  background-color: var(--background-theme);
+  font-family: var(--font-geist-sans);
+}
+
 :host,
 :root {
   --gray-100: hsl(0, 0%, 95%);

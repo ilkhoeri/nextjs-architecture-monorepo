@@ -36,7 +36,7 @@ export function RegisterForm({ className, providerSign, ...props }: SignUpFormPr
       <HeadImageSign title="Create your account" description="Welcome! Please fill in the details to get started." size={48} className={cn(!providerSign && 'mb-6')} />
 
       {providerSign}
-      {providerSign && <Separator label="or" className="-my-2" />}
+      {providerSign && <Separator label="or" className="-my-2 border-b-[var(--palette-divider)]" />}
 
       <Form {...props} onSubmit={form.handleSubmit(onSubmit)} className={cn('group flex flex-col gap-6 w-full min-h-max', className)}>
         <div className="grid gap-4">

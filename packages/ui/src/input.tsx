@@ -83,6 +83,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(function Inp
     unstyled,
     variant = 'outline',
     size = 'sm',
+    name,
+    id,
     ...props
   },
   ref
@@ -111,6 +113,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(function Inp
   return (
     <input
       type={isFormatText ? 'text' : type}
+      id={id || name}
+      name={name}
       className={cn(
         !unstyled && [
           classesInput({ variant, size }),

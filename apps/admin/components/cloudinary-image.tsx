@@ -11,12 +11,15 @@ import { CldUploadWidget, CldUploadWidgetPropsChildren, CloudinaryUploadWidgetIn
 
 export interface ExtendedCldUploadWidget extends CloudinaryUploadWidgetOptions {}
 
+const presetType = ['assets', 'avatar', 'event', 'gallery', 'blog', 'news'] as const;
+type presetType = (typeof presetType)[number];
+
 export interface UploadPresetProps {
-  preset: 'assets' | 'avatar' | 'event' | 'gallery' | 'blog' | 'news';
+  preset: presetType | (string & {});
 }
 
-export const uploadPreset = (preset: UploadPresetProps['preset']): string => {
-  const presetMap: Record<UploadPresetProps['preset'], string> = {
+export function uploadPreset(preset: string | null | undefined): string | undefined {
+  const presetMap: Record<presetType, string> = {
     assets: 'assets',
     avatar: 'avatar',
     blog: 'assets',
@@ -24,8 +27,13 @@ export const uploadPreset = (preset: UploadPresetProps['preset']): string => {
     news: 'assets',
     gallery: 'gallery'
   };
-  return presetMap[preset as UploadPresetProps['preset']];
-};
+
+  if (!preset) return;
+
+  if (presetType.includes(preset as presetType)) return presetMap[preset as presetType];
+
+  return preset;
+}
 
 type Selector = 'root' | 'wrapper' | 'figure' | 'figureOnValue' | 'image' | 'svg' | 'button' | 'title' | 'description';
 
@@ -105,7 +113,7 @@ export function ImageUpload(props: ImageUploadProps) {
                   <div className="flex items-center flex-col gap-2">
                     <div className="font-semibold text-[1.0625rem] leading-normal md:text-[1.125rem]">Select file</div>
                     <div className="font-normal text-[0.875rem] leading-normal text-muted-foreground">
-                      {/* Click to <span className="hover:underline mx-0.5">browse</span> through your device. */}
+                      {/* Click to <span className="hover:underline mx-0.5 text-[var(--palette-primary-main)]">browse</span> through your device. */}
                       Attach <span className="hover:underline mx-0.5 text-[var(--palette-primary-main)]">image</span> should not exceed {formatBytesToMB(maxFileSize)}
                     </div>
                   </div>

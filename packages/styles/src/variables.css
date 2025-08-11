@@ -601,10 +601,10 @@
   --card-foreground: hsl(240 10% 3.9%);
   --popover: hsl(0 0% 100%);
   --popover-foreground: hsl(240 10% 3.9%);
-  --primary: hsl(240 5.9% 10%);
-  --primary-foreground: hsl(0 0% 98%);
-  --secondary: hsl(240 4.8% 95.9%);
-  --secondary-foreground: hsl(240 5.9% 10%);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
   --muted: hsl(209, 11%, 62%);
   --muted-foreground: hsl(208deg 13.16% 44.71%);
   --accent: hsl(240 4.8% 95.9%);
@@ -632,7 +632,8 @@
   --teal-700: hsl(175.34 77.44% 26.08%);
   --teal-900: hsl(175.93 60.82% 19.02%);
   --palette-divider: hsl(210deg 13.4% 61.96%);
-  /* --ceramic-main: color-mix(in srgb, #fff 100%, transparent); */
+  --warning: oklch(0.84 0.16 84);
+  --warning-foreground: oklch(0.28 0.07 46);
 }
 
 :root.dark,
@@ -642,10 +643,10 @@
   --background-theme: hsl(201deg 49% 7%);
   --foreground: hsl(0deg 0% 98%);
   --popover-foreground: hsl(0 0% 98%);
-  --primary: hsl(0deg 0% 98%);
-  --primary-foreground: hsl(240deg 5.9% 10%);
-  --secondary: hsl(240deg 3.7% 15.9%);
-  --secondary-foreground: hsl(0 0% 98%);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
   --muted: hsl(0, 0%, 10%);
   --muted-foreground: hsl(195deg 3.54% 55.69%);
   --accent: hsl(240deg 3.7% 15.9%);
@@ -676,6 +677,8 @@
   --sidebar-accent: hsl(212.31deg 24.53% 10.39%);
   --sidebar-border: hsl(212deg 15.79% 18.63%);
   --palette-divider: hsl(210deg 13.4% 61.96%);
+  --warning: oklch(0.41 0.11 46);
+  --warning-foreground: oklch(0.99 0.02 95);
 }
 
 .dark .invert-theme,
@@ -721,6 +724,7 @@
   /* initial */
   --scale: 1;
   --opacity: 1;
+  --infinity: calc(infinity * 1px);
 
   /* size */
   --sz-0: 0rem;
@@ -744,8 +748,6 @@
   --sz-dvw: 100dvw; /* 100dvw */
   --sz-full: 100%; /* 100% */
 
-  --radius: var(--sz-2);
-  --radius-full: infinity;
   --sz-indicator-disc: var(--sz-2-5);
   --bg-image-danger: -45deg, transparent, transparent 20px, var(--muted) 20px, var(--muted) 40px;
 }

@@ -1,191 +1,98 @@
 'use client';
-import { useCallback, useLayoutEffect, useState } from 'react';
-import { SizeElement } from './use-element-info';
-import { createPortal } from 'react-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { useMeasureScrollbar } from './use-measure-scrollbar';
 
-enum DataAlign {
-  start = 'start',
-  center = 'center',
-  end = 'end'
-}
-enum DataSide {
-  top = 'top',
-  right = 'right',
-  bottom = 'bottom',
-  left = 'left'
-}
+type ExpandedState = string | boolean | string[] | null;
+type ExpandedOptions = {
+  multiple?: boolean | undefined;
+};
 
-type RectInfo = 'x' | 'y' | 'width' | 'height' | 'top' | 'right' | 'bottom' | 'left' | 'scrollX' | 'scrollY';
-
-type RectElement = Record<RectInfo, number>;
-
-const BUFFER_OFFSET = 2;
-
-function nextValue<T>(currentValue: T, values: T[]): T {
-  const currentIndex = values.indexOf(currentValue);
-  const nextIndex = (currentIndex + 1) % values.length;
-  if (currentIndex === values.length - 1) return values[currentIndex];
-  return values[nextIndex];
+export interface UseOpenOptions {
+  modal?: boolean;
+  open?: ExpandedState;
+  defaultOpen?: boolean;
+  /** @default 300 */
+  exitDuration?: number;
+  onOpenChange?: (prev: ExpandedState | ((prev: ExpandedState) => ExpandedState)) => void;
 }
 
-export function setValues<T>(state: boolean | undefined | string | number, attr: T): T | Record<string, never> {
-  return state ? (attr as T) : {};
-}
+export function useOpenState(opts: UseOpenOptions = {}) {
+  const { defaultOpen = false, open: openProp, onOpenChange: setOpenProp, modal, exitDuration = 300 } = opts;
 
-interface GetInsetProps {
-  align: 'start' | 'center' | 'end';
-  side: 'top' | 'right' | 'bottom' | 'left';
-  sideOffset: number;
-  alignOffset: number;
-  triggerRect: RectElement;
-  contentRect: RectElement;
-}
+  const [openState, setOpenState] = useState<ExpandedState>(defaultOpen);
 
-export function getInset(_props: GetInsetProps): readonly [number, number] {
-  const { align, side, contentRect, sideOffset, alignOffset, triggerRect } = _props;
-  let top: number = 0;
-  let left: number = 0;
+  const _expanded = openProp ?? openState;
+  const _setExpanded = setOpenProp ?? setOpenState;
 
-  const calcAlign = (triggerStart: number, triggerSize: number, contentSize: number): number => {
-    switch (align) {
-      case 'start':
-        return triggerStart;
-      case 'center':
-        return triggerStart + (triggerSize - contentSize) / 2;
-      case 'end':
-        return triggerStart + triggerSize - contentSize;
-      default:
-        return triggerStart;
-    }
-  };
-
-  switch (side) {
-    case 'top':
-      top = triggerRect.top - contentRect.height - sideOffset;
-      left = calcAlign(triggerRect.left + alignOffset, triggerRect.width, contentRect.width);
-      break;
-    case 'right':
-      top = calcAlign(triggerRect.top + alignOffset, triggerRect.height, contentRect.height);
-      left = triggerRect.right + sideOffset;
-      break;
-    case 'bottom':
-      top = triggerRect.bottom + sideOffset;
-      left = calcAlign(triggerRect.left + alignOffset, triggerRect.width, contentRect.width);
-      break;
-    case 'left':
-      top = calcAlign(triggerRect.top, triggerRect.height, contentRect.height);
-      left = triggerRect.left + alignOffset - contentRect.width - sideOffset;
-      break;
-  }
-
-  if (typeof window !== 'undefined') {
-    const viewportWidth = window.innerWidth;
-    if (left < BUFFER_OFFSET) {
-      if (side === 'left') {
-        left = triggerRect.right + sideOffset; // ltr
-      } else {
-        left = BUFFER_OFFSET;
+  const open = useCallback(
+    (target?: string) => {
+      if (typeof _expanded === 'boolean') {
+        return _expanded;
       }
-    } else if (left + contentRect.width > viewportWidth - BUFFER_OFFSET) {
-      if (side === 'right') {
-        left = triggerRect.left - contentRect.width - sideOffset; // rtl
-      } else {
-        left = viewportWidth - contentRect.width - BUFFER_OFFSET;
+      if (typeof _expanded === 'string') {
+        return _expanded === target;
       }
-    }
-  }
-
-  return [top, left] as const;
-}
-
-export interface UseVarsPositions extends GetInsetProps {
-  contentSize: SizeElement | undefined;
-}
-export function getVarsPositions(required: UseVarsPositions) {
-  const { triggerRect, contentRect, contentSize, ...others } = required;
-  const [top, left] = getInset({ triggerRect, contentRect, ...others });
-
-  const vars = {
-    triggerInset: {
-      '--top': `${top + triggerRect.scrollY}px`,
-      '--left': `${left + triggerRect.scrollX}px`
+      if (Array.isArray(_expanded) && target) {
+        return _expanded.includes(target);
+      }
+      return false;
     },
-    triggerSize: {
-      '--measure-trigger-h': `${triggerRect.height}px`,
-      '--measure-trigger-w': `${triggerRect.width}px`
+    [_expanded]
+  );
+
+  const setOpen = useCallback(
+    (value: string | null | boolean = !_expanded, opts: ExpandedOptions = {}) => {
+      _setExpanded(prev => {
+        if (typeof value === 'boolean' || value === null) {
+          return value;
+        }
+
+        if (opts?.multiple) {
+          if (Array.isArray(prev)) {
+            if (prev.includes(value)) {
+              return prev.filter(id => id !== value);
+            } else {
+              return [...prev, value];
+            }
+          } else if (typeof prev === 'string') {
+            return prev === value ? [] : [prev, value];
+          } else {
+            return [value];
+          }
+        } else {
+          if (typeof value === 'string' && prev === value) {
+            return null;
+          }
+          return value;
+        }
+      });
     },
-    contentSize: {
-      '--measure-available-h': `${contentSize?.h}px`,
-      '--measure-available-w': `${contentSize?.w}px`
+    [_expanded]
+  );
+
+  const [isRender, setRender] = useState(open);
+
+  useEffect(() => {
+    if (open()) {
+      setRender(true);
+    } else {
+      const timer = setTimeout(() => setRender(false), exitDuration);
+      return () => clearTimeout(timer);
     }
-  };
-  return { vars, top, left };
-}
+  }, [open, setOpen]);
 
-export interface UseUpdatedPositions {
-  triggerRect: RectElement;
-  contentRect: RectElement;
-  align: `${DataAlign}`;
-  side: `${DataSide}`;
-  sideOffset: number;
-  alignOffset: number;
-}
-export function useUpdatedPositions(required: UseUpdatedPositions) {
-  const { triggerRect, contentRect, align, side, sideOffset, alignOffset } = required;
+  useEffect(() => {
+    if (!open()) return;
 
-  const [newSide, setNewSide] = useState(side);
-  const [newAlign, setNewAlign] = useState(align);
-
-  const updatedPosition = useCallback(() => {
-    const dataAlign: `${DataAlign}`[] = ['start', 'center', 'end'];
-    const [top, left] = getInset({ align, side, sideOffset, alignOffset, triggerRect, contentRect });
-
-    if (triggerRect && contentRect) {
-      const rect = { top, left, bottom: top + contentRect.height, right: left + contentRect.width, width: contentRect.width, height: contentRect.height };
-      const isOutOfLeftViewport = rect.left < BUFFER_OFFSET;
-      const isOutOfRightViewport = rect.right > window.innerWidth - BUFFER_OFFSET;
-      const isOutOfTopViewport = rect.top < BUFFER_OFFSET;
-      const isOutOfBottomViewport = rect.bottom > window.innerHeight - BUFFER_OFFSET;
-
-      if (isOutOfLeftViewport) {
-        if (side === DataSide.left) setNewSide(DataSide.right);
-      } else if (isOutOfRightViewport) {
-        if (side === DataSide.right) setNewSide(DataSide.left);
-      } else if (isOutOfTopViewport) {
-        if (side === DataSide.top) setNewSide(DataSide.bottom);
-        if (newSide === DataSide.left || newSide === DataSide.right) setNewAlign(nextValue(newAlign, (dataAlign as any).toReversed()));
-      } else if (isOutOfBottomViewport) {
-        if (side === DataSide.bottom) setNewSide(DataSide.top);
-        if (newSide === DataSide.left || newSide === DataSide.right) setNewAlign(nextValue(newAlign, dataAlign));
-      } else {
-        setNewSide(side);
-        setNewAlign(align);
-      }
-    }
-  }, [align, side, sideOffset, alignOffset, triggerRect, contentRect]);
-
-  useLayoutEffect(() => {
-    updatedPosition();
-    window.addEventListener('scroll', updatedPosition);
-    window.addEventListener('resize', updatedPosition);
-    return () => {
-      window.removeEventListener('scroll', updatedPosition);
-      window.removeEventListener('resize', updatedPosition);
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false);
     };
-  }, [updatedPosition]);
 
-  return { newAlign, newSide, updatedPosition };
-}
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [open, setOpen]);
 
-export interface PortalProps {
-  render: boolean;
-  portal?: boolean;
-  children: React.ReactNode;
-  container?: Element | DocumentFragment | null;
-  key?: null | string;
-}
-export function Portal(_props: PortalProps) {
-  const { portal = true, render, children, container, key } = _props;
-  if (typeof document === 'undefined' || !render) return null;
-  return portal ? createPortal(children, container || document.body, key) : children;
+  useMeasureScrollbar(isRender, { modal });
+
+  return { open, setOpen, isRender };
 }

@@ -1,7 +1,225 @@
 import { Svg, type SvgProps } from '@repo/ui/svg';
 
+export type LogoType = 'block' | 'line' | 'solid';
+
 export function Base(props: SvgProps) {
   return <Svg {...props} currentFill="fill"></Svg>;
+}
+
+const baseMap = {
+  block: [{ tag: 'path', d: '' }],
+  line: [{ tag: 'circle', d: '' }],
+  solid: [{ tag: 'path', d: '' }]
+} as const;
+export function BaseMap({ logo = 'block', ...props }: SvgProps<{ logo?: keyof typeof baseMap }>) {
+  return (
+    <Svg {...props} currentFill="fill">
+      {baseMap[logo].map(({ tag: Tag, ...acc }, idx) => (
+        <Tag key={idx} {...acc} />
+      ))}
+    </Svg>
+  );
+}
+
+export function BrandXAnimation(props: SvgProps) {
+  return (
+    <Svg {...props} currentFill="fill">
+      <path d="M1 2h2.5L3.5 2h-2.5zM5.5 2h2.5L7.2 2h-2.5z">
+        <animate fill="freeze" attributeName="d" dur="0.4s" values="M1 2h2.5L3.5 2h-2.5zM5.5 2h2.5L7.2 2h-2.5z;M1 2h2.5L18.5 22h-2.5zM5.5 2h2.5L23 22h-2.5z" />
+      </path>
+      <path d="M3 2h5v0h-5zM16 22h5v0h-5z">
+        <animate fill="freeze" attributeName="d" begin="0.4s" dur="0.4s" values="M3 2h5v0h-5zM16 22h5v0h-5z;M3 2h5v2h-5zM16 22h5v-2h-5z" />
+      </path>
+      <path d="M18.5 2h3.5L22 2h-3.5z">
+        <animate fill="freeze" attributeName="d" begin="0.5s" dur="0.4s" values="M18.5 2h3.5L22 2h-3.5z;M18.5 2h3.5L5 22h-3.5z" />
+      </path>
+    </Svg>
+  );
+}
+
+export function BrandInstagramAnimation(props: SvgProps) {
+  return (
+    <Svg {...props} currentFill="none">
+      <circle cx="17" cy="7" r="1.5" fill="currentColor" fillOpacity="0">
+        <animate fill="freeze" attributeName="fill-opacity" begin="1.3s" dur="0.15s" values="0;1" />
+      </circle>
+      <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
+        <path strokeDasharray="72" strokeDashoffset="72" d="M16 3c2.76 0 5 2.24 5 5v8c0 2.76 -2.24 5 -5 5h-8c-2.76 0 -5 -2.24 -5 -5v-8c0 -2.76 2.24 -5 5 -5h4Z">
+          <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="72;0" />
+        </path>
+        <path strokeDasharray="28" strokeDashoffset="28" d="M12 8c2.21 0 4 1.79 4 4c0 2.21 -1.79 4 -4 4c-2.21 0 -4 -1.79 -4 -4c0 -2.21 1.79 -4 4 -4">
+          <animate fill="freeze" attributeName="stroke-dashoffset" begin="0.7s" dur="0.6s" values="28;0" />
+        </path>
+      </g>
+    </Svg>
+  );
+}
+
+export function BrandFacebookAnimation(props: SvgProps) {
+  return (
+    <Svg {...props} strokeWidth="4" currentFill="stroke">
+      <path strokeDasharray="24" strokeDashoffset="24" d="M17 4l-2 0c-2.5 0 -4 1.5 -4 4v12">
+        <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.4s" values="24;0" />
+      </path>
+      <path strokeDasharray="8" strokeDashoffset="8" d="M8 12h7">
+        <animate fill="freeze" attributeName="stroke-dashoffset" begin="0.5s" dur="0.2s" values="8;0" />
+      </path>
+    </Svg>
+  );
+}
+
+export function BrandLinkedinAnimation(props: SvgProps) {
+  return (
+    <Svg {...props} currentFill="none">
+      <circle cx="4" cy="4" r="2" fill="currentColor" fillOpacity="0">
+        <animate fill="freeze" attributeName="fill-opacity" dur="0.15s" values="0;1" />
+      </circle>
+      <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="4">
+        <path strokeDasharray="12" strokeDashoffset="12" d="M4 10v10">
+          <animate fill="freeze" attributeName="stroke-dashoffset" begin="0.15s" dur="0.2s" values="12;0" />
+        </path>
+        <path strokeDasharray="12" strokeDashoffset="12" d="M10 10v10">
+          <animate fill="freeze" attributeName="stroke-dashoffset" begin="0.45s" dur="0.2s" values="12;0" />
+        </path>
+        <path strokeDasharray="24" strokeDashoffset="24" d="M10 15c0 -2.76 2.24 -5 5 -5c2.76 0 5 2.24 5 5v5">
+          <animate fill="freeze" attributeName="stroke-dashoffset" begin="0.65s" dur="0.2s" values="24;0" />
+        </path>
+      </g>
+    </Svg>
+  );
+}
+
+export function BrandXIcon(props: SvgProps) {
+  return (
+    <Svg {...props} currentFill="none">
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        d="m13.458 9.122l7.516-7.965h2.491l-.01.011l-8.89 9.424l8.139 10.802a.906.906 0 0 1-.658 1.45H16.95a.9.9 0 0 1-.659-.359l-5.727-7.601l-7.472 7.96H.535l8.922-9.43L1.318 2.612a.906.906 0 0 1 .724-1.452h4.965c.285 0 .553.134.724.361zm-.763 2a1 1 0 0 1-.07-.093l-6.07-8.056H3.86l13.607 18.06h2.696z"
+        clipRule="evenodd"
+      />
+    </Svg>
+  );
+}
+
+const instagramIconMap = {
+  block: [
+    {
+      tag: 'path',
+      fill: 'currentColor',
+      d: 'M12 15.5a3.53 3.53 0 0 1-2.5-1.04a3.54 3.54 0 0 1-1.04-2.5a3.53 3.53 0 0 1 1.04-2.5A3.54 3.54 0 0 1 12 8.42a3.53 3.53 0 0 1 2.5 1.04a3.54 3.54 0 0 1 1.04 2.5a3.53 3.53 0 0 1-1.04 2.5A3.54 3.54 0 0 1 12 15.5'
+    },
+    {
+      tag: 'path',
+      fill: 'currentColor',
+      fillRule: 'evenodd',
+      d: 'M7.41 1.07C8.343 1.02 9.87.996 12 .996q3.195 0 4.59.074c.825.03 1.64.17 2.43.417c.803.286 1.53.748 2.14 1.35a5.8 5.8 0 0 1 1.35 2.14c.249.797.398 1.62.442 2.46q.05 1.375.049 4.57q0 3.195-.074 4.59a9.3 9.3 0 0 1-.417 2.43a5.8 5.8 0 0 1-1.35 2.14a5.8 5.8 0 0 1-2.14 1.35a9.3 9.3 0 0 1-2.43.417c-.933.05-2.46.074-4.59.074q-3.195 0-4.59-.074a8 8 0 0 1-2.43-.466a5.3 5.3 0 0 1-2.14-1.3a5.6 5.6 0 0 1-1.35-2.14a9.3 9.3 0 0 1-.417-2.43c-.05-.933-.074-2.46-.074-4.59q0-3.195.074-4.59c.03-.825.17-1.64.417-2.43c.286-.803.748-1.53 1.35-2.14s1.33-1.06 2.14-1.35a9.3 9.3 0 0 1 2.43-.417zm9.72 3.89a1.365 1.365 0 0 1 1.732.178c.257.256.403.604.408.968a1.6 1.6 0 0 1-.432.967a1.24 1.24 0 0 1-.943.408a1.32 1.32 0 0 1-.968-.408a1.37 1.37 0 0 1-.302-1.496a1.37 1.37 0 0 1 .507-.617zM9.25 7.24A5.34 5.34 0 0 1 12 6.499c.967-.006 1.92.25 2.75.741a5.5 5.5 0 0 1 2.01 2.01a5.47 5.47 0 0 1 0 5.5a5.5 5.5 0 0 1-2.01 2.01a5.47 5.47 0 0 1-5.5 0a5.5 5.5 0 0 1-2.01-2.01a5.47 5.47 0 0 1 0-5.5a5.53 5.53 0 0 1 2.01-2.01',
+      clipRule: 'evenodd'
+    }
+  ],
+  line: [
+    {
+      tag: 'path',
+      fill: 'currentColor',
+      d: 'M12 1q-3.195 0-4.59.074a9.3 9.3 0 0 0-2.43.417c-.803.286-1.53.748-2.14 1.35S1.78 4.17 1.49 4.98a9.3 9.3 0 0 0-.417 2.43C1.023 8.344.999 9.87.999 12q0 3.195.074 4.59c.03.825.17 1.64.417 2.43a5.8 5.8 0 0 0 1.35 2.14c.596.6 1.33 1.05 2.14 1.3c.781.28 1.6.437 2.43.466c.933.05 2.46.074 4.59.074q3.195 0 4.59-.074a9.3 9.3 0 0 0 2.43-.417a5.8 5.8 0 0 0 2.14-1.35a5.8 5.8 0 0 0 1.35-2.14c.247-.788.387-1.61.417-2.43c.05-.933.074-2.46.074-4.59s-.016-3.65-.049-4.57a10 10 0 0 0-.442-2.46a5.8 5.8 0 0 0-1.35-2.14a5.8 5.8 0 0 0-2.14-1.35a9.3 9.3 0 0 0-2.43-.417c-.933-.05-2.46-.074-4.59-.074zm-.786 20c-1.31 0-2.32-.016-3.04-.049a10.3 10.3 0 0 1-2.65-.393a3.7 3.7 0 0 1-2.114-2.115a10.3 10.3 0 0 1-.393-2.65c-.033-.72-.05-1.74-.05-3.04v-1.57c0-1.31.017-2.32.05-3.04a9.8 9.8 0 0 1 .393-2.65a3.54 3.54 0 0 1 2.112-2.112a10.3 10.3 0 0 1 2.65-.393c.72-.033 1.74-.05 3.04-.05h1.57c1.31 0 2.32.017 3.04.05a9.8 9.8 0 0 1 2.65.393a3.54 3.54 0 0 1 2.113 2.112c.251.862.383 1.75.393 2.65q.048 1.031.049 3.04v1.57c0 1.31-.017 2.32-.049 3.04c-.016.897-.148 1.79-.393 2.65a3.8 3.8 0 0 1-.835 1.28a3.7 3.7 0 0 1-1.28.835a10 10 0 0 1-2.65.393q-1.03.05-3.04.049h-1.57zm6.68-16.3a1.37 1.37 0 0 0-.967 2.342a1.32 1.32 0 0 0 .968.408a1.24 1.24 0 0 0 .943-.408a1.6 1.6 0 0 0 .432-.967A1.394 1.394 0 0 0 17.894 4.7m-5.89 1.77a5.34 5.34 0 0 0-2.75.741a5.53 5.53 0 0 0-2.01 2.01a5.47 5.47 0 0 0 0 5.5a5.5 5.5 0 0 0 2.01 2.01a5.47 5.47 0 0 0 5.5 0a5.5 5.5 0 0 0 2.01-2.01a5.47 5.47 0 0 0 0-5.5a5.53 5.53 0 0 0-2.01-2.01a5.34 5.34 0 0 0-2.75-.741m0 9.04a3.53 3.53 0 0 1-2.5-1.04a3.54 3.54 0 0 1-1.04-2.5a3.53 3.53 0 0 1 1.04-2.5a3.54 3.54 0 0 1 2.5-1.04a3.53 3.53 0 0 1 2.5 1.04a3.54 3.54 0 0 1 1.04 2.5a3.53 3.53 0 0 1-1.04 2.5a3.54 3.54 0 0 1-2.5 1.04'
+    }
+  ]
+} as const;
+export function BrandInstagramIcon({ logo = 'block', ...props }: SvgProps<{ logo?: keyof typeof instagramIconMap }>) {
+  return (
+    <Svg {...props} currentFill="none">
+      {instagramIconMap[logo].map(({ tag: Tag, ...acc }, idx) => (
+        <Tag key={idx} {...acc} />
+      ))}
+    </Svg>
+  );
+}
+
+const facebookIconMap = {
+  block: [
+    {
+      tag: 'path',
+      fill: 'currentColor',
+      fillRule: 'evenodd',
+      d: 'M5 1a4 4 0 0 0-4 4v14a4 4 0 0 0 4 4h14a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4zm4.682 6.273A3.273 3.273 0 0 1 12.954 4h2.91c.2 0 .363.163.363.364v2.909c0 .2-.163.363-.363.363h-1.455a1.09 1.09 0 0 0-1.09 1.091v1.091h2.545a.364.364 0 0 1 .352.452l-.727 2.91a.36.36 0 0 1-.353.274h-1.818v6.182a.364.364 0 0 1-.364.364h-2.909a.364.364 0 0 1-.363-.364v-6.181H7.864a.364.364 0 0 1-.364-.364v-2.91c0-.2.163-.363.364-.363h1.818z',
+      clipRule: 'evenodd'
+    }
+  ],
+  line: [
+    {
+      tag: 'path',
+      fill: 'none',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      d: 'M9.5 22.5h4v-9h3l1-4h-4v-2a2 2 0 0 1 2-2h2v-4h-4a4 4 0 0 0-4 4v4h-3v4h3z',
+      strokeWidth: '1'
+    }
+  ],
+  solid: [
+    {
+      tag: 'path',
+      fill: 'currentColor',
+      d: 'M13.5 1A4.5 4.5 0 0 0 9 5.5V9H6.5a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 .5.5H9v8.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5V14h2.5a.5.5 0 0 0 .485-.379l1-4A.5.5 0 0 0 17.5 9H14V7.5A1.5 1.5 0 0 1 15.5 6h2a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 0-.5-.5z'
+    }
+  ]
+} as const;
+export function BrandFacebookIcon({ logo = 'block', ...props }: SvgProps<{ logo?: keyof typeof facebookIconMap }>) {
+  return (
+    <Svg {...props} currentFill="none">
+      {facebookIconMap[logo].map(({ tag: Tag, ...acc }, idx) => (
+        <Tag key={idx} {...acc} />
+      ))}
+    </Svg>
+  );
+}
+const linkedInIconMap = {
+  block: [
+    {
+      tag: 'path',
+      fill: 'currentColor',
+      fillRule: 'evenodd',
+      d: 'M5 1a4 4 0 0 0-4 4v14a4 4 0 0 0 4 4h14a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4zm1.205 6.91a1.705 1.705 0 1 0 0-3.41a1.705 1.705 0 0 0 0 3.41M7.909 19.5V9.273H4.5V19.5h3.41Zm4.432-10.227H9.273V19.5h3.068v-6.17c.395-.642 1.077-1.33 2.045-1.33c1.364 0 1.705 1.364 1.705 2.046V19.5H19.5v-5.454c0-1.828-.797-4.773-3.75-4.773c-1.878 0-2.92.685-3.41 1.327z',
+      clipRule: 'evenodd'
+    }
+  ],
+  line: [
+    {
+      tag: 'path',
+      fill: 'none',
+      stroke: 'currentColor',
+      strokeLinejoin: 'round',
+      strokeWidth: '1',
+      d: 'M1.5 3.5a2 2 0 1 0 4 0a2 2 0 1 0-4 0'
+    },
+    {
+      tag: 'path',
+      fill: 'none',
+      stroke: 'currentColor',
+      strokeLinejoin: 'round',
+      strokeWidth: '1',
+      d: 'M1.5 22.5v-14h4v14zM8 8.5v14h4v-6.908c0-1.092 1-3.092 3.895-3.092c1.643 0 2.605.845 2.605 2.5v7.5h4V15c0-1.309-.312-2.937-1.394-4.277c-1.144-1.417-2.913-2.223-5.21-2.223c-1.513 0-2.835.615-3.896 1.366V8.5z',
+      clipRule: 'evenodd'
+    }
+  ],
+  solid: [
+    {
+      tag: 'path',
+      fill: 'currentColor',
+      fillRule: 'evenodd',
+      d: 'M3.5 6a2.5 2.5 0 1 0 0-5a2.5 2.5 0 0 0 0 5M6 23V8H1v15zM8 8h4.5v1.946C13.216 9.005 14.746 8 17.5 8c4.33 0 5.5 4.32 5.5 7v8h-5v-8c0-1-.5-3-2.5-3c-1.42 0-2.42 1.008-3 1.951V23H8z',
+      clipRule: 'evenodd'
+    }
+  ]
+} as const;
+export function BrandLinkedinIcon({ logo = 'block', ...props }: SvgProps<{ logo?: keyof typeof linkedInIconMap }>) {
+  return (
+    <Svg {...props} currentFill="none">
+      {linkedInIconMap[logo].map(({ tag: Tag, ...acc }, idx) => (
+        <Tag key={idx} {...acc} />
+      ))}
+    </Svg>
+  );
 }
 
 export function BrandGithubFillIcon({ role = 'img', fill = '#24292f', ...props }: SvgProps) {

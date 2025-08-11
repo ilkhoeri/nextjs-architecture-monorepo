@@ -32,14 +32,6 @@ export function NotchTailIcon(props: React.ComponentProps<'svg'>) {
   );
 }
 
-export function IndicatorIcon(props: React.ComponentProps<'svg'>) {
-  return (
-    <svg width="14" height="14" fill="none" {...props} viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="7" cy="7" r="5.5" strokeWidth="3"></circle>
-    </svg>
-  );
-}
-
 export function ReactIcon(props: React.ComponentProps<'svg'>) {
   return (
     <svg height="16" {...props} strokeLinejoin="round" viewBox="0 0 16 16" width="16">

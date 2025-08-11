@@ -6,7 +6,7 @@ export const badgeVariants = cvx({
   assign:
     'inline-flex flex-row items-center text-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors backdrop-blur-[25px] focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 cursor-default',
   variants: {
-    color: {
+    variant: {
       default: 'border-transparent bg-[#0000000f] dark:bg-[#ffffff0f] text-color',
       gold: 'border-yellow-600 bg-yellow-100 text-yellow-600 hover:bg-yellow-200/80',
       secondary: 'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
@@ -16,8 +16,13 @@ export const badgeVariants = cvx({
       outline: 'text-foreground'
     },
     size: {
-      md: '',
-      lg: 'py-2 px-4 gap-2.5 border-0 text-sm font-medium'
+      default: 'h-9 px-3',
+      sm: 'h-[30px] px-3',
+      md: 'py-1.5 px-4',
+      lg: 'h-9 py-2 px-4',
+      xl: 'h-12 py-2 px-4',
+      '2xl': 'h-12 text-base font-semibold px-8',
+      icon: '[--sz:32px] size-[var(--sz)] min-h-[var(--sz)] min-w-[var(--sz)]'
     }
   }
   // defaultVariants: {
@@ -25,9 +30,11 @@ export const badgeVariants = cvx({
   // }
 });
 
-export interface BadgeProps extends Omit<React.ComponentPropsWithRef<'div'>, 'color'>, cvxVariants<typeof badgeVariants> {}
+export interface BadgeProps extends Omit<React.ComponentPropsWithRef<'div'>, 'color'>, cvxVariants<typeof badgeVariants> {
+  color?: React.CSSProperties['color'];
+}
 
 export function Badge(_props: BadgeProps) {
-  const { className, color = 'default', size = 'md', ...props } = _props;
-  return <div {...props} className={cn(badgeVariants({ color, size }), className)} />;
+  const { className, variant = 'default', size = 'md', ...props } = _props;
+  return <div {...props} className={cn(badgeVariants({ variant, size }), className)} />;
 }

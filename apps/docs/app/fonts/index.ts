@@ -19,12 +19,12 @@ import {
 
 export const geistSans = localFont({
   src: './GeistVF.woff',
-  variable: '--ff-geist-sans',
+  variable: '--font-geist-sans',
   weight: '100 900'
 });
 export const geistMono = localFont({
   src: './GeistMonoVF.woff',
-  variable: '--ff-geist-mono',
+  variable: '--font-geist-mono',
   weight: '100 900'
 });
 
@@ -32,105 +32,105 @@ export const anekTelugu = Anek_Telugu({
   weight: ['400', '500', '600', '700', '800'],
   style: ['normal'],
   subsets: ['latin'],
-  variable: '--ff-anek-telugu',
+  variable: '--font-anek-telugu',
   display: 'swap'
 });
 export const amiri = Amiri({
   weight: ['400', '700'],
   style: ['normal'],
   subsets: ['latin'],
-  variable: '--ff-amiri',
+  variable: '--font-amiri',
   display: 'swap'
 });
 export const inter = Inter({
   weight: ['400', '500', '600', '700', '800', '900'],
   style: ['normal'],
   subsets: ['latin'],
-  variable: '--ff-inter',
+  variable: '--font-inter',
   display: 'swap'
 });
 export const ubuntu = Ubuntu({
   weight: ['300', '400', '500', '700'],
   style: ['normal'],
   subsets: ['latin'],
-  variable: '--ff-ubuntu',
+  variable: '--font-ubuntu',
   display: 'swap'
 });
 export const caveat = Caveat({
   weight: ['400', '500', '600', '700'],
   style: ['normal'],
   subsets: ['latin'],
-  variable: '--ff-caveat',
+  variable: '--font-caveat',
   display: 'swap'
 });
 export const kanit = Kanit({
   weight: ['400', '500', '600', '700', '800', '900'],
   style: ['normal'],
   subsets: ['latin'],
-  variable: '--ff-kanit',
+  variable: '--font-kanit',
   display: 'swap'
 });
 export const dancingScript = Dancing_Script({
   weight: ['400', '500', '600', '700'],
   style: ['normal'],
   subsets: ['latin'],
-  variable: '--ff-dancing-script',
+  variable: '--font-dancing-script',
   display: 'swap'
 });
 export const koulen = Koulen({
   weight: ['400'],
   style: ['normal'],
   subsets: ['latin'],
-  variable: '--ff-koulen',
+  variable: '--font-koulen',
   display: 'swap'
 });
 export const montserrat = Montserrat({
   weight: ['400', '500', '600', '700', '800', '900'],
   style: ['normal'],
   subsets: ['latin'],
-  variable: '--ff-montserrat',
+  variable: '--font-montserrat',
   display: 'swap'
 });
 export const poppins = Poppins({
   weight: ['400', '500', '600', '700', '800', '900'],
   style: ['normal'],
   subsets: ['latin'],
-  variable: '--ff-poppins',
+  variable: '--font-poppins',
   display: 'swap'
 });
 export const robotoMono = Roboto_Mono({
   weight: ['400', '500', '600', '700'],
   style: ['normal'],
   subsets: ['latin'],
-  variable: '--ff-roboto-mono',
+  variable: '--font-roboto-mono',
   display: 'swap'
 });
 export const specialElit = Special_Elite({
   weight: ['400'],
   style: ['normal'],
   subsets: ['latin'],
-  variable: '--ff-special-elit',
+  variable: '--font-special-elit',
   display: 'swap'
 });
 export const quicksand = Quicksand({
   weight: ['400', '500', '600', '700'],
   style: ['normal'],
   subsets: ['latin'],
-  variable: '--ff-quicksand',
+  variable: '--font-quicksand',
   display: 'swap'
 });
 export const barlow = Barlow({
   weight: ['400', '500', '600', '700', '800', '900'],
   style: ['normal'],
   subsets: ['latin'],
-  variable: '--ff-barlow',
+  variable: '--font-barlow',
   display: 'swap'
 });
 export const rokkitt = Orelega_One({
   weight: ['400'],
   style: ['normal'],
   subsets: ['latin'],
-  variable: '--ff-orelega-one',
+  variable: '--font-orelega-one',
   display: 'swap'
 });
 

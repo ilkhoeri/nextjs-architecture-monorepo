@@ -3,3 +3,8 @@
 @import 'tw-animate-css';
 
 @import '@repo/styles';
+
+body {
+  background-color: var(--background);
+  font-family: var(--font-inter);
+}

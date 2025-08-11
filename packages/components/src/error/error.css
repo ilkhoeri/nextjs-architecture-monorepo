@@ -35,7 +35,7 @@ nextjs-portal,
     text-align: right;
     display: inline-block;
     pointer-events: none;
-    color: #808080bf;
+    color: var(--muted-foreground);
     margin-left: 1rem;
   }
 }
@@ -44,9 +44,41 @@ svg {
   overflow: hidden;
   vertical-align: middle;
 }
-.version-staleness-indicator.stale {
-  fill: #ff990a;
-  stroke: #4a2900;
+[data-staleness-indicator] {
+  --indicator-size: 9px;
+  width: var(--indicator-size);
+  height: var(--indicator-size);
+  min-width: var(--indicator-size);
+  min-height: var(--indicator-size);
+  z-index: var(--indicator-z-index, 200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  position: relative;
+  background-color: var(--indicator-color);
+  &::before {
+    content: '';
+    inset: 0;
+    z-index: -1;
+    position: absolute;
+    border-radius: 9999px;
+    background-color: var(--indicator-color);
+    animation: stalenessindicator 1s linear infinite;
+  }
+}
+[data-staleness-indicator].stale {
+  --indicator-color: #ff990a;
+}
+@keyframes stalenessindicator {
+  from {
+    opacity: 0.6;
+    transform: scale(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(2.5);
+  }
 }
 [data-error-dialog-root] {
   --transition-duration: 200ms;
@@ -230,7 +262,7 @@ svg {
   flex: 1 1 auto;
 }
 [data-environment-name-label],
-.errors-label {
+[data-environment-type] {
   padding: 2px 6px;
   margin: 0;
   border-radius: 6px;
@@ -238,6 +270,14 @@ svg {
   font-size: 0.75rem;
   font-family: var(--font-geist-mono);
   line-height: 20px;
+}
+[data-environment-type] {
+  background-color: #ff63682a;
+  color: #ff6369;
+}
+[data-environment-name-label] {
+  background-color: var(--muted);
+  color: var(--color);
 }
 .errors-desc {
   margin: 0;
@@ -256,7 +296,7 @@ svg {
   --code-frame-padding: 12px;
   --code-frame-line-height: calc(16px / 1);
   background-color: var(--background);
-  color: #ededed;
+  color: var(--color);
   text-overflow: ellipsis;
   border: 1.5px solid var(--dialog-border-color);
   border-radius: 8px;
@@ -348,9 +388,9 @@ a.container-build-error-version-status {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   height: 26px;
-  padding: 6px 8px 6px 6px;
+  padding: 6px 8px 6px 8px;
   background-clip: padding-box;
   border: 1px solid var(--border);
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.04);

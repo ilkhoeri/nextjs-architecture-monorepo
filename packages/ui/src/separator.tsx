@@ -12,8 +12,8 @@ const separatorVariant = cvx({
       dashed: 'border-dashed'
     },
     orientation: {
-      horizontal: 'h-0 w-full border-b border-b-[var(--palette-divider)]',
-      vertical: 'h-full w-0 border-r border-r-[var(--palette-divider)]'
+      horizontal: 'h-0 w-full border-b border-b-border',
+      vertical: 'h-full w-0 border-r border-r-border'
     }
   }
 });

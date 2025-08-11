@@ -18,6 +18,7 @@ export * from './use-merged-ref';
 export * from './use-mobile-history-state';
 export * from './use-modal';
 export * from './use-mutation-observer';
+export * from './use-open-lib';
 export * from './use-open-state';
 export * from './use-origin';
 export * from './use-portal-target';

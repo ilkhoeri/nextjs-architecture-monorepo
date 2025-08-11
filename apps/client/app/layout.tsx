@@ -3,6 +3,10 @@ import { ThemeProvider, ThemeStateHidden } from '@repo/components/theme';
 
 import type { Metadata } from 'next';
 
+// import '@repo/styles';
+// import '@repo/ui/styles.css';
+// import '@repo/shells/styles.css';
+// import '@repo/viz/styles.css';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -20,7 +24,7 @@ export function metadata(): Metadata {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} bg-background`}>
+      <body className={inter.className}>
         <ThemeProvider>
           {children}
           <ThemeStateHidden />
