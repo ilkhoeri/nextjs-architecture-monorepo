@@ -5,7 +5,11 @@ import { useEffect } from 'react';
 
 import './error.css';
 
-export function ErrorMessages({ error, reset }: HttpErrorProps) {
+type ErrorMessagesProps = HttpErrorProps & {
+  origin?: string | null | undefined;
+};
+
+export function ErrorMessages({ error, reset, origin }: ErrorMessagesProps) {
   const isDev = process.env.NODE_ENV !== 'production';
 
   function printError(error: unknown) {
@@ -25,7 +29,7 @@ export function ErrorMessages({ error, reset }: HttpErrorProps) {
 
   return (
     <div data-error-dialog-root="">
-      <ErrorBlockHead error={error} />
+      <ErrorBlockHead error={error} origin={origin} />
 
       <div className="error-overlay-dialog-container">
         <div className="overflow-y-auto h-full">

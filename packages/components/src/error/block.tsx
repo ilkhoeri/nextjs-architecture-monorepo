@@ -22,7 +22,7 @@ function NavPagination() {
   );
 }
 
-export function ErrorBlockHead({ error }: { error: HttpErrorProps['error'] }) {
+export function ErrorBlockHead({ error, origin }: { error: HttpErrorProps['error']; origin?: string | null | undefined }) {
   const stack = parseErrorStack(error?.stack);
 
   return (
@@ -38,9 +38,11 @@ export function ErrorBlockHead({ error }: { error: HttpErrorProps['error'] }) {
       <div className="error-overlay-notch" data-side="right">
         <p className="container-build-error-version-status dialog-exclude-closing-from-outside-click">
           <span data-staleness-indicator="" className="stale" />
-          <span data-version-checker="true" title={stack?.type}>
-            {process.env.NEXT_PUBLIC_SITE_URL}
-          </span>
+          {origin && (
+            <span data-version-checker="true" title={stack?.type}>
+              {origin}
+            </span>
+          )}
         </p>
         <NotchTailIcon className="error-overlay-notch-tail" />
       </div>
