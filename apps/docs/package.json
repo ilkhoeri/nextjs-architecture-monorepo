@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "dev:build": "bun build:mdx && next dev --turbopack",
-    "build": "bun build:content && next build",
+    "build": "bun build:content && turbo run build",
     "build:mdx": "bun build:m2d && bun generate:toc && bun prettier && bun build:content",
     "build:content": "contentlayer2 build",
     "build:m2d": "bun run scripts/copy.ts",
